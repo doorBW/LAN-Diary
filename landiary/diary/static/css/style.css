@@ -1,0 +1,867 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin');
+/*----------------------------------main------------------------------*/		
+.clearfix::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+.wrap {
+	
+	/*border-bottom: thick solid #FFC0CB;*/
+	/*padding-bottom: 20px;*/
+	/*background-color: #FFE0C6;*/
+}
+.header_wrap {
+	/*padding-left: 180px;
+	padding-right: 180px;
+	padding-top: 20px;*/
+	height: 135px; 
+	font-family: 'Cabin', sans-serif;
+	padding-top: 10px;
+	/*border-bottom: thick solid #FFC0CB;*/
+
+}
+.logo, .menu_content {
+	float: left;
+	/*color: #78E6E6;*/
+}
+.logo {
+	width: 180px;
+	height: 80px;
+	font-size: 50pt;
+	padding-left: 140px;
+	padding-top: 10px;
+	color: #AE5E1A;
+}
+.menu {
+	float: right;
+	width: 550px;
+}
+.menu_content {
+	width: 770px;
+	height: 40px;
+	float: right;
+	/*opacity: 0.8;*/
+	font-weight: 600;
+	font-size: 15pt;
+	padding-top: 39px;
+	padding-right: 20px;
+}
+.mydiary, .pick, .exchange, .setup, .logout {
+	float: left;
+	margin-left: 50px;
+}
+.main_wrap {
+	padding-top: 30px;
+	padding-left: 140px;
+	padding-right: 140px;
+	background-color: #F7F7F7;
+}
+
+* {box-sizing: border-box;}
+ul {list-style-type: none;}
+body {font-family: Verdana, sans-serif;}
+
+.month {
+    padding: 70px 25px;
+    width: 100%;
+    background: #fffff0;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.month ul {
+    margin: 0;
+    padding: 0;
+}
+
+.month ul li {
+    /*color: white;*/
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.month .prev {
+    float: left;
+    padding-top: 10px;
+}
+
+.month .next {
+    float: right;
+    padding-top: 10px;
+}
+
+.weekdays {
+	height: 100px;
+	text-align: center;
+    margin: 0;
+    padding: 10px 0;
+    /*background-color: #fffff1;*/
+    line-height: 80px;
+}
+
+.weekdays li {
+    display: inline-block;
+    width: 13.6%;
+    color: #666;
+    text-align: center;
+}
+.week_day {
+
+}
+
+.days {
+    padding: 10px 0;
+    background: #eee;
+    margin: 0;
+    border-radius: 15px;
+}
+
+.days li {
+    list-style-type: none;
+    display: inline-block;
+    width: 13.6%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size:14px;
+    color: #777;
+    height: 100px;
+}
+
+.days li .active {
+    padding: 5px;
+    background: #AE5E1A;
+    color: white !important
+}
+.footer_wrap {
+	width: 100%;
+	text-align: center;
+	font-family: 'Cabin', sans-serif;
+	background-color: #F7F7F7;
+}
+.footer_c {
+	font-size: 10pt;
+	color: #c8c8c8;
+}
+.calendar {
+	border-style: double;
+	border-radius: 15px;
+	border-color: #B90000;
+}
+.main_footer_wrap{
+	background-color: #F7F7F7;
+}
+a {
+	color: black;
+	text-decoration: none;
+}
+a:hover{color: #c8c8c8;}
+		
+/*----------------------------------login------------------------------*/
+.login_nav{
+	float: right;
+	font-size: 20px;
+}
+
+.login_wrap{
+	text-align: center;
+}
+
+.login_background{
+	padding: 5% 25px;
+	margin-bottom: 20px;
+  	width: 50%;
+  	background: #fffff0;
+  	text-align: center;
+  	border-radius: 10px;
+  	margin-right: auto;
+  	margin-left: auto;
+  	border-style: double;
+  	border-radius: 15px;
+  	border-color: #B90000;
+}
+
+.login_input_wrap{
+	text-align: right;
+}
+
+.login_each_wrap{
+	font-family: 'Cabin', sans-serif;
+	font-size: 20px;
+}
+
+.login_input{
+	padding: 10px 25px 10px;/*top right&left bottom*/
+	width: 60%;
+	margin: 5px;
+	margin-right: 10%;
+	border-radius: 10px;
+}
+
+.login_submit_div{
+	text-align: center;
+	height: 20%;
+
+}
+
+.login_submit{
+	padding:5px 10px 5px;
+	border-radius: 10px;
+	font-family: 'Cabin', sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	color: white;
+	background: #8A0829;
+}
+
+.recommand_logup{
+	margin-top: 3%;
+}
+
+.logup_a{
+	color: #8A0829;
+}
+
+/*----------------------------------write_diary------------------------------*/
+.date_input{
+	font-size:25px;
+}
+.emotion_input{
+	font-size: 25px;
+}
+.weather_input{
+	font-size: 25px;
+}
+i {
+	padding-right: 13px;
+}
+.image_input{
+	height: 400px;
+	border: solid 2px black;
+	border-style: dashed;
+	margin-bottom: 10px;
+	margin-top: 10px;
+
+	font-size: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/*.content_input {
+	height: 300px;
+	border: solid 1px black;
+	margin-top: 10px;
+}*/
+.emoticon_input:hover {
+	background: rgba(34,50,84,0.03);
+}
+.diary_wrap{
+	padding: 5% 25px;
+	margin-bottom: 20px;
+    width: 70%;
+    background: white;
+    border-radius: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    border: solid 2px;
+}
+.title_input{
+	font-size: 25px;
+	/*width:96%;
+	height:10%;
+	border: solid 1px black;
+	margin-left: 2%;
+	margin-top: 2%;*/
+}
+.category_wrap{
+	float: right;
+}
+/* select바 - jquery dropdown plugin사용하면 더 변경 가능 */
+select {
+    width: 220px;
+    height: 30px;
+    font-size: 15px;
+    color: #AE5E1A;
+    border: 1px solid #AE5E1A;
+    border-radius: 3px;
+    /* select에서 화살표 없애는 거
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;*/
+}
+/*select::-ms-expand {
+   display: none;   
+}*/
+
+button.replace {  
+  position: absolute;
+  width: 51%;
+  height: 54%;
+  border-radius: 3px;
+  font-size: 60px;
+  border:solid 2px white;
+  cursor: pointer;
+}
+
+body{
+  font-family: Avenir;
+}
+.inp {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  max-width: 280px;
+}
+.inp .label {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  font-size: 25px;
+  color: #9098a9;
+  font-weight: 500;
+  transform-origin: 0 0;
+  transition: all 0.2s ease;
+}
+.inp .border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: #07f;
+  transform: scaleX(0);
+  transform-origin: 0 0;
+  transition: all 0.15s ease;
+}
+.inp input {
+  -webkit-appearance: none;
+  width: 100%;
+  border: 0;
+  font-family: inherit;
+  padding: 14px 0;
+  height: 10px;
+  font-size: 25px;
+  font-weight: 500;
+  border-bottom: 2px solid #c8ccd4;
+  background: none;
+  border-radius: 0;
+  color: #223254;
+  transition: all 0.15s ease;
+}
+.inp input:hover {
+  background: rgba(34,50,84,0.03);
+}
+.inp input:not(:placeholder-shown) + span {
+  color: #5a667f;
+  transform: translateY(-26px) scale(0.75);
+}
+.inp input:focus {
+  background: none;
+  outline: none;
+}
+.inp input:focus + span {
+  color: #07f;
+  transform: translateY(-26px) scale(0.75);
+}
+.inp input:focus + span + .border {
+  transform: scaleX(1);
+}
+
+
+
+#paper {
+  color: #fff;
+  font-size: 20px;
+}
+/*#margin {
+  margin-left: 12px;
+  margin-bottom: 20px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}*/
+#text {
+  width: 100%;
+  overflow: hidden;
+  background-color: #fff;
+  color: #222;
+  font-family: Courier, monospace;
+  font-weight: normal;
+  font-size: 24px;
+  /*resize: none;*/
+  line-height: 40px;
+  padding-left: 100px;
+  padding-right: 100px;
+  margin-top:10px;
+  /*padding-top: 45px;*/
+  /*padding-bottom: 34px;*/
+  background-image: url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png),
+    url(https://static.tumblr.com/maopbtg/nBUmgtogx/paper.png);
+  background-repeat: repeat-y, repeat;
+  /*-webkit-border-radius: 12px;
+  border-radius: 12px;
+  -webkit-box-shadow: 0px 2px 14px #000;
+  box-shadow: 0px 2px 14px #000;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;*/
+}
+/*#title {
+  background-color: transparent;
+  border-bottom: 3px solid #fff;
+  color: #fff;
+  font-size: 20px;
+  font-family: Courier, monospace;
+  height: 28px;
+  font-weight: bold;
+  width: 220px;
+}*/
+.diary_submit_button {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+/*----------------------------------register------------------------------*/
+
+.register_input_wrap{
+	padding: 2% 25px;
+	margin-bottom: 20px;
+    width: 50%;
+    background: white;
+    border-radius: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    border: solid 2px;
+}
+.register_title{
+	margin-bottom: 50px;
+	padding-bottom: 5%;
+	padding-top: 5%;
+	text-align: center;
+	background-color: #AE5E1A;
+	font-size: 30px;
+	color: white;
+}
+
+.inp_reg {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  max-width: 280px;
+}
+.inp_reg .label {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  font-size: 20px;
+  color: #9098a9;
+  font-weight: 500;
+  transform-origin: 0 0;
+  transition: all 0.2s ease;
+}
+.inp_reg .border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: #07f;
+  transform: scaleX(0);
+  transform-origin: 0 0;
+  transition: all 0.15s ease;
+}
+.inp_reg input {
+  -webkit-appearance: none;
+  width: 100%;
+  border: 0;
+  font-family: inherit;
+  padding: 14px 0;
+  height: 10px;
+  font-size: 27px;
+  font-weight: 500;
+  border-bottom: 2px solid #c8ccd4;
+  background: none;
+  border-radius: 0;
+  color: #223254;
+  transition: all 0.15s ease;
+  margin-bottom: 35px;
+}
+
+.inp_reg input:hover {
+  background: rgba(34,50,84,0.03);
+}
+.inp_reg input:not(:placeholder-shown) + span {
+  color: #5a667f;
+  transform: translateY(-26px) scale(0.75);
+}
+.inp_reg input:focus {
+  background: none;
+  outline: none;
+}
+.inp_reg input:focus + span {
+  color: #07f;
+  transform: translateY(-26px) scale(0.75);
+}
+.inp_reg input:focus + span + .border {
+  transform: scaleX(1);
+}
+
+
+/*----------------------------------view_mydiary------------------------------*/
+.main_common{
+	display: inline-block;
+}
+.left_arrow_wrap{
+	width: 15%;
+	float: left;
+	margin-top: 400px;
+}
+.right_arrow_wrap{
+	width:3%;
+	float: right;
+	margin-top: 400px;
+}
+.date_input{
+	font-size:25px;
+}
+i {
+	padding-right: 13px;
+}
+.image_input{
+	height: 400px;
+	border: solid 2px black;
+	border-style: dashed;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	background-image: url(http://blog.mindlogr.com/wp-content/uploads/2013/01/diary1.jpg);
+}
+.diary_wrap{
+	padding: 5% 25px;
+	margin-bottom: 20px;
+    width: 70%;
+    background: white;
+    border-radius: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    border: solid 2px;
+}
+.title_input{
+	font-size: 25px;
+}
+.view_mydiary_category_wrap{
+	float: left;
+	font-size:25px;
+	width: 100%;
+}
+
+/*----------------------------------main_exchange_diary------------------------------*/
+.exdi_main_common{
+	display: inline-block;
+	height: auto;
+}
+.total_left_wrap{
+	float: left;
+	/*border: solid 2px black;*/
+	width: 80%;
+	margin-left: 2%;
+}
+.left_wrap{
+	float: left;
+	width: 10%;
+	height: 600px;
+	/*border:solid 2px black;*/
+}
+.left_arrow{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+.right_wrap{
+	float: right;
+	width: 10%;
+	height: 600px;
+	/*border:solid 2px black;*/
+}
+.right_arrow{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.feed_wrap{
+	padding: 2% 5%;
+	/*margin-bottom: 20px;*/
+    width: 80%;
+    /*margin-right: auto;
+    margin-left: auto;*/
+    /*border:solid 2px black;*/
+
+}
+.feed{
+	width: 100%;
+	height: 400px;
+	/*border: solid 2px black;*/
+}
+.list_wrap{
+	/*border: solid 2px black;*/
+	float: right;
+	width: 10%;
+	height: 200px;
+	margin-right: 2%;
+}
+
+.search_button{
+	padding-bottom: 5%;
+	font-size: 23px;
+}
+.search_input{
+	height: 30px;
+	font-size: 20px;
+}
+.exdi_diary_button{
+	font-size: 21px;
+}
+.add_button{
+	margin-top: 15%;
+	margin-bottom: 50%;
+
+}
+.exdi_diary_wrap{
+	display: inline-block;
+	padding: 5% 25px;
+	margin-bottom: 20px;
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    border: solid 2px;
+}
+.list_icon, .list_name, .add_button{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 17px;
+}
+.list_name{
+	margin-bottom: 25%;
+}
+.user_input{
+	font-size: 25px;
+	color: #AE5E1A;
+	/*float: right;*/
+}
+.diary_func{
+	display: flex;
+	justify-content: space-between;
+	font-size: 25px;
+}
+.main_exdi_title{
+	/*border-bottom: solid 2px black;*/
+	margin-bottom: 2%;
+	/*display: inline-block;*/
+}
+.exdi_title{
+	border-bottom: solid 2px black;
+}
+.exdi_time{
+	float: right;
+	width: 100%;
+	text-align: right;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	color: red;
+}
+/*----------------------------------make_our_diary---------------------------------*/
+.make_div_wrap{
+  padding: 8% 25px;
+  padding-top: 5%;
+  margin-bottom: 20px;
+  width: 50%;
+  background: url('../notebook.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: 'Cabin', sans-serif; 
+}
+
+.title_wrap{
+  font-size: 35px;
+  font-weight: bold;
+  letter-spacing: 5px;
+  word-spacing: 10px;
+  margin-bottom: 10%;
+}
+
+.note_wrap{
+  margin-top: 10%;
+
+}
+
+.name_wrap{
+  font-size: 23px;
+  padding: 15px;
+}
+
+.name_input{
+  font-size: 30px;
+  height: 40px;
+  padding: 1%;
+  margin: 1%;
+}
+
+.detail_wrap{
+  font-size: 20px;
+  padding: 15px;
+}
+
+.detail_input{
+  font-size: 20px;
+  height: 25px;
+  padding: 1%;
+  margin: 1%;
+}
+
+.secret_anonymous_span{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.secret_wrap{
+  padding: 1%;
+  margin: 1%;
+}
+
+.anonymous_wrap{
+  padding: 1%;
+  margin: 1%;
+}
+
+.submit_btn{
+  margin-top: 8%;
+  margin-bottom: 3%;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+/*----------------------------------setting---------------------------------*/
+
+
+.setting_wrap{
+
+}
+
+.setting_background{
+  padding: 5% 25px;
+  margin-bottom: 20px;
+  width: 70%;
+  background: #fffff0;
+  border-radius: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  border-style: double;
+  border-radius: 15px;
+  border-color: #B90000;
+}
+
+.setting_content_wrap{
+  text-align: left;
+  padding-left: 5%;
+}
+
+.setting_content_each{
+  line-height: 50px;
+}
+
+.setting_each_title{
+  text-align: right;
+  padding-right: 5%;
+  font-family: 'Cabin', sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  color: #B90000;
+  width: 30%;
+  float: left;
+
+}
+
+.setting_each_detail{
+  font-family: 'Cabin', sans-serif;
+  font-size: 20px;
+}
+
+.setting_input{
+  height: 25px;
+  font-size: 18px;
+}
+
+.setting_explain{
+  text-align: center;
+  font-size: 20px;
+}
+
+.setting_submit{
+  text-align: center;
+  
+}
+
+.setting_submit_btn{
+  margin-top: 3%;
+  padding:5px 15px 5px;
+  border-radius: 10px;
+  font-family: 'Cabin', sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  background: #8A0829;
+}
+
+/*--------------------------search_exchange_diary---------------------------------*/
+
+.exdi_search_wrap{
+	margin:auto;
+	width: 60%;
+	height:auto;
+	/*border: solid 2px black;*/
+	padding-top: 5%;
+	padding-bottom: 5%;
+}
+
+.each_search_wrap{
+	border: solid 2px black;
+	width: 99%;
+	margin: auto;
+	height:200px;
+	border-radius: 10px;
+	margin-bottom: 2%;
+	padding: 2% 2%;
+	background-color: white;
+}
+
+.username_wrap{
+	margin-bottom: 10%;
+}
+.diary_name_wrap{
+	margin-bottom: 10%;
+}
+.search_left_wrap{
+	float: left;
+}
+.search_right_wrap{
+	float: right;
+	width: 20%;
+	height: 90%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size:100px;
+}
