@@ -1,0 +1,643 @@
+{% extends "diary/layout.html" %}
+{% load static %}
+{% block title %} SharedDiary {% endblock %}
+{% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var time = 24*60*60;
+		var timeOrigin = time;
+		var hour = parseInt(timeOrigin/3600);
+
+		timeOrigin = timeOrigin % 3600;
+		var min = parseInt(timeOrigin / 60);
+		var second = timeOrigin % 60;
+
+		$(".exdi_time").text("남은 시간 : "+hour+" : "+min+" : "+second);
+		var timer = setInterval(function(){
+			time--;
+			var timeOrigin = time;
+			var hour = parseInt(timeOrigin/3600);
+			timeOrigin = timeOrigin % 3600;
+			var min = parseInt(timeOrigin/60);
+			var second = timeOrigin%60;
+			$(".exdi_time").text("남은 시간 : "+hour+" : "+min+" : "+second);
+			if(time == 0){
+				console.log(show_diary_id);
+				hidden([show_diary_id]);
+				alert("시간이 지나서 사라져요ㅠㅠ");
+				show([show_diary_id-1]);
+				clearInterval(timer);
+			}
+		}, 1000)
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".content_input").show(); //페이지를 로드할 때 표시할 요소
+		$(".write_comment_icon").show();
+		$(".comment_wrap").hide(); //페이지를 로드할 때 숨길 요소
+		$(".view_diary_icon").hide(); 
+		$(".write_comment_icon").click(function(){
+			$ (".write_comment_icon").hide();
+			$ (".content_input").hide(); //클릭 시 첫 번째 요소 숨김
+			$ (".view_diary_icon").show();
+			$ (".comment_wrap").show(); //클릭 시 두 번째 요소 표시
+		return false;
+		});
+		$(".view_diary_icon").click(function(){
+			$ (".view_diary_icon").hide();
+			$ (".comment_wrap").hide(); //클릭 시 첫 번째 요소 숨김
+			$ (".write_comment_icon").show();
+			$ (".content_input").show(); //클릭 시 두 번째 요소 표시
+		return false;
+		});
+	});
+</script>
+<script type="text/javascript">
+	$(function(){
+	  var hover1 = $('.hover1');
+	  var hover2 = $('.hover2');
+	  var hover3 = $('.hover3');
+	  var hover4 = $('.hover4');
+	  var comment_button_hover = $('.comment_button_hover');
+	  hover1.hover(function(){
+	    hover1.css('font-size','30px');
+	    hover1.css('color','#B90000');
+	  },function(){
+	    hover1.css('font-size','25px');
+	    hover1.css('color','black');
+	  });
+	  hover2.hover(function(){
+	    hover2.css('font-size','30px');
+	    hover2.css('color','#B90000');
+	  },function(){
+	    hover2.css('font-size','25px');
+	    hover2.css('color','black');
+	  });
+	  hover3.hover(function(){
+	    hover3.css('font-size','30px');
+	    hover3.css('color','#B90000');
+	  },function(){
+	    hover3.css('font-size','25px');
+	    hover3.css('color','black');
+	  });
+	  hover4.hover(function(){
+	    hover4.css('font-size','30px');
+	    hover4.css('color','#B90000');
+	  },function(){
+	    hover4.css('font-size','25px');
+	    hover4.css('color','black');
+	  });
+	  comment_button_hover.hover(function(){
+	    comment_button_hover.css('color','gray');
+	    comment_button_hover.css('font-size','12px');
+	  },function(){
+	    comment_button_hover.css('color','black');
+	    comment_button_hover.css('font-size','10px');
+	  });
+	});
+</script>
+<script type="text/javascript">
+	var diary_id_list = [1,2,3]; //교환 일기장의 id 목록을 받아옴
+	var temp_id_list = [1,2,3]; 
+	var show_diary_id = diary_id_list[diary_id_list.length-1]; // 처음에 보여줘야되는 일기(default) -> =3
+	temp_id_list.splice(show_diary_id-1, 1);
+	var not_show_diary_id_list = temp_id_list;
+	function show(show_id){
+		document.getElementById(show_id).className='visiblediv';
+	}
+	
+	function hidden(not_show_id_array){
+		for(var index=0; index < not_show_id_array.length; index++){
+			document.getElementById(not_show_id_array[index]).className='hiddendiv';
+		}
+	}
+	function view_exchange_diary(){
+		show(show_diary_id);
+		hidden(not_show_diary_id_list);
+	}
+	function left_btn_click() {
+		if(show_diary_id==1) {
+			alert("더 이상 못 넘겨요ㅠㅠ");
+		}
+		else {
+			show_diary_id--;
+			var for_temp_id_list = [1,2,3];
+			for_temp_id_list.splice(show_diary_id-1, 1);
+			not_show_diary_id_list = for_temp_id_list;
+			console.log(show_diary_id);
+			console.log(not_show_diary_id_list);
+			show(show_diary_id);
+			hidden(not_show_diary_id_list);
+		}
+	}
+	function right_btn_click() {
+		if(show_diary_id==diary_id_list[diary_id_list.length-1]){
+			alert("더 이상 못 넘겨요ㅜㅜ");
+		}
+		else{
+			show_diary_id++;
+			var for_temp_id_list = [1,2,3];
+			for_temp_id_list.splice(show_diary_id-1, 1);
+			var not_show_diary_id_list = for_temp_id_list;
+			show(show_diary_id);
+			hidden(not_show_diary_id_list);
+		}
+	}
+</script>
+<script type="text/javascript">
+	var group_list = ['group1', 'group2', 'group3', 'group4']; //사용자의 그룹 목록을 받아옴. 
+	var group_diary_list = ["group1", "group2", "group3"]; 
+	//교환 일기장 게시물의 각 그룹 리스트를 받아옴. 내 일기장은 default로 들어가고 교환 일기장에서 볼 수 있는 일기장은 이미 그룹이 하나로 정해져있음.
+
+	function show_group(group_class){
+		document.getElementById(group_class).className='visiblediv';
+	}
+	function hidden_group(not_group_class){
+		document.getElementById(not_group_class).className='hiddendiv';
+	}
+	function group1_click(){
+		hidden([show_diary_id]);
+		//그룹1을 클릭했을 때 group_id가 visivle인 것들에 show_diary_id를 다시 부여하고 diary_id_list부터 쭈욱 다시 정의되고 on_load될 때처럼 다시 피드 배포 함.
+		for(var i = 0; i < diary_id_list.length; i++){
+			if(group_diary_list[i] == "group1")
+			document.getElementById(diary_id_list[i]).className='visiblediv';
+		}
+		temp_show_group_list = [];
+		//그룹1 클릭했을 때 그룹id가 group1인거 display:visible로 만들어 줌.
+		for(var i = 0; i < group_diary_list.length; i++){
+			if(group_diary_list[i] == "group1"){
+				show_group(group_diary_list[i]);
+				temp_show_group_list.push(group_diary_list[i]);
+			}
+			else{
+				hidden_group(group_diary_list[i]);
+			}
+		}
+		//해당 그룹에 속하는 게시물이 저장된 temp_show_group_list를 통해서 상위 div의 id를 다시 지정함.
+		for(var i = 0; i < temp_show_group_list.length; i++){
+			diary_id_list=[]
+		}
+		console.log(temp_show_group_list);
+		console.log(group_diary_list);
+		console.log(group_list);
+		console.log(group_diary_list[0]);
+		if(temp_show_group_list.length==0){
+			alert("아직 그룹에 일기가 없습니다ㅠㅠ");
+		}
+	}
+	function group_click(group_name){
+
+	}
+</script>
+<script type="text/javascript">
+	
+	function comment_edit_click(comment_id){
+		var each_comment = "comment_row_"+comment_id;
+		var comment_root = document.getElementById(each_comment);
+		if(false){
+			// 실제로는 현재 로그인된사람과 글쓴이의 닉네임이 일치하는지 확인해야함
+			// if 조건문에 {username} != comment_root.getElementsByTagName("td")[0].innerText 를 넣어줘야 하고
+			// 여기 내용에는
+			// alert("자신이 작성한 댓글만 수정할 수 있다 ㅗ");
+		}else{
+			var img_tags = comment_root.getElementsByTagName("td")[2];
+			var modify_img = img_tags.getElementsByTagName('button')[0];
+			var delete_img = img_tags.getElementsByTagName('button')[1];
+			modify_img.remove();
+			delete_img.remove();
+			var update_btn = "<form name='change_comment' method='POST'><input class='css_update_btn' name='new_comment' type='submit' value='수정'/><input name='comment_id' type='hidden' value='"+comment_id+"'></form>";
+			var cancle_btn = "<input class='css_cancle_btn' type='submit' onclick='comment_cancle("+comment_id+")' value='취소'/>";
+			img_tags.innerHTML = update_btn+cancle_btn;
+
+			var temp_content = document.getElementById(each_comment);
+			var temp_content_text = temp_content.getElementsByTagName('td')[1].innerText;
+			temp_content.getElementsByTagName('td')[1].innerText = "";
+			var comment_input = '<input class="edit_comment_class" type="text" id="edit_comment_id" value="'+temp_content_text+'" />';
+			var add_span = document.createElement("span");
+			add_span.innerHTML = comment_input;
+			temp_content.getElementsByTagName('td')[1].appendChild(add_span);
+		}
+	}
+
+	function comment_cancle(comment_id){
+		var each_comment = "comment_row_"+comment_id;
+		var each_comment = document.getElementById(each_comment);
+		var temp_content = each_comment.getElementsByTagName('td')[1];
+		var temp_content_input = temp_content.getElementsByTagName('input')[0];
+		var temp_content_text = temp_content_input.value;
+		temp_content_input.remove();
+		temp_content.innerHTML = temp_content_text;
+
+		var update_btn = each_comment.getElementsByTagName('td')[2].getElementsByTagName('form')[0];
+		var cancle_btn = each_comment.getElementsByTagName('td')[2].getElementsByTagName('input')[2];
+		update_btn.remove();
+		cancle_btn.remove();
+
+		var original_btn = '<button class="exchange_diary_comment_func_button" onclick="comment_edit_click('+comment_id+')"><img id="comment_img" width="16px" height="16px" src="{% static "img/edit.png" %}" alt="수정하기"></button><form name="comment_'+comment_id+'_delete"><input type="hidden" name="delete_comment_num" value="comment_id"/></form><button class="exchange_diary_comment_func_button"><img id="delete_img" width="13px" height="13px" src="{% static "img/delete.png" %}" alt="삭제하기"></button>'
+
+		
+		each_comment.getElementsByTagName('td')[2].innerHTML = original_btn
+		
+	}
+</script>
+<body onload="view_exchange_diary()">
+{% endblock %}
+								{% block highlight %}
+								<span class="exchange_write"><a href="../writediary">일기 쓰기</a></span>
+								<span class="exchange_mydiary"><a href="../mydiary">내 일기장</a></span>
+								<span class="exchange_pick"><a href="../pickdiary">뜯어온 일기장</a></span>
+								<span class="exchange_exchange menu_highlight">교환 일기장</span>
+								<span class="exchange_setup"><a href="../setting">설정</a></span>
+								<span class="exchange_logout"><a href="#">로그아웃</a></span>
+								{% endblock %}
+							
+	{% block main %}
+	<div class="wrap" id="1">
+
+			<div class="main_footer_wrap">
+				<main>
+					<div class="exdi_main_wrap clearfix">
+						<div class="exdi_main_common total_left_wrap">
+							<div class="exdi_main_common left_wrap">
+								<div class="left_arrow">
+									<button id="left_btn" onclick="left_btn_click()"><i class="fas fa-angle-left fa-7x"></i></a></button>
+								</div>
+							</div>
+							<div class="exdi_main_common feed_wrap">
+								<div class="search_button">
+									<form action="../search">
+										교환 일기장 검색 : <input name="search" type="text" size="50" placeholder="옆에 검색 버튼 누르면 검색뷰로" class="search_input">
+										<input type="submit" class="exdi_diary_button" value="검색"/>
+									</form>
+								</div>
+								<div class="exdi_diary_wrap ">
+									<div class="title_input">
+										<div class="main_exdi_title">
+											<div class="exdi_title">
+												밤 새기는 힘들다링
+											</div>
+											<div class="exdi_time">
+											</div>
+										</div>
+									</div>
+									<div class="user_input">
+										"????"의 일기(익명 아닐 때에만 나타남)
+									</div>
+									<div class="view_mydiary_category_wrap">
+										<span>
+											#그룹2 교환 일기장(방 주제)
+										</span>&nbsp;
+										<span>
+											<img src="{% static 'img/sunny_color.png' %}" alt="" width="25px" height="25px">
+										</span>
+										<span class="exchange_diary_emotion_img">
+											<img src="{% static 'img/happy_color.png' %}" alt="" width="25px" height="25px"> : 32 
+										</span>
+									</div>
+									<div class="exdi_date_input">
+										<span>2018년 </span>
+										<span>7월 </span>
+										<span>28일</span>
+									</div>
+									<div class="image_input">
+										
+									</div>
+									<div class="exchange_diary_func">
+										<span class="hover1">
+											<i class="fas fa-cut"></i>
+											뜯어가기
+										</span>
+										<span class="write_comment_icon hover2">
+											<i class="far fa-comment"></i>
+											댓글 쓰기
+										</span>
+										<span class="view_diary_icon hover3">
+											<i class="far fa-eye"></i>
+											일기 보기
+										</span>
+										<span class="hover4">
+											<i class="far fa-meh"></i>
+											공감하기
+										</span>
+									</div>
+									<div class="content_input">
+										<form id="paper" method="get" action="">
+											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>으아아아아아아아아아아아아아아</textarea>  
+											<br>
+										</form>
+									</div>
+									<div class="comment_wrap">
+										<div class="comment_input_wrap">
+											
+										</div>
+										<form action="">
+											<div class="write_comment">
+												<label for="user_comment"></label>
+												<input type="text" id="user_comment" placeholder=" 댓글 쓰기...">
+												<button type="button" class="comment_button comment_button_hover"><i class="fas fa-pencil-alt fa-3x"></i></button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="exdi_main_common right_wrap">
+								<div class="right_arrow">
+									<button id="right_btn" onclick="right_btn_click()"><i class="fas fa-angle-right fa-7x"></i></a></button>
+								</div>
+							</div>
+						</div>
+						<div class="exdi_main_common list_wrap">
+							<a href="../makegroup"><div class="add_button">
+								<i class="fas fa-plus fa-5x"></i>
+							</div></a>
+
+							{% for group in all_group %}
+								{% if group == selected_group %}
+									<div class="list_icon">
+										<i class="fas fa-book-open fa-5x"></i>
+									</div>
+									<div class="list_name">{{group}} 보고있는 상태</div>
+								{% else %}
+									<div class="list_icon">
+										<a href="./{{group}}"><i class="fas fa-book fa-5x"></i></a>
+									</div>
+									<div class="list_name">{{group}}</div>
+								{% endif %}
+							{% endfor %}
+
+						</div>
+					</div>
+				</main>
+			</div>
+
+	</div>
+
+
+	<div class="wrap" id="2">
+			<div class="main_footer_wrap">
+				<main>
+					<div class="exdi_main_wrap clearfix">
+						<div class="exdi_main_common total_left_wrap">
+							<div class="exdi_main_common left_wrap">
+								<div class="left_arrow">
+									<button id="left_btn" onclick="left_btn_click()"><i class="fas fa-angle-left fa-7x"></i></a></button>
+								</div>
+							</div>
+							<div class="exdi_main_common feed_wrap">
+								<div class="search_button">
+									<form action="../search">
+										교환 일기장 검색 : <input name="search" type="text" size="50" placeholder="옆에 검색 버튼 누르면 검색뷰로" class="search_input">
+										<input type="submit" class="exdi_diary_button" value="검색"/>
+									</form>
+								</div>
+								<div class="exdi_diary_wrap ">
+									<div class="title_input">
+										<div class="main_exdi_title">
+											<div class="exdi_title">
+												북북북북북북북
+											</div>
+											<div class="exdi_time">
+											</div>
+										</div>
+									</div>
+									<div class="user_input">
+										"????"의 일기(익명 아닐 때에만 나타남)
+									</div>
+									<div class="view_mydiary_category_wrap">
+										<span>
+											#그룹2 교환 일기장(방 주제)
+										</span>&nbsp;
+										<span>
+											<img src="{% static 'img/cloud_color.png' %}" alt="" width="25px" height="25px">
+										</span>
+										<span class="exchange_diary_emotion_img">
+											<img src="{% static 'img/sleepy_color.png' %}" alt="" width="25px" height="25px"> : 32 
+										</span>
+									</div>
+									<div class="exdi_date_input">
+										<span>2018년 </span>
+										<span>8월 </span>
+										<span>4일</span>
+									</div>
+									<div class="image_input">
+										
+									</div>
+									<div class="exchange_diary_func">
+										<span class="hover1">
+											<i class="fas fa-cut"></i>
+											뜯어가기
+										</span>
+										<span class="write_comment_icon hover2">
+											<i class="far fa-comment"></i>
+											댓글 쓰기
+										</span>
+										<span class="view_diary_icon hover3">
+											<i class="far fa-eye"></i>
+											일기 보기
+										</span>
+										<span class="hover4">
+											<i class="far fa-meh"></i>
+											공감하기
+										</span>
+									</div>
+									<div class="content_input">
+										<form id="paper" method="get" action="">
+											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>보니 클라이드 야~</textarea>  
+											<br>
+										</form>
+									</div>
+									<div class="comment_wrap">
+										<div class="comment_input_wrap">
+										</div>
+										<form action="">
+											<div class="write_comment">
+												<label for="user_comment"></label>
+												<input type="text" id="user_comment" placeholder=" 댓글 쓰기...">
+												<button type="button" class="comment_button comment_button_hover"><i class="fas fa-pencil-alt fa-3x"></i></button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="exdi_main_common right_wrap">
+								<div class="right_arrow">
+									<button id="right_btn" onclick="right_btn_click()"><i class="fas fa-angle-right fa-7x"></i></a></button>
+								</div>
+							</div>
+						</div>
+						<div class="exdi_main_common list_wrap">
+							<a href="../makegroup"><div class="add_button">
+								<i class="fas fa-plus fa-5x"></i>
+							</div></a>
+							{% for group in all_group %}
+								{% if group == selected_group %}
+									<div class="list_icon">
+										<i class="fas fa-book-open fa-5x"></i>
+									</div>
+									<div class="list_name">{{group}} 보고있는 상태</div>
+								{% else %}
+									<div class="list_icon">
+										<a href="./{{group}}"><i class="fas fa-book fa-5x"></i></a>
+									</div>
+									<div class="list_name">{{group}}</div>
+								{% endif %}
+							{% endfor %}
+						</div>
+					</div>
+				</main>
+			</div>
+
+	</div>
+
+
+	<div class="wrap" id="3">
+			<div class="main_footer_wrap">
+				<main>
+					<div class="exdi_main_wrap clearfix">
+						<div class="exdi_main_common total_left_wrap">
+							<div class="exdi_main_common left_wrap">
+								<div class="left_arrow">
+									<button id="left_btn" onclick="left_btn_click()"><i class="fas fa-angle-left fa-7x"></i></a></button>
+								</div>
+							</div>
+							<div class="exdi_main_common feed_wrap">
+								<div class="search_button">
+									<form action="../search">
+										교환 일기장 검색 : <input name="search" type="text" size="50" placeholder="옆에 검색 버튼 누르면 검색뷰로" class="search_input">
+										<input type="submit" class="exdi_diary_button" value="검색"/>
+									</form>
+								</div>
+								<div class="exdi_diary_wrap ">
+									<div class="title_input">
+										<div class="main_exdi_title">
+											<div class="exdi_title">
+												안녕띠
+											</div>
+											<div class="exdi_time">
+											</div>
+										</div>
+									</div>
+									<div class="user_input">
+										"????"의 일기(익명 아닐 때에만 나타남)
+									</div>
+									<div class="view_mydiary_category_wrap">
+										<span>
+											#그룹3 교환 일기장(방 주제)
+										</span>&nbsp;
+										<span>
+											<img src="{% static 'img/sunny_color.png' %}" alt="" width="25px" height="25px">
+										</span>
+										<span class="exchange_diary_emotion_img">
+											<img src="{% static 'img/love_color.png' %}" alt="" width="25px" height="25px"> : 32 
+										</span>
+									</div>
+									<div class="exdi_date_input">
+										<span>2018년 </span>
+										<span>8월 </span>
+										<span>28일</span>
+									</div>
+									<div class="image_input">
+										
+									</div>
+									<div class="exchange_diary_func">
+										<span class="hover1">
+											<i class="fas fa-cut"></i>
+											뜯어가기
+										</span>
+										<span class="write_comment_icon hover2">
+											<i class="far fa-comment"></i>
+											댓글 쓰기
+										</span>
+										<span class="view_diary_icon hover3">
+											<i class="far fa-eye"></i>
+											일기 보기
+										</span>
+										<span class="hover4">
+											<i class="far fa-meh"></i>
+											공감하기
+										</span>
+									</div>
+									<div class="content_input">
+										<form id="paper" method="get" action="">
+											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>가장 최근일수록 id값이 높네용</textarea>  
+											<br>
+										</form>
+									</div>
+									<div class="comment_wrap">
+										<div class="comment_input_wrap">
+											<table class="comment_table comment_input">
+												<tr id="comment_row_1" class="row">
+													<td class="nickname">닉네임</td>
+													<td class="comment_content_real">댓글 내용이이이이이</td>
+													<div class="ddd">
+														<td class="exchange_diary_comment_func">
+															<!-- comment_edit_click의 인자와 comment_row_{여기}, 아래 삭제하기를 둘러싼 form의 이름과 그 내부의 input태그 name에 댓글 id와같은 고유넘버가 전달. -->
+															<button class="exchange_diary_comment_func_button" onclick="comment_edit_click(1)">
+																<img id="comment_img" width="16px" height="16px" src="{% static 'img/edit.png' %}" alt="수정하기"></button>
+															<form name="comment_1_delete">
+																<input type="hidden" name="delete_comment_num" value="comment_id"/>
+															</form>
+															<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_1_delete.submit();">
+																<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기"></button>
+														</td>
+													</div>
+												</tr>
+
+												<tr id="comment_row_2" class="row">
+													<td class="nickname">2</td>
+													<td class="comment_content_real">22222</td>
+													<td class="exchange_diary_comment_func">
+														<button class="exchange_diary_comment_func_button" onclick="comment_edit_click(2)">
+															<img id="comment_img" width="16px" height="16px" src="{% static 'img/edit.png' %}" alt="수정하기"></button>
+														<form name="comment_2_delete">
+															<input type="hidden" name="delete_comment_num" value="comment_id"/>
+														</form>
+														<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_2_delete.submit();">
+															<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기"></button>
+													</td>
+												</tr>
+
+											</table>
+										</div>
+										<form action="" method="POST">
+											<div class="write_comment">
+												<label for="user_comment"></label>
+												<input type="text" id="user_comment" placeholder=" 댓글 쓰기...">
+												<button type="button" class="comment_button comment_button_hover"><i class="fas fa-pencil-alt fa-3x"></i></button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="exdi_main_common right_wrap">
+								<div class="right_arrow">
+									<button id="right_btn" onclick="right_btn_click()"><i class="fas fa-angle-right fa-7x"></i></a></button>
+								</div>
+							</div>
+						</div>
+						<div class="exdi_main_common list_wrap">
+							<a href="../makegroup"><div class="add_button">
+								<i class="fas fa-plus fa-5x"></i>
+							</div></a>
+							{% for group in all_group %}
+								{% if group == selected_group %}
+									<div class="list_icon">
+										<i class="fas fa-book-open fa-5x"></i>
+									</div>
+									<div class="list_name">{{group}} 보고있는 상태</div>
+								{% else %}
+									<div class="list_icon">
+										<a href="./{{group}}"><i class="fas fa-book fa-5x"></i></a>
+									</div>
+									<div class="list_name">{{group}}</div>
+								{% endif %}
+							{% endfor %}
+						</div>
+					</div>
+				</main>
+			</div>
+
+	</div>
+	{% endblock %}

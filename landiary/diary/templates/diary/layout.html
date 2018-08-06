@@ -1,0 +1,68 @@
+{% load static %}
+<!doctype html>
+<html lang = "ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+</head>
+{% block script %} {% endblock %}
+    <div class="wrap">
+        <header>
+            <div class="header_background_wrap">
+                <div class="new_header_wrap">
+                    <div class="new_logo">
+                        <a href="http://localhost:8000/main">
+                            LANDI
+                        </a>
+                    </div>
+                    <div class="new_menu" style="float:right;">
+                        <div class="new_menu_content">
+                            {% block highlight %} {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+            {% block main %} {% endblock %}
+
+        <footer class="main_footer_wrap">
+            <div class="footer_wrap">
+                <div class="footer_icons clearfix">
+                    <br><br><br><br><br>
+                    <span class="footer_c">© 2018 LANDI</span>
+                    <br><br><br>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

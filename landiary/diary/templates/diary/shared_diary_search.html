@@ -1,0 +1,110 @@
+{% extends "diary/layout.html" %}
+{% load static %}
+{% block title %} SearchGroup {% endblock %}
+{% block script %}
+<body>
+{% endblock %}
+							{% block highlight %}
+							<span class="exchange_write"><a href="../writediray">일기 쓰기</a></span>
+							<span class="exchange_mydiary"><a href="../mydiary">내 일기장</a></span>
+							<span class="exchange_pick"><a href="../pickdiary">뜯어온 일기장</a></span>
+							<span class="exchange_exchange menu_highlight">교환 일기장</span>
+							<span class="exchange_setup"><a href="../setting">설정</a></span>
+							<span class="exchange_logout"><a href="#">로그아웃</a></span>
+							{% endblock %}
+		{% block main%}
+		<div class="main_footer_wrap">
+			<main>
+				<div class="exdi_search_wrap">
+					<div class="search_button">
+						교환 일기장 검색 : <input type="text" size="50" value="{{searched}}" class="search_input">
+						<button class="exdi_diary_button">검색</button>
+						<br><br><span style="font-size: 20px">각 교환일기장을 눌러 일기를 열람하거나 참여하기를 눌러 함께 작성할 수 있어요 🤓</span>
+					</div>
+
+					<!-- 1개의 교환일기장 -->
+					<div class="each_search_wrap">
+						<a href="" style=""> <!-- 상자 클릭하면 exchange_diary_search_preview.html로 넘어감. -->
+						<div class="search_left_wrap">
+							<div class="diary_name_wrap">
+								교환 일기장 이름
+							</div>
+							<div class="diary_detail_wrap">
+								교환 일기장 설명
+							</div>
+						</div>
+						</a>
+						<div class="search_right_wrap">
+							<div>15</div>
+							<div>
+								<!-- 참가하기 버튼은 get이 아닌 post요청으로 처리해야하므로 form태그를 생성, 전달하고자 하는 값을 input태그의 value에 넣어주면됨. 실제로 view에서는 아래의 a태그만 보이고, 해당 a태그를 누르면 form태그가 submit되도록 js를 구성함 -->
+								<form name="enter_shared_diary_btn" action="" method="POST" >
+									<input type="hidden" name="name1" value="value1">
+								</form>	
+								<a href="">
+									<div class="search_enter_btn"onMouseOver="this.style.color='black'" onMouseout="this.style.color='white'" onClick="javascript:document.enter_shared_diary_btn.submit()">
+										참여하기
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 1개의 교환일기장 -->
+					<div class="each_search_wrap">
+						<a href="" style="">
+						<div class="search_left_wrap">
+							<div class="diary_name_wrap">
+								김세윤 뒷담
+							</div>
+							<div class="diary_detail_wrap" >
+								김세윤 짜증나는거 매일 기록하는 일기장입니당 ~🔥
+							</div>
+						</div>
+						</a>
+						<div class="search_right_wrap" >
+							<div>9999</div>
+							<div>
+								<form name="enter_shared_diary_btn" action="" method="POST" >
+									<input type="hidden" name="name1" value="value1">
+								</form>	
+								<a href="">
+									<div class="search_enter_btn" onMouseOver="this.style.color='black'" onMouseout="this.style.color='white'" onClick="javascript:document.enter_shared_diary_btn.submit()">
+										참여하기
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<!-- 1개의 교환일기장 -->
+					<div class="each_search_wrap">
+						<a href="" style="">
+						<div class="search_left_wrap" >
+							<div class="diary_name_wrap">
+								배터리 없땅
+							</div>
+							<div class="diary_detail_wrap" >
+								충전하러가기 넘나리 귀차닝~~~
+							</div>
+						</div>
+						</a>
+						<div class="search_right_wrap" >
+							<div>154</div>
+							<div>
+								<form name="enter_shared_diary_btn" action="" method="POST" >
+									<input type="hidden" name="name1" value="value1">
+								</form>	
+								<a href="">
+									<div class="search_enter_btn" onMouseOver="this.style.color='black'" onMouseout="this.style.color='white'" onClick="javascript:document.enter_shared_diary_btn.submit()">
+										참여하기
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					
+
+				</div>
+			</main>
+			{% endblock %}

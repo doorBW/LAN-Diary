@@ -1,0 +1,87 @@
+{% extends "diary/layout.html" %}
+{% load static %}
+{% block title %} Setting {% endblock %}
+{% block script %}
+<body class="main_footer_wrap">
+{% endblock %}
+							{% block highlight %}
+							<span class="setup_write"><a href="../writediary">일기 쓰기</a></span>
+							<span class="setup_mydiary"><a href="../mydiary">내 일기장</a></span>
+							<span class="setup_pick"><a href="../pickdiary">뜯어온 일기장</a></span>
+							<span class="setup_exchange"><a href="../groupdiary/all">교환 일기장</a></span>
+							<span class="setup_setup menu_highlight">설정</span>
+							<span class="setup_logout"><a href="#">로그아웃</a></span>
+							{% endblock %}
+
+		{% block main%}
+		<div class="main_footer_wrap">
+			<main>
+				<div>
+					<div class="setting_wrap">
+						<div class="setting_background">      
+							<div class="setting_content_wrap">
+								<form>
+									<div class="setting_content_each_row">
+										<div class="setting_each_title">
+											일기장 주인
+										</div>
+											<span class="setting_each_detail">홍길동</span>
+									</div><br>
+
+									<div class="setting_content_each">
+										<div class="setting_each_title">
+											별명
+										</div>
+											<span class="setting_each_detail">길동무</span>
+									</div><br>
+
+									<div class="setting_content_each">
+										<div class="setting_each_title">
+											별명 바꾸기
+										</div>
+											<input class="setting_input" type="text" name="change_nickname" placeholder="바꿀 별명을 입력하세요." size="30">
+									</div><br>
+
+									<div class="setting_content_each">
+										<div class="setting_each_title">
+											이메일
+										</div>
+											<span class="setting_each_detail">asdf@naver.com</span>
+									</div><br>
+
+									<div class="setting_content_each">
+										<div class="setting_each_title">
+											돌려쓰는 일기장
+										</div>
+											<span class="setting_each_detail">A, B, C</span>
+									</div><br>
+									
+									<div class="setting_content_each">
+										<div class="setting_each_title">
+											현재 비밀번호
+										</div>
+											<input class="setting_input" type="password" name="original_password" placeholder="현재 비밀번호를 입력하세요." size="30">
+									</div><br>
+
+									<div class="setting_content_each">
+										<div class="setting_each_title">
+											변경할 비밀번호
+										</div>
+											<input class="setting_input" type="password" name="change_password" placeholder="변경할 비밀번호를 입력하세요." size="30">
+									</div><br>
+
+									<div class="setting_explain">
+										변경하고 하는 항목과 현재 비밀번호를 채우고 <span style="color: #B90000; font-weight: bold;">수정하기</span>를 눌러주세요 :-)
+									</div>
+									<div class="setting_submit">
+										<input type="submit" class="setting_submit_btn" name="submit_btn" value="수 정 하 기">
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+		{% endblock %}
+

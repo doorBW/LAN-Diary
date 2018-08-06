@@ -1,0 +1,45 @@
+{% extends "diary/layout.html" %}
+{% load static %}
+{% block title %} MakeShareDiary {% endblock %}
+{% block script %}
+<body>
+{% endblock %}
+							{% block highlight %}
+							<span class="exchange_write"><a href="../writediary">일기 쓰기</a></span>
+							<span class="exchange_mydiary"><a href="../mydiary">내 일기장</a></span>
+							<span class="exchange_pick"><a href="../pickdiary">뜯어온 일기장</a></span>
+							<span class="exchange_exchange menu_highlight">교환 일기장</span>
+							<span class="exchange_setup"><a href="../setting">설정</a></span>
+							<span class="exchange_logout"><a href="#">로그아웃</a></span>
+							{% endblock %}
+		{% block main %}
+		<div class="main_footer_wrap">
+			<body>
+				<div class="make_div_wrap">
+					<div class="title_wrap">교환일기장 제작하기</div>
+					<div class="note_wrap">
+						<form>
+							<div class="name_wrap">
+								교환일기장 이름
+								<div> <input type="text" name="diary_name" size="20" class="name_input"/> </div>
+							</div>
+							<div class="detail_wrap">
+								교환일기장 설명
+								<div> <input type="text" name="diary_detail" size="30" class="detail_input"/> </div>
+							</div>
+							<div class="secret_wrap">
+								<span class="secret_anonymous_span">공개 여부</span>
+								<input style="display:inline-block;" type="radio" name="secret" value="0" checked="checked"> 공개
+								<input style="display:inline-block;" type="radio" name="secret" value="1"> 비공개
+							</div>
+							<div class="anonymous_wrap">
+								<span class="secret_anonymous_span">실명 여부</span>
+								<input style="display:inline-block;" type="radio" name="anonymous" value="0" checked="checked"> 실명
+								<input style="display:inline-block;" type="radio" name="anonymous" value="1"> 익명
+							</div>
+							<input type="submit" name="submit" value="일기장 만들기" class="submit_btn">
+						</form>
+					</div>
+				</div>
+			</body>
+			{% endblock %}

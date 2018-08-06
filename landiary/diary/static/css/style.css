@@ -1,36 +1,25 @@
 @import url('https://fonts.googleapis.com/css?family=Cabin');
+@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
 /*----------------------------------main------------------------------*/		
 .clearfix::after {
 	content: "";
 	clear: both;
 	display: table;
 }
-.wrap {
-	
-	/*border-bottom: thick solid #FFC0CB;*/
-	/*padding-bottom: 20px;*/
-	/*background-color: #FFE0C6;*/
-}
 .header_wrap {
-	/*padding-left: 180px;
-	padding-right: 180px;
-	padding-top: 20px;*/
-	height: 135px; 
-	font-family: 'Cabin', sans-serif;
-	padding-top: 10px;
-	/*border-bottom: thick solid #FFC0CB;*/
-
+	height: 56px; 
+	font-family: 'Hanna', serif;
 }
 .logo, .menu_content {
 	float: left;
-	/*color: #78E6E6;*/
 }
 .logo {
 	width: 180px;
 	height: 80px;
-	font-size: 50pt;
+	font-size: 35pt;
 	padding-left: 140px;
-	padding-top: 10px;
+	padding-top: 2px;
 	color: #AE5E1A;
 }
 .menu {
@@ -43,125 +32,200 @@
 	float: right;
 	/*opacity: 0.8;*/
 	font-weight: 600;
-	font-size: 15pt;
-	padding-top: 39px;
+	font-size: 14pt;
+	padding-top: 16px;
 	padding-right: 20px;
 }
 .mydiary, .pick, .exchange, .setup, .logout {
 	float: left;
-	margin-left: 50px;
+	margin-left: 56px;
 }
 .main_wrap {
-	padding-top: 30px;
+	padding-top: 75px;
 	padding-left: 140px;
 	padding-right: 140px;
 	background-color: #F7F7F7;
 }
-
-* {box-sizing: border-box;}
-ul {list-style-type: none;}
-body {font-family: Verdana, sans-serif;}
-
-.month {
-    padding: 70px 25px;
-    width: 100%;
-    background: #fffff0;
-    text-align: center;
-    border-radius: 15px;
-}
-
-.month ul {
-    margin: 0;
-    padding: 0;
-}
-
-.month ul li {
-    /*color: white;*/
-    font-size: 20px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
-
-.month .prev {
-    float: left;
-    padding-top: 10px;
-}
-
-.month .next {
-    float: right;
-    padding-top: 10px;
-}
-
-.weekdays {
-	height: 100px;
-	text-align: center;
-    margin: 0;
-    padding: 10px 0;
-    /*background-color: #fffff1;*/
-    line-height: 80px;
-}
-
-.weekdays li {
-    display: inline-block;
-    width: 13.6%;
-    color: #666;
-    text-align: center;
-}
-.week_day {
-
-}
-
-.days {
-    padding: 10px 0;
-    background: #eee;
-    margin: 0;
-    border-radius: 15px;
-}
-
-.days li {
-    list-style-type: none;
-    display: inline-block;
-    width: 13.6%;
-    text-align: center;
-    margin-bottom: 5px;
-    font-size:14px;
-    color: #777;
-    height: 100px;
-}
-
-.days li .active {
-    padding: 5px;
-    background: #AE5E1A;
-    color: white !important
-}
 .footer_wrap {
 	width: 100%;
 	text-align: center;
-	font-family: 'Cabin', sans-serif;
+	font-family: 'Hanna', sans-serif;
 	background-color: #F7F7F7;
 }
 .footer_c {
 	font-size: 10pt;
 	color: #c8c8c8;
 }
-.calendar {
-	border-style: double;
-	border-radius: 15px;
-	border-color: #B90000;
-}
+
 .main_footer_wrap{
 	background-color: #F7F7F7;
 }
-a {
-	color: black;
-	text-decoration: none;
+
+.menu_highlight{
+  font-weight: bold;
+  font-size: 33px;
 }
-a:hover{color: #c8c8c8;}
-		
+/*----------------------------------new_main------------------------------*/
+.header_background_wrap{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 56px;
+  background-color: white;
+}
+.new_header_wrap {
+  height: 56px;
+  width: 80%;
+  margin: auto;
+  font-family: 'Hanna', sans-serif;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+.new_logo{
+  float: left;
+  width: 15%;
+  font-size: 35pt;
+  color: #AE5E1A;
+  padding-top: 5px;
+}
+.blank_div{
+  float: left;
+  width: 30%;
+  border: solid 2px white;
+}
+.new_menu{
+  float: left;
+  width: 55%;
+  height: 56px;
+  font-size: 14pt;
+  font-weight: 500;
+}
+.new_write, .new_mydiary, .new_pick, .new_exchange, .new_setup, .new_logout {
+  float: left;
+  margin-left: 6.36%;
+  margin-top: 2.5%;
+}
+.calendar{
+  border: double rgb(185, 0, 0);
+  border-radius: 5px;
+}
+.calendar_prev{
+  text-align: center;
+  background-color: #fffff0;
+  border-right-color: #fffff0;
+  border-top-left-radius: 7px;
+}
+.calendar_year_month{
+  text-align: center;
+  height: 150px;
+  background-color: #fffff0;
+  border-right-color: #fffff0;
+  font-size: 40px;
+}
+.calendar_next{
+  text-align: center;
+  background-color: #fffff0;
+  border-right: solid white;
+}
+.main_calendar {
+  border-collapse: collapse;
+  width:100%;
+}
+.calendar_weekday{
+  text-align: center;
+  border-right-color: #f7f7f7;
+}
+.main_calendar tr:nth-child(1){
+  border-top: solid #fffff0;
+  border-bottom-color: #fffff0;
+}
+.main_calendar tr:nth-child(2){
+  border-bottom-color: #f7f7f7;
+  height: 60px;
+  font-size: 22px;
+}
+.main_calendar tr:nth-child(3){
+  background-color: #eee;
+  border-bottom-color: #eee;
+  border-right-color: #eee;
+  text-align: center;
+  font-size: 23px;
+  height: 100px;
+  vertical-align: top;
+}
+.main_calendar tr:nth-child(4){
+  background-color: #eee;
+  border-bottom-color: #eee;
+  border-right-color: #eee;
+  text-align: center;
+  font-size: 23px;
+  height: 100px;
+  vertical-align: top;
+}
+.main_calendar tr:nth-child(5){
+  background-color: #eee;
+  border-bottom-color: #eee;
+  border-right-color: #eee;
+  text-align: center;
+  font-size: 23px;
+  height: 100px;
+  vertical-align: top;
+}
+.main_calendar tr:nth-child(6){
+  background-color: #eee;
+  border-bottom-color: #eee;
+  border-right-color: #eee;
+  text-align: center;
+  font-size: 23px;
+  height: 100px;
+  vertical-align: top;
+}
+.main_calendar tr:nth-child(7){
+  background-color: #eee;
+  border-right-color: #eee;
+  border-bottom: solid #eee;
+  text-align: center;
+  font-size: 23px;
+  height: 100px;
+  vertical-align: top;
+}
+.main_calendar tr:nth-child(8){
+  background-color: #eee;
+  border-right-color: #eee;
+  border-bottom: solid #eee;
+  text-align: center;
+  font-size: 23px;
+  height: 100px;
+  vertical-align: top;
+}
+
+
+.main_calendar td:nth-child(1){
+  border-left: double white;
+}
+.main_calendar td:nth-child(7){
+  border-right: double white;
+}
+.calendar_cell{
+  background-color: #B90000;
+  width: 20%;
+  margin: auto;
+  border-radius: 30px;
+  color: white;
+}
+.calendar_label{
+  font-size: 40px;
+}
+.calendar_a_tag_example{
+  font-size: 16px;
+}
 /*----------------------------------login------------------------------*/
 .login_nav{
 	float: right;
-	font-size: 20px;
+	margin-top: 0.3%
 }
 
 .login_wrap{
@@ -187,12 +251,12 @@ a:hover{color: #c8c8c8;}
 }
 
 .login_each_wrap{
-	font-family: 'Cabin', sans-serif;
+	font-family: 'Hanna', serif;
 	font-size: 20px;
 }
 
 .login_input{
-	padding: 10px 25px 10px;/*top right&left bottom*/
+	padding: 10px 25px 10px;
 	width: 60%;
 	margin: 5px;
 	margin-right: 10%;
@@ -208,9 +272,8 @@ a:hover{color: #c8c8c8;}
 .login_submit{
 	padding:5px 10px 5px;
 	border-radius: 10px;
-	font-family: 'Cabin', sans-serif;
+	font-family: 'Hanna', sans-serif;
 	font-size: 15px;
-	font-weight: bold;
 	color: white;
 	background: #8A0829;
 }
@@ -224,19 +287,24 @@ a:hover{color: #c8c8c8;}
 }
 
 /*----------------------------------write_diary------------------------------*/
+.write_write, .write_mydiary, .write_pick, .write_exchange, .write_setup, .write_logout {
+  float: left;
+  margin-left: 5.12%;
+  margin-top: 2.5%;
+}
 .date_input{
-	font-size:25px;
+	font-size:30px;
+  float: right;
+  margin-top: 10px;
 }
 .emotion_input{
-	font-size: 25px;
+	font-size: 30px;
+  margin-top: 10px;
 }
 .weather_input{
-	font-size: 25px;
+	font-size: 30px;
 }
-i {
-	padding-right: 13px;
-}
-.image_input{
+.write_diary_image_input{
 	height: 400px;
 	border: solid 2px black;
 	border-style: dashed;
@@ -248,12 +316,9 @@ i {
 	justify-content: center;
 	align-items: center;
 }
-
-/*.content_input {
-	height: 300px;
-	border: solid 1px black;
-	margin-top: 10px;
-}*/
+.writediary_emotion_icon, .writediary_weather_icon{
+  padding-right: 10px;
+}
 .emoticon_input:hover {
 	background: rgba(34,50,84,0.03);
 }
@@ -269,31 +334,10 @@ i {
 }
 .title_input{
 	font-size: 25px;
-	/*width:96%;
-	height:10%;
-	border: solid 1px black;
-	margin-left: 2%;
-	margin-top: 2%;*/
 }
 .category_wrap{
 	float: right;
 }
-/* select바 - jquery dropdown plugin사용하면 더 변경 가능 */
-select {
-    width: 220px;
-    height: 30px;
-    font-size: 15px;
-    color: #AE5E1A;
-    border: 1px solid #AE5E1A;
-    border-radius: 3px;
-    /* select에서 화살표 없애는 거
-    appearance: none; 
-    -webkit-appearance: none;
-    -moz-appearance: none;*/
-}
-/*select::-ms-expand {
-   display: none;   
-}*/
 
 button.replace {  
   position: absolute;
@@ -303,10 +347,6 @@ button.replace {
   font-size: 60px;
   border:solid 2px white;
   cursor: pointer;
-}
-
-body{
-  font-family: Avenir;
 }
 .inp {
   position: relative;
@@ -339,8 +379,8 @@ body{
   -webkit-appearance: none;
   width: 100%;
   border: 0;
-  font-family: inherit;
-  padding: 14px 0;
+  font-family: 'Hanna', serif;
+  padding: 12px 0;
   height: 10px;
   font-size: 25px;
   font-weight: 500;
@@ -349,6 +389,7 @@ body{
   border-radius: 0;
   color: #223254;
   transition: all 0.15s ease;
+  margin-bottom: 5px;
 }
 .inp input:hover {
   background: rgba(34,50,84,0.03);
@@ -368,63 +409,150 @@ body{
 .inp input:focus + span + .border {
   transform: scaleX(1);
 }
-
-
-
 #paper {
   color: #fff;
   font-size: 20px;
 }
-/*#margin {
-  margin-left: 12px;
-  margin-bottom: 20px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-}*/
 #text {
   width: 100%;
   overflow: hidden;
   background-color: #fff;
   color: #222;
-  font-family: Courier, monospace;
+  font-family: 'Nanum Pen Script', serif;
   font-weight: normal;
   font-size: 24px;
-  /*resize: none;*/
   line-height: 40px;
   padding-left: 100px;
   padding-right: 100px;
   margin-top:10px;
-  /*padding-top: 45px;*/
-  /*padding-bottom: 34px;*/
   background-image: url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png),
-    url(https://static.tumblr.com/maopbtg/nBUmgtogx/paper.png);
+  url(https://static.tumblr.com/maopbtg/nBUmgtogx/paper.png);
   background-repeat: repeat-y, repeat;
-  /*-webkit-border-radius: 12px;
-  border-radius: 12px;
-  -webkit-box-shadow: 0px 2px 14px #000;
-  box-shadow: 0px 2px 14px #000;
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #fff;*/
 }
-/*#title {
-  background-color: transparent;
-  border-bottom: 3px solid #fff;
-  color: #fff;
-  font-size: 20px;
-  font-family: Courier, monospace;
-  height: 28px;
-  font-weight: bold;
-  width: 220px;
-}*/
-.diary_submit_button {
+.diary_submit_button_wrap {
 	display: flex;
 	justify-content: center;
-	margin-top: 10px;
+	margin-top: 15px;
 }
+.diary_submit_button{
+  font-family: 'Nanum Pen Script', serif;
+  font-size: 20px;
+  width: 100px;
+  background-color: #AE5E1A;
+  color: white;
+  padding: 12px 0;
+  cursor: pointer;
+  outline:none;
+  border: none;
+}
+input[type=radio]{
+  display:none;
+  }
+  .emotion_happy > input + label{ 
+    display: inline-block; 
+    cursor: pointer; 
+    line-height: 30px; 
+    padding-left: 30px; 
+    background: url('../img/happy.png') left/30px no-repeat; 
+  }
+  .emotion_happy > input:checked + label{
+   background-image: url('../img/happy_color.png');
+ }
+ .emotion_love > input + label{ 
+    display: inline-block; 
+    cursor: pointer; 
+    line-height: 30px; 
+    padding-left: 30px; 
+    background: url('../img/love.png') left/30px no-repeat; 
+  }
+  .emotion_love > input:checked + label{
+   background-image: url('../img/love_color.png');
+ }
+  .emotion_angry > input + label{ 
+    display: inline-block; 
+    cursor: pointer; 
+    line-height: 30px; 
+    padding-left: 30px; 
+    background: url('../img/angry.png') left/30px no-repeat; 
+  }
+  .emotion_angry > input:checked + label{
+   background-image: url('../img/angry_color.png');
+ }
+  .emotion_crying > input + label{ 
+      display: inline-block; 
+      cursor: pointer; 
+      line-height: 30px; 
+      padding-left: 30px; 
+      background: url('../img/crying.png') left/30px no-repeat; 
+    }
+  .emotion_crying > input:checked + label{
+   background-image: url('../img/crying_color.png');
+ }
+ .emotion_serious > input + label{ 
+    display: inline-block; 
+    cursor: pointer; 
+    line-height: 30px; 
+    padding-left: 30px; 
+    background: url('../img/serious.png') left/30px no-repeat; 
+  }
+  .emotion_serious > input:checked + label{
+   background-image: url('../img/serious_color.png');
+ }
+  .emotion_sleepy > input + label{ 
+    display: inline-block; 
+    cursor: pointer; 
+    line-height: 30px; 
+    padding-left: 30px; 
+    background: url('../img/sleepy.png') left/30px no-repeat; 
+  }
+  .emotion_sleepy > input:checked + label{
+   background-image: url('../img/sleepy_color.png');
+ }
 
+ 
+  .weather_sunny > input + label{ 
+    display: inline-block; 
+    cursor: pointer; 
+    line-height: 30px; 
+    padding-left: 30px; 
+    background: url('../img/sunny.png') left/30px no-repeat; 
+  }
+  .weather_sunny > input:checked + label{
+   background-image: url('../img/sunny_color.png');
+ }
+
+ .weather_umbrella > input + label{ 
+    display: inline-block; 
+    cursor: pointer; 
+    line-height: 30px; 
+    padding-left: 30px; 
+    background: url('../img/umbrella.png') left/30px no-repeat; 
+  }
+  .weather_umbrella input:checked + label{
+   background-image: url('../img/umbrella_color.png');
+ }
+
+  .weather_cloud input + label{ 
+    display: inline-block; 
+    cursor: pointer; 
+    line-height: 30px; 
+    padding-left: 30px; 
+    background: url('../img/cloud.png') left/30px no-repeat; 
+  }
+  .weather_cloud input:checked + label{
+   background-image: url('../img/cloud_color.png');
+ }
+
+ .weather_snow input + label{ 
+    display: inline-block; 
+    cursor: pointer; 
+    line-height: 30px; 
+    padding-left: 30px; 
+    background: url('../img/snow.png') left/30px no-repeat; 
+  }
+  .weather_snow input:checked + label{
+   background-image: url('../img/snow_color.png');
+ }
 /*----------------------------------register------------------------------*/
 
 .register_input_wrap{
@@ -478,7 +606,7 @@ body{
   -webkit-appearance: none;
   width: 100%;
   border: 0;
-  font-family: inherit;
+  font-family: 'Hanna', serif;
   padding: 14px 0;
   height: 10px;
   font-size: 27px;
@@ -511,9 +639,18 @@ body{
 }
 
 
-/*----------------------------------view_mydiary------------------------------*/
+/*----------------------------------my_diary_view------------------------------*/
+.mydiary_write, .mydiary_mydiary, .mydiary_pick, .mydiary_exchange, .mydiary_setup, .mydiary_logout{
+    float: left;
+    margin-left: 5.06%;
+    margin-top: 2.5%;
+}
 .main_common{
 	display: inline-block;
+}
+.view_mydiary_title{
+  border-bottom: solid 2px black;
+  margin-bottom: 2%;
 }
 .left_arrow_wrap{
 	width: 15%;
@@ -525,11 +662,8 @@ body{
 	float: right;
 	margin-top: 400px;
 }
-.date_input{
+.mydiary_date_input{
 	font-size:25px;
-}
-i {
-	padding-right: 13px;
 }
 .image_input{
 	height: 400px;
@@ -537,7 +671,6 @@ i {
 	border-style: dashed;
 	margin-bottom: 10px;
 	margin-top: 10px;
-	background-image: url(http://blog.mindlogr.com/wp-content/uploads/2013/01/diary1.jpg);
 }
 .diary_wrap{
 	padding: 5% 25px;
@@ -557,23 +690,83 @@ i {
 	font-size:25px;
 	width: 100%;
 }
+.view_mydiary_func{
+  display: flex;
+  justify-content: space-between;
+  font-size: 25px;
+}
+.view_mydiary_wrap{
+    padding: 4% 25px;
+    margin-bottom: 20px;
+    width: 70%;
+    background: white;
+    border-radius: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    border: solid 2px;
+}
+.mydiary_comment{
+  background-image: url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png);
+}
+.comment_area{
+  background-color: #FAFAD2;
+  height: 400px;
+  width: 85%;
+  margin-top: 15px;
+  background-image: url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png)
+}
+.my_diary_emotion_img{
+  margin-left: 10px;
+}
+/*----------------------------------pick_diary------------------------------*/
+.pick_write, .pick_mydiary, .pick_pick, .pick_exchange, .pick_setup, .pick_logout{
+    float: left;
+    margin-left: 4.44%;
+    margin-top: 2.5%;
+}
+.otherdiary_emotion_icon{
+  padding-right: 5px;
+}
+.pick_diary_date_input{
+  font-size:30px;
+  margin-top: 10px;
+}
+.pick_diary_image_input{
+  height: 400px;
+  border: solid 2px black;
+  border-style: dashed;
+  margin-bottom: 10px;
+  margin-top: 10px;
 
-/*----------------------------------main_exchange_diary------------------------------*/
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pickdiary_emotion_img{
+  margin-left: 10px;
+}
+/*----------------------------------exchange_diary_view------------------------------*/
+.exchange_write, .exchange_mydiary, .exchange_pick, .exchange_exchange, .exchange_setup, .exchange_logout{
+    float: left;
+    margin-left: 4.76%;
+    margin-top: 2.5%;
+}
+
 .exdi_main_common{
 	display: inline-block;
 	height: auto;
+  padding-top: 65px;
 }
 .total_left_wrap{
 	float: left;
-	/*border: solid 2px black;*/
 	width: 80%;
 	margin-left: 2%;
 }
 .left_wrap{
 	float: left;
 	width: 10%;
-	height: 600px;
-	/*border:solid 2px black;*/
+	height: 1200px;
 }
 .left_arrow{
 	display: flex;
@@ -584,8 +777,7 @@ i {
 .right_wrap{
 	float: right;
 	width: 10%;
-	height: 600px;
-	/*border:solid 2px black;*/
+	height: 1200px;
 }
 .right_arrow{
 	display: flex;
@@ -596,26 +788,21 @@ i {
 
 .feed_wrap{
 	padding: 2% 5%;
-	/*margin-bottom: 20px;*/
-    width: 80%;
-    /*margin-right: auto;
-    margin-left: auto;*/
-    /*border:solid 2px black;*/
-
+  width: 80%;
 }
 .feed{
 	width: 100%;
 	height: 400px;
-	/*border: solid 2px black;*/
 }
 .list_wrap{
-	/*border: solid 2px black;*/
-	float: right;
-	width: 10%;
-	height: 200px;
-	margin-right: 2%;
+	width: 18%;
+	height: 800px;
+  position: fixed;
 }
-
+.exdi_date_input{
+  font-size: 25px;
+  margin-top: 10px;
+}
 .search_button{
 	padding-bottom: 5%;
 	font-size: 23px;
@@ -623,13 +810,24 @@ i {
 .search_input{
 	height: 30px;
 	font-size: 20px;
+  font-family: 'Nanum Pen Script', serif;
+  outline: none;
 }
 .exdi_diary_button{
 	font-size: 21px;
+  font-family: 'Nanum Pen Script', serif;
+  width: 70px;
+  background-color: #AE5E1A;
+  color: white;
+  padding: 3px 0;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 10px;
 }
 .add_button{
-	margin-top: 15%;
-	margin-bottom: 50%;
+	margin-top: 10%;
+	margin-bottom: 10%;
 
 }
 .exdi_diary_wrap{
@@ -643,29 +841,31 @@ i {
     margin-left: auto;
     border: solid 2px;
 }
-.list_icon, .list_name, .add_button{
+.list_icon, .add_button{
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	font-size: 17px;
+	font-size: 11px;
+  padding-left: 20%;
 }
 .list_name{
-	margin-bottom: 25%;
+	margin-bottom: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  padding-left: 20%;
 }
 .user_input{
 	font-size: 25px;
 	color: #AE5E1A;
-	/*float: right;*/
 }
-.diary_func{
+.exchange_diary_func{
 	display: flex;
 	justify-content: space-between;
 	font-size: 25px;
 }
 .main_exdi_title{
-	/*border-bottom: solid 2px black;*/
 	margin-bottom: 2%;
-	/*display: inline-block;*/
 }
 .exdi_title{
 	border-bottom: solid 2px black;
@@ -678,25 +878,65 @@ i {
 	padding-bottom: 2%;
 	color: red;
 }
-/*----------------------------------make_our_diary---------------------------------*/
+.comment_input_wrap{
+  display: flex;
+  justify-content: center;
+}
+.comment_input{
+  background-color: #FAFAD2;
+  height: 400px;
+  width: 85%;
+  margin-top: 15px;
+  background-image: url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png)
+}
+.write_comment{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.write_comment input[type="text"]{ 
+  width: 70%;
+  padding: .8em .5em; 
+  font-family: 'Nanum Pen Script', serif;
+  font-size: 20px;
+  border-radius: 10px;
+  outline-style: none; 
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+  appearance: none;
+}
+.comment_button{
+  width: 54px;
+  background: none;
+  border: none; 
+  border: solid 2px black;
+  border-radius: 50px;
+  margin-left: 10px;
+  outline: none;
+  font-size: 10px;
+}
+.exchange_diary_emotion_img{
+  margin-left: 10px;
+}
+/*----------------------------------exchange_diary_make---------------------------------*/
 .make_div_wrap{
   padding: 8% 25px;
-  padding-top: 5%;
+  padding-top: 10%;
   margin-bottom: 20px;
+  margin-top: 65px;
   width: 50%;
-  background: url('../notebook.png');
+  background: url('../img/notebook.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
   text-align: center;
   margin-right: auto;
   margin-left: auto;
-  font-family: 'Cabin', sans-serif; 
+  font-family: 'Hanna', serif; 
 }
 
 .title_wrap{
   font-size: 35px;
-  font-weight: bold;
   letter-spacing: 5px;
   word-spacing: 10px;
   margin-bottom: 10%;
@@ -713,10 +953,15 @@ i {
 }
 
 .name_input{
+  font-family: 'Nanum Pen Script', serif;
   font-size: 30px;
   height: 40px;
-  padding: 1%;
+  padding: 3% 10%;
   margin: 1%;
+  outline: none;
+  text-align: center;
+  border-radius: 10px;
+  border:none;
 }
 
 .detail_wrap{
@@ -725,39 +970,57 @@ i {
 }
 
 .detail_input{
+  font-family: 'Nanum Pen Script', serif;
   font-size: 20px;
   height: 25px;
-  padding: 1%;
+  padding: 3% 5%;
   margin: 1%;
+  outline: none;
+  border-radius: 10px;
+  border:none;
 }
 
 .secret_anonymous_span{
+  margin-right: 2%;
   font-size: 20px;
-  font-weight: bold;
+  font-family: 'Hanna', serif;
 }
 
 .secret_wrap{
-  padding: 1%;
+  padding: 2%;
   margin: 1%;
+  font-family: 'Nanum Pen Script', serif;
 }
 
 .anonymous_wrap{
-  padding: 1%;
+  padding: 2%;
   margin: 1%;
+  font-family: 'Nanum Pen Script', serif;
 }
 
 .submit_btn{
   margin-top: 8%;
   margin-bottom: 3%;
-  font-size: 50px;
-  font-weight: bold;
+  border-radius: 10px;
+  font-family: 'Hanna', serif;
+  font-size: 30px;
+  background: #AE5E1A;
+  outline: none;
+  width: 200px;
+  color: white;
+  padding: 12px 0;
+  border: none;
 }
 
 /*----------------------------------setting---------------------------------*/
-
+.setup_write, .setup_mydiary, .setup_pick, .setup_exchange, .setup_setup, .setup_logout{
+    float: left;
+    margin-left: 5.75%;
+    margin-top: 2.5%;
+}
 
 .setting_wrap{
-
+  padding-top: 65px;
 }
 
 .setting_background{
@@ -785,9 +1048,8 @@ i {
 .setting_each_title{
   text-align: right;
   padding-right: 5%;
-  font-family: 'Cabin', sans-serif;
+  font-family: 'Hanna', sans-serif;
   font-size: 25px;
-  font-weight: bold;
   color: #B90000;
   width: 30%;
   float: left;
@@ -795,13 +1057,15 @@ i {
 }
 
 .setting_each_detail{
-  font-family: 'Cabin', sans-serif;
-  font-size: 20px;
+  font-family: 'Nanum Pen Script', serif;
+  font-size: 25px;
 }
 
 .setting_input{
-  height: 25px;
+  height: 30px;
   font-size: 18px;
+  font-family: 'Nanum Pen Script', serif;
+  outline: none;
 }
 
 .setting_explain{
@@ -818,20 +1082,21 @@ i {
   margin-top: 3%;
   padding:5px 15px 5px;
   border-radius: 10px;
-  font-family: 'Cabin', sans-serif;
+  font-family: 'Hanna', sans-serif;
   font-size: 30px;
-  font-weight: bold;
+  background: #AE5E1A;
+  outline: none;
+  width: 150px;
   color: white;
-  background: #8A0829;
+  padding: 12px 0;
 }
 
-/*--------------------------search_exchange_diary---------------------------------*/
+/*--------------------------exchange_diary_search---------------------------------*/
 
 .exdi_search_wrap{
 	margin:auto;
 	width: 60%;
 	height:auto;
-	/*border: solid 2px black;*/
 	padding-top: 5%;
 	padding-bottom: 5%;
 }
@@ -851,17 +1116,168 @@ i {
 	margin-bottom: 10%;
 }
 .diary_name_wrap{
-	margin-bottom: 10%;
+	font-size: 45px;
+  width: 100%;
+  color: #B90000;
+  font-family: 'Hanna', serif;
+  margin: 5%;
+}
+.diary_detail_wrap{
+  margin-left: 5%;
+  font-size: 25px;
+  font-family: 'Nanum Pen Script', serif;
+  margin-top: 0%;
+  width:70%;
 }
 .search_left_wrap{
 	float: left;
+  width: 70%;
 }
 .search_right_wrap{
+  font-family: 'Hanna', serif;
 	float: right;
-	width: 20%;
+	width: 30%;
 	height: 90%;
-	display: flex;
+	display: table;
 	justify-content: center;
 	align-items: center;
 	font-size:100px;
+  text-align: center;
 }
+
+.search_enter_btn{
+  font-size:30px;
+  margin-top:5%;
+  border: 1px solid #AE5E1A;
+  border-radius: 3px;
+  padding:5px;
+  color:white;
+  background-color:#B90000;
+}
+
+/*--------------------------댓글 table 속성---------------------------------*/
+.comment_table{
+  border-collapse: collapse;
+  width: 650px;
+  height: 80px;
+  background-color: #FAFAD2;
+  margin-top: 15px;
+}
+.row{
+  background-image: url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png);
+}
+.nickname{
+  width: 15%;
+  text-align: center;
+}
+.view_diary_comment_func{
+  width: 5%;
+}
+.exchange_diary_comment_func{
+  margin-top: 14%;
+  display: flex;
+  justify-content: center;
+}
+.view_diary_comment_func_button{
+  background-color: white;
+  cursor: pointer;
+  outline:none;
+  border: none;
+  font-size: 14px;
+  background-color: #FAFAD2;
+}
+.exchange_diary_comment_func_button{
+  background-color: white;
+  cursor: pointer;
+  outline:none;
+  border: none;
+  font-size: 15px;
+  background-color: #FAFAD2;
+}
+.edit_img{
+  width: 100%;
+  height: 100%;
+}
+.comment_content_real{
+  width:75%;
+}
+.css_cancle_btn{
+  width: 40px;
+  font-size: 17px;
+  border: 0;
+  border-radius: 5px;
+  font-family: 'Nanum Pen Script', serif;
+  margin-left: 5px;
+  outline: none;
+}
+.css_update_btn{
+  font-family: 'Nanum Pen Script', serif;
+  width: 40px;
+  font-size: 17px;
+  border: 0;
+  border-radius: 5px;
+  margin-right: 1%;
+  outline: none;
+}
+/*--------------------------tag selector들---------------------------------*/
+
+select {
+    width: 220px;
+    height: 30px;
+    font-size: 18px;
+    color: #AE5E1A;
+    border: 1px solid #AE5E1A;
+    border-radius: 3px;
+    font-family: 'Nanum Pen Script', serif;
+    text-align-last: center;
+    outline: none;
+}
+
+
+body{
+  font-family: 'Nanum Pen Script', serif;
+}
+
+* {box-sizing: border-box;}
+ul {list-style-type: none;}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+a:hover{color: #B90000;}
+button{
+  background-color: #f7f7f7;
+  cursor: pointer;
+  outline:none;
+  border: none;
+}
+.write_diary_img_button{
+  background-color: white;
+  cursor: pointer;
+  outline:none;
+  border: none;
+}
+/*----------------------------------js처리를 위한----------------------------------*/
+.hiddendiv{
+  display:none;
+}
+.visiblediv{
+  display:block;
+}
+
+.aaa{
+  background-image: url(img/edit.png);
+}
+.edit_comment_class{
+  font-family: 'Nanum Pen Script', serif;
+  width: 85%;
+  padding: .5em .5em; 
+  font-size: 13px;
+  border-radius: 10px;
+  outline-style: none; 
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+  appearance: none;
+}
+

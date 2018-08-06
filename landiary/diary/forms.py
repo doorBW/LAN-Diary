@@ -10,7 +10,6 @@ class PostForm(ModelForm): #일단 긁어온 modelform, 후에 리팩토링하�
                   'content',
                   'weather',
                   'emotion',
-                  'category',
-                  'anonymous']
+                  'category']
 
 

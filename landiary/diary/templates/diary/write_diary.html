@@ -1,156 +1,116 @@
+{% extends "diary/layout.html" %}
 {% load static %}
-<!doctype html>
-<html lang="ko">
+{% block title %} Write {% endblock %}
+{% block script %}
+<script type="text/javascript">
+	function autoTextarea(obj,limit) {
+		obj.style.height = "100px";
+		obj.style.height = (70+obj.scrollHeight)+"px";
+		console.log(obj.value.length);
+	    if(obj.value.length > limit) {
+	    	alert("일기는 최대 2000자 까지만 작성가능해요 :'(");
+	    	obj.value = obj.value.substring(0,limit);  
+	    	obj.focus();
+	    }
+	}
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<body class="main_footer_wrap">
+{% endblock %}
+							{% block highlight %}
+							<span class="write_write menu_highlight">일기 쓰기</span>
+							<span class="write_mydiary"><a href="../mydiary">내 일기장</a></span>
+							<span class="write_pick"><a href="../pickdiary">뜯어온 일기장</a></span>
+							<span class="write_exchange"><a href="../groupdiary/all">교환 일기장</a></span>
+							<span class="write_setup"><a href="../setting">설정</a></span>
+							<span class="write_logout"><a href="#">로그아웃</a></span>
+							{% endblock %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>일기 쓰기</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-    crossorigin="anonymous">
-  <script type="text/javascript">
-    /**
-    * 내용 라인수에 맞추어 자동으로 textarea의 높이를 결정한다
-    * @ obj                <textarea>의 object : this
-    * @ limit                      최대 높이 제한(픽셀)
-    */
-    function autoTextarea(obj, limit) {
-      obj.style.height = "100px";
-      obj.style.height = (70 + obj.scrollHeight) + "px";
-      console.log(obj.value.length);
-      if (obj.value.length > limit) {
-        alert("일기는 최대 2000자 까지만 작성가능해요 :'(");
-        obj.value = obj.value.substring(0, limit);
-        obj.focus();
-      }
-    }
-  </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      var i = 0;
-      var color = ["red", "black"];
-      var backgound = ["white", "white"];
-      $(".icon").click(function () {
-        $(this).css("color", color[i]);
-        $(this).css("background", backgound[i]);
-        i++;
-        if (i == 2) { i = 0 };
-      });
-    });
-  </script>
-</head>
-
-<body>
-  <div class="wrap">
-    <header>
-      <div class="header_wrap clearfix">
-        <div class="logo">LANDI</div>
-        <div class="menu">
-          <div class="menu_content clearfix">
-            <div class="mydiary">
-              <a href="">내 일기장</a>
-            </div>
-            <div class="pick">
-              <a href="">뜯어온 일기장</a>
-            </div>
-            <div class="exchange">
-              <a href="">교환 일기장</a>
-            </div>
-            <div class="setup">
-              <a href="">설정</a>
-            </div>
-            <div class="logout">
-              <a href="">로그아웃</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <div class="main_footer_wrap">
-
-      <main>
-        <div class="main_wrap">
-          <div class="diary_wrap">
-            <form method="POST">
-              {% csrf_token %}
-              <div class="title_input clearfix">
-                <label for="title" class="inp">
-                  <input id="title" type="text" name="title" placeholder="&nbsp;" value="{{post.title}}" maxlength="100" required>
-                  <span class="label">일기 제목</span>
-                  <span class="border"></span>
-                </label>
-                <!-- 제목 : <input type="title" name="title"> -->
-                <span class="category_wrap">
-                  <select name="category">
-                    <option value="">교환 일기장선택</option>
-                    <option value="그룹1">그룹1</option>
-                    <option value="그룹2">그룹2</option>
-                    <option value="그룹3">그룹3</option>
-                  </select>
-                </span>
-                <input type="text" name="category" value="{{post.category}}">
-              </div>
-              <div class="date_input">
-                날짜 :
-                <span>2018년 </span>
-                <span>7월 </span>
-                <span>28일</span>
-              </div>
-              <div class="image_input">
-                <!-- <input type="submit" value="등록" class="upload"> -->
-                <i class="fas fa-camera-retro">
-                  <input type="file" value="파일 업로드" class="upload"> </i>
-
-              </div>
-              <div class="emotion_input">
-                감정 :
-                <input type="text" name="emotion" value="{{post.emotion}}">
-                <i class="far fa-meh icon"></i>
-                <i class="far fa-kiss-wink-heart icon"></i>
-                <i class="far fa-surprise icon"></i>
-                <i class="far fa-laugh icon"></i>
-              </div>
-              <div class="weather_input">
-                날씨 :
-                <input type="text" name="weather" value="{{post.weather}}">
-                <i class="fas fa-sun icon"></i>
-                <i class="fas fa-umbrella icon"></i>
-                <i class="fas fa-snowflake icon"></i>
-                <i class="fas fa-cloud icon"></i>
-              </div>
-
-              <div class="content_input">
-                <textarea placeholder="일기 내용" onkeyup="autoTextarea(this,2000)" id="text" name="content" rows="4" style="word-wrap: break-word; resize: none; height: 100px; "> {{post.content}} </textarea>
-                <br>
-              </div>
-
-              <div class="diary_submit_button">
-
-              </div>
-              <input type="text" name="anonymous">
-              <button type="submit" class="save btn btn-default">SAVE</button>
-            </form>
-          </div>
-        </div>
-      </main>
-
-      <footer>
-        <div class="footer_wrap">
-          <div class="footer_icons clearfix">
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <span class="footer_c">© 2018 LANDI</span>
-            <br>
-            <br>
-            <br>
-          </div>
-        </div>
-      </footer>
-    </div>
-  </div>
-</body>
+			{% block main %}
+			<main>
+				<div class="main_wrap">
+					<form name="write_diary_input" action="" method="POST">
+					<div class="diary_wrap">
+						<div class="title_input clearfix">
+							
+								<label for="inp" class="inp">
+								  <input type="title" name="title" id="inp" placeholder="&nbsp;">
+								  <span class="label">일기 제목</span>
+								  <span class="border"></span>
+								</label>
+							
+							<span class="category_wrap">
+								<form action="" method="POST">
+									<select name="category">
+								    <option value="">교환 일기장 선택</option>
+								    <option value="그룹1">그룹1</option>
+								    <option value="그룹2">그룹2</option>
+								    <option value="그룹3">그룹3</option>
+									</select>
+								</form>
+							</span>
+						</div>
+						
+						<div class="date_input">
+							<span>2018년 </span>
+							<span>7월 </span>
+							<span>28일</span>
+						</div>
+						
+							<div class="emotion_input">
+								감정 : 
+								<span class="emotion_happy">
+									<input type="radio" id="happy" name="radio_emotion" value="happy" checked="checked"><label for="happy">&nbsp;</label>
+								</span>
+								<span class="emotion_love">
+									<input type="radio" id="love" name="radio_emotion" value="love"><label for="love">&nbsp;</label>
+								</span>
+								<span class="emotion_angry">
+									<input type="radio" id="angry" name="radio_emotion" value="angry"><label for="angry">&nbsp;</label>
+								</span>
+								<span class="emotion_crying">
+									<input type="radio" id="crying" name="radio_emotion" value="crying"><label for="crying">&nbsp;</label>
+								</span>
+								<span class="emotion_serious">
+									<input type="radio" id="serious" name="radio_emotion" value="serious"><label for="serious">&nbsp;</label>
+								</span>
+								<span class="emotion_sleepy">
+									<input type="radio" id="sleepy" name="radio_emotion" value="sleepy"><label for="sleepy">&nbsp;</label>
+								</span>
+							</div>
+						
+						
+							<div class="weather_input">
+								날씨 : 
+								<span class="weather_sunny">
+									<input type="radio" id="sunny" name="radio_weather" value="sunny" checked="checked"><label for="sunny">&nbsp;</label>
+								</span>
+								<span class="weather_umbrella">
+									<input type="radio" id="umbrella" name="radio_weather" value="umbrella"><label for="umbrella">&nbsp;</label>
+								</span>
+								<span class="weather_cloud">
+									<input type="radio" id="cloud" name="radio_weather" value="cloud"><label for="cloud">&nbsp;</label>
+								</span>
+								<span class="weather_snow">
+									<input type="radio" id="snow" name="radio_weather" value="snow"><label for="snow">&nbsp;</label>
+								</span>
+							</div>
+						
+						<div class="write_diary_image_input">
+							<!-- <input type="submit" value="등록" class="upload"> -->
+							<i class="fas fa-camera-retro"><input type="file" name="image" value="파일 업로드" class="upload"></i>
+							
+						</div>
+						<div class="content_input">
+							<!-- <form id="paper" method="get" action=""> -->
+								<textarea placeholder="일기 내용" onkeyup="autoTextarea(this,2000)" id="text" name="text" rows="4" style="word-wrap: break-word; resize: none; height: 100px; "></textarea>  
+								<br>
+						</div>
+						<div class="diary_submit_button_wrap">
+							<input type="submit" class="diary_submit_button" value="일기 저장"/>
+						</div>
+					</div>
+					</form>
+				</div>
+			</main>
+			{% endblock %}
