@@ -705,9 +705,7 @@ input[type=radio]{
     margin-left: auto;
     border: solid 2px;
 }
-.mydiary_comment{
-  background-image: url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png);
-}
+
 .comment_area{
   background-color: #FAFAD2;
   height: 400px;
@@ -756,7 +754,7 @@ input[type=radio]{
 .exdi_main_common{
 	display: inline-block;
 	height: auto;
-  padding-top: 65px;
+  margin-top: 65px;
 }
 .total_left_wrap{
 	float: left;
@@ -882,13 +880,7 @@ input[type=radio]{
   display: flex;
   justify-content: center;
 }
-.comment_input{
-  background-color: #FAFAD2;
-  height: 400px;
-  width: 85%;
-  margin-top: 15px;
-  background-image: url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png)
-}
+
 .write_comment{
   display: flex;
   justify-content: center;
@@ -907,13 +899,11 @@ input[type=radio]{
 }
 .comment_button{
   width: 54px;
-  background: none;
+  height: 54px;
+  cursor: pointer;
   border: none; 
-  border: solid 2px black;
-  border-radius: 50px;
   margin-left: 10px;
   outline: none;
-  font-size: 10px;
 }
 .exchange_diary_emotion_img{
   margin-left: 10px;
@@ -1156,18 +1146,20 @@ input[type=radio]{
 }
 
 /*--------------------------댓글 table 속성---------------------------------*/
-.comment_table{
+.row{
   border-collapse: collapse;
   width: 650px;
-  height: 80px;
+  height: 40px;
   background-color: #FAFAD2;
   margin-top: 15px;
-}
-.row{
   background-image: url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png);
 }
+.diary_nickname{
+  width: 18%;
+  text-align: center;
+}
 .nickname{
-  width: 15%;
+  width: 15.3%;
   text-align: center;
 }
 .view_diary_comment_func{

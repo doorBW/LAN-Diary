@@ -99,10 +99,27 @@
 	});
 </script>
 <script type="text/javascript">
-	var diary_id_list = [1,2,3]; //교환 일기장의 id 목록을 받아옴
-	var temp_id_list = [1,2,3]; 
-	var show_diary_id = diary_id_list[diary_id_list.length-1]; // 처음에 보여줘야되는 일기(default) -> =3
-	temp_id_list.splice(show_diary_id-1, 1);
+	var now_group_list = []
+	{% if selected_group == 'all' %}
+		now_group_list = {{posts_idlist}}
+	{% else %}
+		{% for post in posts %}
+			{% if post.category.C_name == selected_group %}
+				now_group_list.push('{{ post.id }}')
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+	
+	var diary_id_list = now_group_list; // 일기의 id 목록을 받아옴
+	var count = diary_id_list.length-1
+	var last_id = diary_id_list[count]
+	var first_id = diary_id_list[0]
+	
+	var temp_id_list = diary_id_list.slice(); 
+
+	var show_diary_id = diary_id_list[count]; // 처음에 보여줘야되는 일기(default) -> =3
+	var tmp_idx = temp_id_list.indexOf(show_diary_id)
+	temp_id_list.splice(tmp_idx, 1);
 	var not_show_diary_id_list = temp_id_list;
 	function show(show_id){
 		document.getElementById(show_id).className='visiblediv';
@@ -118,77 +135,36 @@
 		hidden(not_show_diary_id_list);
 	}
 	function left_btn_click() {
-		if(show_diary_id==1) {
+		if(show_diary_id==first_id) {
 			alert("더 이상 못 넘겨요ㅠㅠ");
 		}
 		else {
-			show_diary_id--;
-			var for_temp_id_list = [1,2,3];
-			for_temp_id_list.splice(show_diary_id-1, 1);
+			count--;
+			show_diary_id = diary_id_list[count]
+			var for_temp_id_list = now_group_list.slice();
+			var for_tmp_idx = for_temp_id_list.indexOf(show_diary_id)
+			for_temp_id_list.splice(for_tmp_idx, 1);
 			not_show_diary_id_list = for_temp_id_list;
-			console.log(show_diary_id);
-			console.log(not_show_diary_id_list);
+
 			show(show_diary_id);
 			hidden(not_show_diary_id_list);
 		}
 	}
 	function right_btn_click() {
-		if(show_diary_id==diary_id_list[diary_id_list.length-1]){
+		if(show_diary_id==last_id){
 			alert("더 이상 못 넘겨요ㅜㅜ");
 		}
 		else{
-			show_diary_id++;
-			var for_temp_id_list = [1,2,3];
-			for_temp_id_list.splice(show_diary_id-1, 1);
+			count++;
+			show_diary_id = diary_id_list[count]
+
+			var for_temp_id_list = now_group_list.slice();
+			var for_tmp_idx = for_temp_id_list.indexOf(show_diary_id)
+			for_temp_id_list.splice(for_tmp_idx, 1);
 			var not_show_diary_id_list = for_temp_id_list;
 			show(show_diary_id);
 			hidden(not_show_diary_id_list);
 		}
-	}
-</script>
-<script type="text/javascript">
-	var group_list = ['group1', 'group2', 'group3', 'group4']; //사용자의 그룹 목록을 받아옴. 
-	var group_diary_list = ["group1", "group2", "group3"]; 
-	//교환 일기장 게시물의 각 그룹 리스트를 받아옴. 내 일기장은 default로 들어가고 교환 일기장에서 볼 수 있는 일기장은 이미 그룹이 하나로 정해져있음.
-
-	function show_group(group_class){
-		document.getElementById(group_class).className='visiblediv';
-	}
-	function hidden_group(not_group_class){
-		document.getElementById(not_group_class).className='hiddendiv';
-	}
-	function group1_click(){
-		hidden([show_diary_id]);
-		//그룹1을 클릭했을 때 group_id가 visivle인 것들에 show_diary_id를 다시 부여하고 diary_id_list부터 쭈욱 다시 정의되고 on_load될 때처럼 다시 피드 배포 함.
-		for(var i = 0; i < diary_id_list.length; i++){
-			if(group_diary_list[i] == "group1")
-			document.getElementById(diary_id_list[i]).className='visiblediv';
-		}
-		temp_show_group_list = [];
-		//그룹1 클릭했을 때 그룹id가 group1인거 display:visible로 만들어 줌.
-		for(var i = 0; i < group_diary_list.length; i++){
-			if(group_diary_list[i] == "group1"){
-				show_group(group_diary_list[i]);
-				temp_show_group_list.push(group_diary_list[i]);
-			}
-			else{
-				hidden_group(group_diary_list[i]);
-			}
-		}
-		//해당 그룹에 속하는 게시물이 저장된 temp_show_group_list를 통해서 상위 div의 id를 다시 지정함.
-		for(var i = 0; i < temp_show_group_list.length; i++){
-			diary_id_list=[]
-		}
-		console.log(temp_show_group_list);
-		console.log(group_diary_list);
-		console.log(group_list);
-		console.log(group_diary_list[0]);
-		if(temp_show_group_list.length==0){
-			alert("아직 그룹에 일기가 없습니다ㅠㅠ");
-		}
-	}
-	function group_click(group_name){
-
 	}
 </script>
 <script type="text/javascript">
@@ -254,8 +230,9 @@
 								{% endblock %}
 							
 	{% block main %}
-	<div class="wrap" id="1">
-
+	{% if selected_group == 'all' %}
+		{% for post in posts %}
+	<div class="wrap" id="{{ post.id }}">
 			<div class="main_footer_wrap">
 				<main>
 					<div class="exdi_main_wrap clearfix">
@@ -276,30 +253,30 @@
 									<div class="title_input">
 										<div class="main_exdi_title">
 											<div class="exdi_title">
-												밤 새기는 힘들다링
+												{{ post.title }}
 											</div>
 											<div class="exdi_time">
 											</div>
 										</div>
 									</div>
 									<div class="user_input">
-										"????"의 일기(익명 아닐 때에만 나타남)
+										{{ post.username }}
 									</div>
 									<div class="view_mydiary_category_wrap">
 										<span>
-											#그룹2 교환 일기장(방 주제)
+											{{ post.category }}
 										</span>&nbsp;
 										<span>
-											<img src="{% static 'img/sunny_color.png' %}" alt="" width="25px" height="25px">
+											<img src="{% with 'img/'|add:post.weather|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px">
 										</span>
 										<span class="exchange_diary_emotion_img">
-											<img src="{% static 'img/happy_color.png' %}" alt="" width="25px" height="25px"> : 32 
+											<img src="{% with 'img/'|add:post.emotion|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px"> : 32 
 										</span>
 									</div>
 									<div class="exdi_date_input">
-										<span>2018년 </span>
-										<span>7월 </span>
-										<span>28일</span>
+										<span>{{ post.published|date:"Y"}}년 </span>
+										<span>{{ post.published|date:"m" }}월 </span>
+										<span>{{ post.published|date:"d" }}일</span>
 									</div>
 									<div class="image_input">
 										
@@ -324,288 +301,50 @@
 									</div>
 									<div class="content_input">
 										<form id="paper" method="get" action="">
-											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>으아아아아아아아아아아아아아아</textarea>  
+											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>
+												{{ post.content }}
+											</textarea>  
 											<br>
 										</form>
 									</div>
 									<div class="comment_wrap">
 										<div class="comment_input_wrap">
-											
-										</div>
-										<form action="">
-											<div class="write_comment">
-												<label for="user_comment"></label>
-												<input type="text" id="user_comment" placeholder=" 댓글 쓰기...">
-												<button type="button" class="comment_button comment_button_hover"><i class="fas fa-pencil-alt fa-3x"></i></button>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="exdi_main_common right_wrap">
-								<div class="right_arrow">
-									<button id="right_btn" onclick="right_btn_click()"><i class="fas fa-angle-right fa-7x"></i></a></button>
-								</div>
-							</div>
-						</div>
-						<div class="exdi_main_common list_wrap">
-							<a href="../makegroup"><div class="add_button">
-								<i class="fas fa-plus fa-5x"></i>
-							</div></a>
-
-							{% for group in all_group %}
-								{% if group == selected_group %}
-									<div class="list_icon">
-										<i class="fas fa-book-open fa-5x"></i>
-									</div>
-									<div class="list_name">{{group}} 보고있는 상태</div>
-								{% else %}
-									<div class="list_icon">
-										<a href="./{{group}}"><i class="fas fa-book fa-5x"></i></a>
-									</div>
-									<div class="list_name">{{group}}</div>
-								{% endif %}
-							{% endfor %}
-
-						</div>
-					</div>
-				</main>
-			</div>
-
-	</div>
-
-
-	<div class="wrap" id="2">
-			<div class="main_footer_wrap">
-				<main>
-					<div class="exdi_main_wrap clearfix">
-						<div class="exdi_main_common total_left_wrap">
-							<div class="exdi_main_common left_wrap">
-								<div class="left_arrow">
-									<button id="left_btn" onclick="left_btn_click()"><i class="fas fa-angle-left fa-7x"></i></a></button>
-								</div>
-							</div>
-							<div class="exdi_main_common feed_wrap">
-								<div class="search_button">
-									<form action="../search">
-										교환 일기장 검색 : <input name="search" type="text" size="50" placeholder="옆에 검색 버튼 누르면 검색뷰로" class="search_input">
-										<input type="submit" class="exdi_diary_button" value="검색"/>
-									</form>
-								</div>
-								<div class="exdi_diary_wrap ">
-									<div class="title_input">
-										<div class="main_exdi_title">
-											<div class="exdi_title">
-												북북북북북북북
-											</div>
-											<div class="exdi_time">
-											</div>
-										</div>
-									</div>
-									<div class="user_input">
-										"????"의 일기(익명 아닐 때에만 나타남)
-									</div>
-									<div class="view_mydiary_category_wrap">
-										<span>
-											#그룹2 교환 일기장(방 주제)
-										</span>&nbsp;
-										<span>
-											<img src="{% static 'img/cloud_color.png' %}" alt="" width="25px" height="25px">
-										</span>
-										<span class="exchange_diary_emotion_img">
-											<img src="{% static 'img/sleepy_color.png' %}" alt="" width="25px" height="25px"> : 32 
-										</span>
-									</div>
-									<div class="exdi_date_input">
-										<span>2018년 </span>
-										<span>8월 </span>
-										<span>4일</span>
-									</div>
-									<div class="image_input">
-										
-									</div>
-									<div class="exchange_diary_func">
-										<span class="hover1">
-											<i class="fas fa-cut"></i>
-											뜯어가기
-										</span>
-										<span class="write_comment_icon hover2">
-											<i class="far fa-comment"></i>
-											댓글 쓰기
-										</span>
-										<span class="view_diary_icon hover3">
-											<i class="far fa-eye"></i>
-											일기 보기
-										</span>
-										<span class="hover4">
-											<i class="far fa-meh"></i>
-											공감하기
-										</span>
-									</div>
-									<div class="content_input">
-										<form id="paper" method="get" action="">
-											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>보니 클라이드 야~</textarea>  
-											<br>
-										</form>
-									</div>
-									<div class="comment_wrap">
-										<div class="comment_input_wrap">
-										</div>
-										<form action="">
-											<div class="write_comment">
-												<label for="user_comment"></label>
-												<input type="text" id="user_comment" placeholder=" 댓글 쓰기...">
-												<button type="button" class="comment_button comment_button_hover"><i class="fas fa-pencil-alt fa-3x"></i></button>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="exdi_main_common right_wrap">
-								<div class="right_arrow">
-									<button id="right_btn" onclick="right_btn_click()"><i class="fas fa-angle-right fa-7x"></i></a></button>
-								</div>
-							</div>
-						</div>
-						<div class="exdi_main_common list_wrap">
-							<a href="../makegroup"><div class="add_button">
-								<i class="fas fa-plus fa-5x"></i>
-							</div></a>
-							{% for group in all_group %}
-								{% if group == selected_group %}
-									<div class="list_icon">
-										<i class="fas fa-book-open fa-5x"></i>
-									</div>
-									<div class="list_name">{{group}} 보고있는 상태</div>
-								{% else %}
-									<div class="list_icon">
-										<a href="./{{group}}"><i class="fas fa-book fa-5x"></i></a>
-									</div>
-									<div class="list_name">{{group}}</div>
-								{% endif %}
-							{% endfor %}
-						</div>
-					</div>
-				</main>
-			</div>
-
-	</div>
-
-
-	<div class="wrap" id="3">
-			<div class="main_footer_wrap">
-				<main>
-					<div class="exdi_main_wrap clearfix">
-						<div class="exdi_main_common total_left_wrap">
-							<div class="exdi_main_common left_wrap">
-								<div class="left_arrow">
-									<button id="left_btn" onclick="left_btn_click()"><i class="fas fa-angle-left fa-7x"></i></a></button>
-								</div>
-							</div>
-							<div class="exdi_main_common feed_wrap">
-								<div class="search_button">
-									<form action="../search">
-										교환 일기장 검색 : <input name="search" type="text" size="50" placeholder="옆에 검색 버튼 누르면 검색뷰로" class="search_input">
-										<input type="submit" class="exdi_diary_button" value="검색"/>
-									</form>
-								</div>
-								<div class="exdi_diary_wrap ">
-									<div class="title_input">
-										<div class="main_exdi_title">
-											<div class="exdi_title">
-												안녕띠
-											</div>
-											<div class="exdi_time">
-											</div>
-										</div>
-									</div>
-									<div class="user_input">
-										"????"의 일기(익명 아닐 때에만 나타남)
-									</div>
-									<div class="view_mydiary_category_wrap">
-										<span>
-											#그룹3 교환 일기장(방 주제)
-										</span>&nbsp;
-										<span>
-											<img src="{% static 'img/sunny_color.png' %}" alt="" width="25px" height="25px">
-										</span>
-										<span class="exchange_diary_emotion_img">
-											<img src="{% static 'img/love_color.png' %}" alt="" width="25px" height="25px"> : 32 
-										</span>
-									</div>
-									<div class="exdi_date_input">
-										<span>2018년 </span>
-										<span>8월 </span>
-										<span>28일</span>
-									</div>
-									<div class="image_input">
-										
-									</div>
-									<div class="exchange_diary_func">
-										<span class="hover1">
-											<i class="fas fa-cut"></i>
-											뜯어가기
-										</span>
-										<span class="write_comment_icon hover2">
-											<i class="far fa-comment"></i>
-											댓글 쓰기
-										</span>
-										<span class="view_diary_icon hover3">
-											<i class="far fa-eye"></i>
-											일기 보기
-										</span>
-										<span class="hover4">
-											<i class="far fa-meh"></i>
-											공감하기
-										</span>
-									</div>
-									<div class="content_input">
-										<form id="paper" method="get" action="">
-											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>가장 최근일수록 id값이 높네용</textarea>  
-											<br>
-										</form>
-									</div>
-									<div class="comment_wrap">
-										<div class="comment_input_wrap">
-											<table class="comment_table comment_input">
+											<table class="comment_table">
+												
+												{% for key, value in comments.items %}
+													{% if key == post.id %}
+														{% for tmp_comments in value %}
+															{% for comment in tmp_comments %}
 												<tr id="comment_row_1" class="row">
-													<td class="nickname">닉네임</td>
-													<td class="comment_content_real">댓글 내용이이이이이</td>
-													<div class="ddd">
-														<td class="exchange_diary_comment_func">
-															<!-- comment_edit_click의 인자와 comment_row_{여기}, 아래 삭제하기를 둘러싼 form의 이름과 그 내부의 input태그 name에 댓글 id와같은 고유넘버가 전달. -->
-															<button class="exchange_diary_comment_func_button" onclick="comment_edit_click(1)">
-																<img id="comment_img" width="16px" height="16px" src="{% static 'img/edit.png' %}" alt="수정하기"></button>
-															<form name="comment_1_delete">
-																<input type="hidden" name="delete_comment_num" value="comment_id"/>
-															</form>
-															<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_1_delete.submit();">
-																<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기"></button>
-														</td>
-													</div>
-												</tr>
-
-												<tr id="comment_row_2" class="row">
-													<td class="nickname">2</td>
-													<td class="comment_content_real">22222</td>
+													<td class="nickname">{{ comment.author }}</td>
+													<td class="comment_content_real">{{ comment.content }}</td>
 													<td class="exchange_diary_comment_func">
-														<button class="exchange_diary_comment_func_button" onclick="comment_edit_click(2)">
-															<img id="comment_img" width="16px" height="16px" src="{% static 'img/edit.png' %}" alt="수정하기"></button>
-														<form name="comment_2_delete">
+														<!-- comment_edit_click의 인자와 comment_row_{여기}, 아래 삭제하기를 둘러싼 form의 이름과 그 내부의 input태그 name에 댓글 id와같은 고유넘버가 전달. -->
+														<button class="exchange_diary_comment_func_button" onclick="comment_edit_click(1)">
+															<img id="comment_img" width="16px" height="16px" src="{% static 'img/edit.png' %}" alt="수정하기">
+														</button>
+														<form name="comment_1_delete">
 															<input type="hidden" name="delete_comment_num" value="comment_id"/>
 														</form>
-														<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_2_delete.submit();">
-															<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기"></button>
+														<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_1_delete.submit();">
+															<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기">
+														</button>
 													</td>
 												</tr>
+															{% endfor %}
+														{% endfor %}
+													{% endif %}
+												{% endfor %}
 
 											</table>
 										</div>
-										<form action="" method="POST">
+										<form action="">
 											<div class="write_comment">
 												<label for="user_comment"></label>
-												<input type="text" id="user_comment" placeholder=" 댓글 쓰기...">
-												<button type="button" class="comment_button comment_button_hover"><i class="fas fa-pencil-alt fa-3x"></i></button>
+												<form action="#" method="">
+													<input name="comment_content" type="text" id="user_comment" placeholder=" 댓글 쓰기...">
+													<input type="image" src="{% static 'img/edit.png' %}" class="comment_button comment_button_hover"/>
+												</form>
 											</div>
 										</form>
 									</div>
@@ -621,23 +360,180 @@
 							<a href="../makegroup"><div class="add_button">
 								<i class="fas fa-plus fa-5x"></i>
 							</div></a>
-							{% for group in all_group %}
-								{% if group == selected_group %}
+
+							{% for name in categories_namelist %}
+								{% if name == selected_group %}
 									<div class="list_icon">
 										<i class="fas fa-book-open fa-5x"></i>
 									</div>
-									<div class="list_name">{{group}} 보고있는 상태</div>
+									<div class="list_name">{{name}} 보고있는 상태</div>
 								{% else %}
 									<div class="list_icon">
-										<a href="./{{group}}"><i class="fas fa-book fa-5x"></i></a>
+										<a href="./{{name}}"><i class="fas fa-book fa-5x"></i></a>
 									</div>
-									<div class="list_name">{{group}}</div>
+									<div class="list_name">{{name}}</div>
 								{% endif %}
 							{% endfor %}
+
 						</div>
 					</div>
 				</main>
 			</div>
-
 	</div>
+		{% endfor %}
+	{% else %}
+		{% for post in posts %}
+			{% if post.category.C_name == selected_group %}
+	<div class="wrap" id="{{ post.id }}">
+			<div class="main_footer_wrap">
+				<main>
+					<div class="exdi_main_wrap clearfix">
+						<div class="exdi_main_common total_left_wrap">
+							<div class="exdi_main_common left_wrap">
+								<div class="left_arrow">
+									<button id="left_btn" onclick="left_btn_click()"><i class="fas fa-angle-left fa-7x"></i></a></button>
+								</div>
+							</div>
+							<div class="exdi_main_common feed_wrap">
+								<div class="search_button">
+									<form action="../search">
+										교환 일기장 검색 : <input name="search" type="text" size="50" placeholder="옆에 검색 버튼 누르면 검색뷰로" class="search_input">
+										<input type="submit" class="exdi_diary_button" value="검색"/>
+									</form>
+								</div>
+								<div class="exdi_diary_wrap ">
+									<div class="title_input">
+										<div class="main_exdi_title">
+											<div class="exdi_title">
+												{{ post.title }}
+											</div>
+											<div class="exdi_time">
+											</div>
+										</div>
+									</div>
+									<div class="user_input">
+										{{ post.username }}
+									</div>
+									<div class="view_mydiary_category_wrap">
+										<span>
+											{{ post.category }}
+										</span>&nbsp;
+										<span>
+											<img src="{% with 'img/'|add:post.weather|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px">
+										</span>
+										<span class="exchange_diary_emotion_img">
+											<img src="{% with 'img/'|add:post.emotion|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px"> : 32 
+										</span>
+									</div>
+									<div class="exdi_date_input">
+										<span>{{ post.published|date:"Y"}}년 </span>
+										<span>{{ post.published|date:"m" }}월 </span>
+										<span>{{ post.published|date:"d" }}일</span>
+									</div>
+									<div class="image_input">
+										
+									</div>
+									<div class="exchange_diary_func">
+										<span class="hover1">
+											<i class="fas fa-cut"></i>
+											뜯어가기
+										</span>
+										<span class="write_comment_icon hover2">
+											<i class="far fa-comment"></i>
+											댓글 쓰기
+										</span>
+										<span class="view_diary_icon hover3">
+											<i class="far fa-eye"></i>
+											일기 보기
+										</span>
+										<span class="hover4">
+											<i class="far fa-meh"></i>
+											공감하기
+										</span>
+									</div>
+									<div class="content_input">
+										<form id="paper" method="get" action="">
+											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>
+												{{ post.content }}
+											</textarea>  
+											<br>
+										</form>
+									</div>
+									<div class="comment_wrap">
+										<div class="comment_input_wrap">
+											<table class="comment_table">
+
+												{% for key, value in comments.items %}
+													{% if key == post.id %}
+														{% for tmp_comments in value %}
+															{% for comment in tmp_comments %}
+												<tr id="comment_row_1" class="row">
+													<td class="nickname">{{ comment.author }}</td>
+													<td class="comment_content_real">{{ comment.content }}</td>
+													<td class="exchange_diary_comment_func">
+														<!-- comment_edit_click의 인자와 comment_row_{여기}, 아래 삭제하기를 둘러싼 form의 이름과 그 내부의 input태그 name에 댓글 id와같은 고유넘버가 전달. -->
+														<button class="exchange_diary_comment_func_button" onclick="comment_edit_click(1)">
+															<img id="comment_img" width="16px" height="16px" src="{% static 'img/edit.png' %}" alt="수정하기">
+														</button>
+														<form name="comment_1_delete">
+															<input type="hidden" name="delete_comment_num" value="comment_id"/>
+														</form>
+														<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_1_delete.submit();">
+															<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기">
+														</button>
+													</td>
+												</tr>
+															{% endfor %}
+														{% endfor %}
+													{% endif %}
+												{% endfor %}
+												
+											</table>
+										</div>
+										<form action="">
+											<div class="write_comment">
+												<label for="user_comment"></label>
+												<form action="#" method="">
+													<input name="comment_content" type="text" id="user_comment" placeholder=" 댓글 쓰기...">
+													<input type="image" src="{% static 'img/edit.png' %}" class="comment_button comment_button_hover"/>
+												</form>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="exdi_main_common right_wrap">
+								<div class="right_arrow">
+									<button id="right_btn" onclick="right_btn_click()"><i class="fas fa-angle-right fa-7x"></i></a></button>
+								</div>
+							</div>
+						</div>
+						<div class="exdi_main_common list_wrap">
+							<a href="../makegroup"><div class="add_button">
+								<i class="fas fa-plus fa-5x"></i>
+							</div></a>
+
+							{% for name in categories_namelist %}
+								{% if name == selected_group %}
+									<div class="list_icon">
+										<i class="fas fa-book-open fa-5x"></i>
+									</div>
+									<div class="list_name">{{name}} 보고있는 상태</div>
+								{% else %}
+									<div class="list_icon">
+										<a href="./{{name}}"><i class="fas fa-book fa-5x"></i></a>
+									</div>
+									<div class="list_name">{{name}}</div>
+								{% endif %}
+							{% endfor %}
+
+						</div>
+					</div>
+				</main>
+			</div>
+	</div>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+	
 	{% endblock %}
