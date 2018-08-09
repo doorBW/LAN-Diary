@@ -12,7 +12,7 @@ class User(models.Model):
         blank=True,
         null=True
     )
-    categories = models.ManyToManyField(Category, blank=True, null=True)
+    categories = models.ManyToManyField(Category, blank=True)
     def __str__(self):
         return "%s" % (self.nick_name)
 

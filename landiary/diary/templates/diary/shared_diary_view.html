@@ -183,14 +183,14 @@
 			var delete_img = img_tags.getElementsByTagName('button')[1];
 			modify_img.remove();
 			delete_img.remove();
-			var update_btn = "<form name='change_comment' method='POST'><input class='css_update_btn' name='new_comment' type='submit' value='수정'/><input name='comment_id' type='hidden' value='"+comment_id+"'></form>";
+			var update_btn = "<form name='change_comment' method='POST'><input class='css_update_btn' name='new_comment' type='submit' value='수정'/><input name='comment_"+comment_id+"' type='hidden' value='"+comment_id+"'></form>";
 			var cancle_btn = "<input class='css_cancle_btn' type='submit' onclick='comment_cancle("+comment_id+")' value='취소'/>";
 			img_tags.innerHTML = update_btn+cancle_btn;
 
 			var temp_content = document.getElementById(each_comment);
 			var temp_content_text = temp_content.getElementsByTagName('td')[1].innerText;
 			temp_content.getElementsByTagName('td')[1].innerText = "";
-			var comment_input = '<input class="edit_comment_class" type="text" id="edit_comment_id" value="'+temp_content_text+'" />';
+			var comment_input = '<input class="edit_comment_class" type="text" id="edit_comment_'+comment_id+'" value="'+temp_content_text+'" />';
 			var add_span = document.createElement("span");
 			add_span.innerHTML = comment_input;
 			temp_content.getElementsByTagName('td')[1].appendChild(add_span);
@@ -211,7 +211,7 @@
 		update_btn.remove();
 		cancle_btn.remove();
 
-		var original_btn = '<button class="exchange_diary_comment_func_button" onclick="comment_edit_click('+comment_id+')"><img id="comment_img" width="16px" height="16px" src="{% static "img/edit.png" %}" alt="수정하기"></button><form name="comment_'+comment_id+'_delete"><input type="hidden" name="delete_comment_num" value="comment_id"/></form><button class="exchange_diary_comment_func_button"><img id="delete_img" width="13px" height="13px" src="{% static "img/delete.png" %}" alt="삭제하기"></button>'
+		var original_btn = '<button class="exchange_diary_comment_func_button" onclick="comment_edit_click('+comment_id+')"><img id="comment_img" width="16px" height="16px" src="{% static "img/edit.png" %}" alt="수정하기"></button><form name="comment_'+comment_id+'_delete"><input type="hidden" name="delete_comment_'+comment_id+'" value="'+comment_id+'"/></form><button class="exchange_diary_comment_func_button"><img id="delete_img" width="13px" height="13px" src="{% static "img/delete.png" %}" alt="삭제하기"></button>'
 
 		
 		each_comment.getElementsByTagName('td')[2].innerHTML = original_btn
@@ -315,18 +315,18 @@
 													{% if key == post.id %}
 														{% for tmp_comments in value %}
 															{% for comment in tmp_comments %}
-												<tr id="comment_row_1" class="row">
-													<td class="nickname">{{ comment.author }}</td>
+												<tr id="comment_row_{{comment.id}}" class="row">
+													<td class="diary_nickname">{{ comment.author }}</td>
 													<td class="comment_content_real">{{ comment.content }}</td>
 													<td class="exchange_diary_comment_func">
 														<!-- comment_edit_click의 인자와 comment_row_{여기}, 아래 삭제하기를 둘러싼 form의 이름과 그 내부의 input태그 name에 댓글 id와같은 고유넘버가 전달. -->
-														<button class="exchange_diary_comment_func_button" onclick="comment_edit_click(1)">
+														<button class="exchange_diary_comment_func_button" onclick="comment_edit_click({{ comment.id }})">
 															<img id="comment_img" width="16px" height="16px" src="{% static 'img/edit.png' %}" alt="수정하기">
 														</button>
 														<form name="comment_1_delete">
-															<input type="hidden" name="delete_comment_num" value="comment_id"/>
+															<input type="hidden" name="delete_comment_{{comment.id}}" value="{{ comment.id }}"/>
 														</form>
-														<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_1_delete.submit();">
+														<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_{{comment.id}}_delete.submit();">
 															<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기">
 														</button>
 													</td>
@@ -467,18 +467,17 @@
 													{% if key == post.id %}
 														{% for tmp_comments in value %}
 															{% for comment in tmp_comments %}
-												<tr id="comment_row_1" class="row">
-													<td class="nickname">{{ comment.author }}</td>
+												<tr id="comment_row_{{ comment.id }}" class="row">
+													<td class="diary_nickname">{{ comment.author }}</td>
 													<td class="comment_content_real">{{ comment.content }}</td>
 													<td class="exchange_diary_comment_func">
-														<!-- comment_edit_click의 인자와 comment_row_{여기}, 아래 삭제하기를 둘러싼 form의 이름과 그 내부의 input태그 name에 댓글 id와같은 고유넘버가 전달. -->
-														<button class="exchange_diary_comment_func_button" onclick="comment_edit_click(1)">
+														<button class="exchange_diary_comment_func_button" onclick="comment_edit_click({{ comment.id }})">
 															<img id="comment_img" width="16px" height="16px" src="{% static 'img/edit.png' %}" alt="수정하기">
 														</button>
-														<form name="comment_1_delete">
-															<input type="hidden" name="delete_comment_num" value="comment_id"/>
+														<form name="comment_{{comment.id}}_delete">
+															<input type="hidden" name="delete_comment_{{comment.id}}" value="{{ comment.id }}"/>
 														</form>
-														<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_1_delete.submit();">
+														<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_{{comment.id}}_delete.submit();">
 															<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기">
 														</button>
 													</td>
