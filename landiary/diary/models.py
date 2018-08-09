@@ -19,6 +19,7 @@ from login.models import User
 class Post(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
+    photo = models.ImageField()
     content = models.CharField(max_length=4000)
     published = models.DateTimeField(auto_now=True)
     weather = models.CharField(max_length=15)
@@ -36,3 +37,9 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now=True)
     def __str__(self):
         return "%s 의 댓글" % (self.post)
+
+class PickPost(models.Model):
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    pick_posts = models.ManyToManyField(Post, blank=True)
+    def __str__(self):
+        return "%s의 뜯어온일기" % (self.username)
