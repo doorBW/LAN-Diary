@@ -18,26 +18,26 @@
 				<div class="make_div_wrap">
 					<div class="title_wrap">교환일기장 제작하기</div>
 					<div class="note_wrap">
-						<form>
+						<form action="./making" method="POST">{% csrf_token %}
 							<div class="name_wrap">
 								교환일기장 이름
-								<div> <input type="text" name="diary_name" size="20" class="name_input"/> </div>
+								<div> <input type="text" name="C_name" size="20" class="name_input"/> </div>
 							</div>
 							<div class="detail_wrap">
 								교환일기장 설명
-								<div> <input type="text" name="diary_detail" size="30" class="detail_input"/> </div>
+								<div> <input type="text" name="C_detail" size="30" class="detail_input"/> </div>
 							</div>
 							<div class="secret_wrap">
 								<span class="secret_anonymous_span">공개 여부</span>
-								<input style="display:inline-block;" type="radio" name="secret" value="0" checked="checked"> 공개
-								<input style="display:inline-block;" type="radio" name="secret" value="1"> 비공개
+								<input style="display:inline-block;" type="radio" name="visible" value="1" checked="checked"> 공개
+								<input style="display:inline-block;" type="radio" name="visible" value="0"> 비공개
 							</div>
 							<div class="anonymous_wrap">
 								<span class="secret_anonymous_span">실명 여부</span>
 								<input style="display:inline-block;" type="radio" name="anonymous" value="0" checked="checked"> 실명
 								<input style="display:inline-block;" type="radio" name="anonymous" value="1"> 익명
 							</div>
-							<input type="submit" name="submit" value="일기장 만들기" class="submit_btn">
+							<input type="submit" style="cursor:pointer" name="submit" value="일기장 만들기" class="submit_btn">
 						</form>
 					</div>
 				</div>

@@ -754,7 +754,6 @@ input[type=radio]{
 .exdi_main_common{
 	display: inline-block;
 	height: auto;
-  margin-top: 65px;
 }
 .total_left_wrap{
 	float: left;
@@ -796,14 +795,18 @@ input[type=radio]{
 	width: 18%;
 	height: 800px;
   position: fixed;
+  left: 75%;
 }
 .exdi_date_input{
   font-size: 25px;
   margin-top: 10px;
 }
 .search_button{
-	padding-bottom: 5%;
-	font-size: 23px;
+  font-size: 23px;
+  margin-top: 70px;
+  padding-top: 10px;
+  background-color: #F7F7F7;
+  padding-left: 20%;
 }
 .search_input{
 	height: 30px;
@@ -822,6 +825,31 @@ input[type=radio]{
   outline: none;
   border: none;
   border-radius: 10px;
+}
+.exdi_diary_button_for_link{
+  font-size: 20px;
+  font-family: 'Nanum Pen Script', serif;
+  width: 135px;
+  background-color: #AE5E1A;
+  color: white;
+  padding: 3px 0;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+}
+.link_div{
+  font-size: 23px;
+  padding-top: 10px;
+  background-color: #F7F7F7;
+  padding-left: 32%;
+}
+.link_input{
+  height: 30px;
+  width:350px;
+	font-size: 16px;
+  font-family: 'Nanum Pen Script', serif;
+  outline: none;
 }
 .add_button{
 	margin-top: 10%;
@@ -1273,3 +1301,8 @@ button{
   appearance: none;
 }
 
+
+.invite_toMain{
+  font-family: 'Hanna', serif;
+  font-size: 30px;
+}

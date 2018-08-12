@@ -9,7 +9,7 @@ class Category(models.Model):
     C_detail = models.CharField(max_length=1000)
     visible = models.IntegerField(default=1)
     anonymous = models.IntegerField(default=0)
-    link = models.CharField(max_length=1000,blank=True,null=True)
+    link = models.CharField(max_length=1000)
     def __str__(self):
         return "%s" % (self.C_name)
 

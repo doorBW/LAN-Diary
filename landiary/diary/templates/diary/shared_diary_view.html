@@ -217,8 +217,26 @@
 		each_comment.getElementsByTagName('td')[2].innerHTML = original_btn
 		
 	}
+
+	function copy_link() {
+	/* Get the text field */
+	var copyText = document.getElementById("link_input");
+
+	/* Select the text field */
+	copyText.select();
+
+	/* Copy the text inside the text field */
+	document.execCommand("copy");
+
+	/* Alert the copied text */
+	alert("{{ selected_group }} 교환일기장의 초대링크가 복사되었습니다 :)");
+	}
 </script>
-<body onload="view_exchange_diary()">
+{% if posts|length == 0%}
+	<body>
+{% else %}
+	<body onload="view_exchange_diary()">
+{% endif %}
 {% endblock %}
 								{% block highlight %}
 								<span class="exchange_write"><a href="../writediary">일기 쓰기</a></span>
@@ -230,6 +248,49 @@
 								{% endblock %}
 							
 	{% block main %}
+	<div class="search_button">
+		<form action="../search">
+			교환 일기장 검색 : <input name="search" type="text" size="50" placeholder="옆에 검색 버튼 누르면 검색뷰로" class="search_input">
+			<input type="submit" class="exdi_diary_button" value="검색"/>
+		</form>
+	</div>
+	{% if selected_group_visible == 0 %}
+	<div class="main_footer_wrap link_div">
+		<input type="text" value="{{ link }}" id="link_input" class="link_input">
+		<button onclick="copy_link()" class="exdi_diary_button_for_link">초대 링크 복사하기</button>
+	</div>
+	{% endif %}
+	<div class="exdi_main_common list_wrap">
+		<a href="../makegroup"><div class="add_button">
+			<i class="fas fa-plus fa-5x"></i>
+		</div></a>
+
+		{% for name in categories_namelist %}
+			{% if name == selected_group %}
+				<div class="list_icon">
+					<i class="fas fa-book-open fa-5x"></i>
+				</div>
+				<div class="list_name">{{name}} 보고있는 상태</div>
+			{% else %}
+				<div class="list_icon">
+					<a href="./{{name}}"><i class="fas fa-book fa-5x"></i></a>
+				</div>
+				<div class="list_name">{{name}}</div>
+			{% endif %}
+		{% endfor %}
+
+	</div>
+
+	{% if posts|length == 0 %}
+		<div class="main_footer_wrap">
+			<div class="nothing_diary_wrap">
+				<div class="nothing_diary">
+					보여줄 일기가 없어요 :-(
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
 	{% if selected_group == 'all' %}
 		{% for post in posts %}
 	<div class="wrap" id="{{ post.id }}">
@@ -243,12 +304,7 @@
 								</div>
 							</div>
 							<div class="exdi_main_common feed_wrap">
-								<div class="search_button">
-									<form action="../search">
-										교환 일기장 검색 : <input name="search" type="text" size="50" placeholder="옆에 검색 버튼 누르면 검색뷰로" class="search_input">
-										<input type="submit" class="exdi_diary_button" value="검색"/>
-									</form>
-								</div>
+								
 								<div class="exdi_diary_wrap ">
 									<div class="title_input">
 										<div class="main_exdi_title">
@@ -356,26 +412,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="exdi_main_common list_wrap">
-							<a href="../makegroup"><div class="add_button">
-								<i class="fas fa-plus fa-5x"></i>
-							</div></a>
-
-							{% for name in categories_namelist %}
-								{% if name == selected_group %}
-									<div class="list_icon">
-										<i class="fas fa-book-open fa-5x"></i>
-									</div>
-									<div class="list_name">{{name}} 보고있는 상태</div>
-								{% else %}
-									<div class="list_icon">
-										<a href="./{{name}}"><i class="fas fa-book fa-5x"></i></a>
-									</div>
-									<div class="list_name">{{name}}</div>
-								{% endif %}
-							{% endfor %}
-
-						</div>
+						
 					</div>
 				</main>
 			</div>
@@ -384,6 +421,7 @@
 	{% else %}
 		{% for post in posts %}
 			{% if post.category.C_name == selected_group %}
+				
 	<div class="wrap" id="{{ post.id }}">
 			<div class="main_footer_wrap">
 				<main>
@@ -395,12 +433,7 @@
 								</div>
 							</div>
 							<div class="exdi_main_common feed_wrap">
-								<div class="search_button">
-									<form action="../search">
-										교환 일기장 검색 : <input name="search" type="text" size="50" placeholder="옆에 검색 버튼 누르면 검색뷰로" class="search_input">
-										<input type="submit" class="exdi_diary_button" value="검색"/>
-									</form>
-								</div>
+								
 								<div class="exdi_diary_wrap ">
 									<div class="title_input">
 										<div class="main_exdi_title">
@@ -507,26 +540,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="exdi_main_common list_wrap">
-							<a href="../makegroup"><div class="add_button">
-								<i class="fas fa-plus fa-5x"></i>
-							</div></a>
-
-							{% for name in categories_namelist %}
-								{% if name == selected_group %}
-									<div class="list_icon">
-										<i class="fas fa-book-open fa-5x"></i>
-									</div>
-									<div class="list_name">{{name}} 보고있는 상태</div>
-								{% else %}
-									<div class="list_icon">
-										<a href="./{{name}}"><i class="fas fa-book fa-5x"></i></a>
-									</div>
-									<div class="list_name">{{name}}</div>
-								{% endif %}
-							{% endfor %}
-
-						</div>
+						
 					</div>
 				</main>
 			</div>

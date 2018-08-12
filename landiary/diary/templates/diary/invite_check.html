@@ -1,0 +1,60 @@
+{% load static %}
+<!doctype html>
+<html lang = "ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>LANDI LOGIN</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+	<div class="wrap">
+		<header>
+			<div class="header_background_wrap">
+				<div class="new_header_wrap">
+					<div class="new_logo">
+                        <a href="http://localhost:8000/main">
+                            LANDI
+                        </a>
+                    </div>
+					<div class="blank_div"> </div>
+				</div>
+			</div>
+		</header>
+		<div class="main_footer_wrap">
+			<div class="main_wrap">
+				<div class="login_wrap">
+					<div class="login_background">      
+                        <div>
+                            안녕하세요. {{ user }}님<br>
+                            {{ group }} 교환일기장에 초대 받으셨어요 :)<br>
+                            교환일기장에 참여하시겠어요?
+                            <div>
+                                <form action="../join/group" name="answer" method="POST">{% csrf_token %}
+                                    <input name="group" type="hidden" value="{{ group }}">
+                                    <input name="user" type="hidden" value="{{ user }}">
+                                    <input name="answer" type="submit" value="네"/>
+                                </form>
+                                <form action="../join/group" name="answer" method="POST">{% csrf_token %}
+                                    <input name="answer" type="submit" value="아니요"/>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="diary_submit_button_wrap">
+                            <a href="../../" class="invite_toMain">main 으로 넘어가기</a>
+                        </div>
+					</div>
+				</div>
+			</div>
+			<footer>
+				<div class="footer_wrap">
+					<div class="footer_icons clearfix">
+						<br><br><br><br><br><br><br><br>
+						<span class="footer_c">© 2018 LANDI</span>
+						<br><br><br>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+</body>
