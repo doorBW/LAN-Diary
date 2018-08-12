@@ -50,14 +50,21 @@ def group_diary(request,group="all"):
   for post in user_posts:
     tmp_comments = Comment.objects.filter(post = post)
     comments[post.id].append(tmp_comments)
-  
+
+  #group이용해서 db에서 해당 group이름을 가진 교환일기장의 visible값을 아래 변수에 저장
+  if group != 'all':
+    visible = Category.objects.filter(C_name = group)[0].visible
+  else:
+    visible = 1
+
   item = {
     'categories_namelist' : user_categories_namelist,
     'categories_idlist' : user_categories_idlist,
     'selected_group' : group,
     'posts':user_posts,
     'posts_idlist':user_posts_idlist,
-    'comments': comments
+    'comments': comments,
+    'selected_group_visible': visible
     }
   return render(request, 'diary/shared_diary_view.html',item)
 
@@ -69,3 +76,4 @@ def search_group(request):
   print(searched)
   item = {'searched':searched}
   return render(request, 'diary/shared_diary_search.html',item)
+

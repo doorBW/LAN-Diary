@@ -754,7 +754,6 @@ input[type=radio]{
 .exdi_main_common{
 	display: inline-block;
 	height: auto;
-  margin-top: 65px;
 }
 .total_left_wrap{
 	float: left;
@@ -796,14 +795,18 @@ input[type=radio]{
 	width: 18%;
 	height: 800px;
   position: fixed;
+  left:75%;
 }
 .exdi_date_input{
   font-size: 25px;
   margin-top: 10px;
 }
 .search_button{
-	padding-bottom: 5%;
 	font-size: 23px;
+  margin-top: 3%; 
+  padding-top: 3%;
+  background-color: #F7F7F7; 
+  padding-left: 20%;
 }
 .search_input{
 	height: 30px;
