@@ -232,7 +232,8 @@
 	alert("{{ selected_group }} 교환일기장의 초대링크가 복사되었습니다 :)");
 	}
 </script>
-{% if posts|length == 0%}
+
+{% if posts|length == 0 %}
 	<body>
 {% else %}
 	<body onload="view_exchange_diary()">

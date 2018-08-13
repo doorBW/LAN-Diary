@@ -54,6 +54,7 @@ def group_diary(request,group="all"):
     tmp_comments = Comment.objects.filter(post = post)
     comments[post.id].append(tmp_comments)
 
+  #group이용해서 db에서 해당 group이름을 가진 교환일기장의 visible값을 아래 변수에 저장
   if group != 'all':
     category_for_link = Category.objects.filter(C_name = group)[0]
     visible = category_for_link.visible
@@ -137,3 +138,5 @@ def join_group(request,group='',user=''):
   else:
     redirect("../../groupdiary/all")
   return redirect("../../groupdiary/"+group)
+
+
