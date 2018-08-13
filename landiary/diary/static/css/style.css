@@ -842,7 +842,7 @@ input[type=radio]{
   font-size: 23px;
   padding-top: 10px;
   background-color: #F7F7F7;
-  padding-left: 32%;
+  padding-left: 29%;
 }
 .link_input{
   height: 30px;
@@ -1305,4 +1305,49 @@ button{
 .invite_toMain{
   font-family: 'Hanna', serif;
   font-size: 30px;
+}
+
+.invite_check_text{
+  font-family: 'Nanum Pen Script', serif;
+  font-size: 25px;
+}
+
+.invite_group_name{
+  font-size: 35px;
+  color: #B90000;
+}
+
+.invite_check_btn_group{
+}
+
+.invite_check_btn_yes{
+  float:left;
+  font-family: 'Hanna', serif;
+  margin-left: 40%;
+  font-size:30px;
+  background-color:#F7F7F7;
+  cursor: pointer;
+}
+
+.invite_check_btn_no{
+  float:right;
+  font-family: 'Hanna', serif;
+  margin-right:40%;
+  font-size:30px;
+  background-color:#F7F7F7;
+  cursor: pointer;
+}
+
+.invite_background{
+  padding: 5% 25px;
+  margin-bottom: 20px;
+  width: 75%;
+  background: #fffff0;
+  text-align: center;
+  border-radius: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  border-style: double;
+  border-radius: 15px;
+  border-color: #B90000;
 }

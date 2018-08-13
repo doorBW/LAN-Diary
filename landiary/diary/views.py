@@ -113,7 +113,7 @@ def search_group(request):
   return render(request, 'diary/shared_diary_search.html',item)
 
 def invite_check(request,token=""):
-  user = 'user_test1'
+  user = 'test_user1'
   if token == "":
     pass # return 잘못된 접근
   else:
@@ -131,10 +131,9 @@ def join_group(request,group='',user=''):
   if request.POST['answer'] == '네':
     group = request.POST['group']
     user = request.POST['user']
-    if ((group == '') and (user=='')):
-      pass
-    else:
-      print(group,"@@",user)
+    invite_group = Category.objects.get(C_name = group)
+    invited_user = User.objects.get(nick_name = user)
+    invited_user.categories.add(invite_group)
   else:
-    print("##가입안함")
-  return redirect("../../groupdiary/all")
+    redirect("../../groupdiary/all")
+  return redirect("../../groupdiary/"+group)

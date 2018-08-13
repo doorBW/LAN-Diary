@@ -24,22 +24,26 @@
 		<div class="main_footer_wrap">
 			<div class="main_wrap">
 				<div class="login_wrap">
-					<div class="login_background">      
-                        <div>
-                            안녕하세요. {{ user }}님<br>
-                            {{ group }} 교환일기장에 초대 받으셨어요 :)<br>
+					<div class="invite_background">      
+                        <div class="invite_check_text">
+                            안녕하세요. {{ user }}님!<br>
+                            <span class="invite_group_name">{{ group }}</span> 교환일기장에 초대 받으셨어요 :)<br>
                             교환일기장에 참여하시겠어요?
+                        </div><br>
+                        <div class="invite_check_btn_group">
                             <div>
                                 <form action="../join/group" name="answer" method="POST">{% csrf_token %}
                                     <input name="group" type="hidden" value="{{ group }}">
                                     <input name="user" type="hidden" value="{{ user }}">
-                                    <input name="answer" type="submit" value="네"/>
+                                    <input class="invite_check_btn_yes" name="answer" type="submit" value="네"/>
                                 </form>
+                            </div>  
+                            <div>
                                 <form action="../join/group" name="answer" method="POST">{% csrf_token %}
-                                    <input name="answer" type="submit" value="아니요"/>
+                                    <input class="invite_check_btn_no" name="answer" type="submit" value="아니요"/>
                                 </form>
                             </div>
-                        </div>
+                        </div><br><br><br>
                         <div class="diary_submit_button_wrap">
                             <a href="../../" class="invite_toMain">main 으로 넘어가기</a>
                         </div>
