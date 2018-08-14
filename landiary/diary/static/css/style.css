@@ -803,7 +803,7 @@ input[type=radio]{
 }
 .search_button{
   font-size: 23px;
-  margin-top: 70px;
+  margin-top: 56px;
   padding-top: 10px;
   background-color: #F7F7F7;
   padding-left: 20%;
@@ -1351,3 +1351,33 @@ button{
   border-radius: 15px;
   border-color: #B90000;
 }
+
+.nothing_diary_wrap{
+  height: 500px;
+  padding-top: 3%;
+}
+
+.nothing_diary{
+  border: solid 2px;
+  border-radius: 15px;
+  width: 70%;
+  height: 100%;
+  margin-left: 7%;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+

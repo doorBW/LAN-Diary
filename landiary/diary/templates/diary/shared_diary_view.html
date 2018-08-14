@@ -161,7 +161,7 @@
 			var for_temp_id_list = now_group_list.slice();
 			var for_tmp_idx = for_temp_id_list.indexOf(show_diary_id)
 			for_temp_id_list.splice(for_tmp_idx, 1);
-			var not_show_diary_id_list = for_temp_id_list;
+			not_show_diary_id_list = for_temp_id_list;
 			show(show_diary_id);
 			hidden(not_show_diary_id_list);
 		}
@@ -286,7 +286,7 @@
 		<div class="main_footer_wrap">
 			<div class="nothing_diary_wrap">
 				<div class="nothing_diary">
-					보여줄 일기가 없어요 :-(
+					<span>아직 교환 일기장에 보여줄 일기가 없어요ㅠ<br>일기가 많은 교환 일기장에 참가하거나<br>일기를 작성해보세요~<i class="fas fa-location-arrow"></i></span>
 				</div>
 			</div>
 		</div>
