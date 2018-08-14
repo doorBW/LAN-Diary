@@ -12,7 +12,10 @@ urlpatterns = [
     path('makegroup/making', views.making_group),
     path('search/', views.search_group),
     path('invite/check/<str:token>', views.invite_check),
-    path('invite/join/group', views.join_group)
+    path('invite/join/group', views.join_group),
+    path('test/404page', views.test_404page),
+    path('test/errorpage', views.test_errorpage),
+    path('test/unloginpage', views.test_unloginpage)
     # path('my_diary/', views.ViewMydiary.as_view(), name='ViewMydiary'),
     # path('write_diary/', views.write_diary, name='WriteDiary'),
     # path('edit_diary/<int:id>/', views.edit_diary, name='EditDiary'),

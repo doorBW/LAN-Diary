@@ -140,3 +140,12 @@ def join_group(request,group='',user=''):
   return redirect("../../groupdiary/"+group)
 
 
+
+def test_404page(request):
+  return render(request, 'diary/404page.html')
+    
+def test_errorpage(request):
+  return render(request, 'diary/errorpage.html')
+
+def test_unloginpage(request):
+  return render(request, 'diary/unloginpage.html')

@@ -1,0 +1,22 @@
+{% load static %}
+<!doctype html>
+<html lang = "ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>404 ERROR</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+	<div class="main_404_wrap">
+		<div class="text_404_wrap">
+			<div class="text_404 error_404">404 ERROR</div>
+			<br>
+			<div class="text_404">죄송합니다. 현재 찾을 수 없는 페이지를 요청 하셨습니다.</div>
+			<div class="text_404">존재하지 않는 주소를 입력하셨거나,</div>
+			<div class="text_404">요청하신 페이지의 주소가 변경, 삭제되어 찾을 수 없습니다.</div>
+			<br>
+			<a class="to_main_404" href="http://localhost:8000/main">메인으로</a>
+		</div>
+	</div>
+</body>

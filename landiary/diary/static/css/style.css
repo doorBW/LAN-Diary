@@ -1370,12 +1370,48 @@ button{
   background-color: white;
 }
 
+.main_404_wrap{
+  width: 70%;
+  height: 500px;
+  margin: auto;
+}
+.text_404_wrap{
+  padding-top: 15%;
+}
+.text_404{
+  display: flex;
+  justify-content: center;
+  font-family: 'Nanum Pen Script', serif;
+  font-size: 30px;
+}
+.error_404{
+  color: #b90000;
+  font-size: 90px;
+}
 
-
-
-
-
-
+.to_main_404{
+  cursor:  pointer;
+  margin:  auto;
+  display:  flex;
+  justify-content:  center;
+  font-size:  30px;
+  border:  solid;
+  width: 15%;
+  color: #AE5E1A;
+  line-height: 2em;
+}
+.to_login{
+  cursor:  pointer;
+  margin:  auto;
+  display:  flex;
+  justify-content:  center;
+  font-size:  30px;
+  border:  solid;
+  width: 20%;
+  color: #AE5E1A;
+  line-height: 2em;
+  text-decoration: none;
+}
 
 
 

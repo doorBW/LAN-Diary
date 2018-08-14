@@ -1,0 +1,19 @@
+{% load static %}
+<html lang = "ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>404 ERROR</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+	<div class="main_404_wrap">
+		<div class="text_404_wrap">
+			<div class="text_404 error_404">ERROR ROUTE</div>
+			<br>
+			<div class="text_404">죄송합니다. 잘못된 경로로 접근 하였거나 오류가 발생하였습니다.</div>
+			<br>
+			<a class="to_main_404" href="http://localhost:8000/main">메인으로</a>
+		</div>
+	</div>
+</body>
