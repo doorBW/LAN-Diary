@@ -102,7 +102,7 @@ def comment_delete(request):
 def group_diary(request,group="all"):
   # 현재 유저 이름에 대한 db의 id를 가져와야함. 예시를 바탕으로, test_user1의 id는 1임
   user = "test_user1"
-  user_id = 1
+  user_id = 3
   user_posts = Post.objects.filter(username = user_id)
   user_categories = User.objects.filter(id = user_id)[0].categories.all()
   # 전체보기를 위해  user_categories_namelist의 맨 앞에 'all' 값을 하나 추가한다.
