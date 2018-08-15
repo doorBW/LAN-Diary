@@ -340,9 +340,12 @@
 									</div>
 									<div class="exchange_diary_func">
 										<span class="hover1">
-											<i class="fas fa-cut"></i>
-											뜯어가기
-										</span>
+											<form method="POST" action="../pick" >{% csrf_token %}
+        								<!--<a onclick="return confirm('뜯은 일기장에 저장되었습니다.')" href="{% url 'pick' %}">--><input type="hidden" name="post_id" value="{{post.id}}" />
+        									<i class="fas fa-cut"></i>뜯어가기
+        								<!--</a>-->
+        								</form>
+        								</span>
 										<span class="write_comment_icon hover2">
 											<i class="far fa-comment"></i>
 											댓글 쓰기
@@ -380,12 +383,13 @@
 														<button class="exchange_diary_comment_func_button" onclick="comment_edit_click({{ comment.id }})">
 															<img id="comment_img" width="16px" height="16px" src="{% static 'img/edit.png' %}" alt="수정하기">
 														</button>
-														<form name="comment_1_delete">
-															<input type="hidden" name="delete_comment_{{comment.id}}" value="{{ comment.id }}"/>
-														</form>
+														<form method="POST" name="comment_1_delete" action="../comment_delete">
+															{% csrf_token %}
+															<input type="hidden" name="comment_id" value="{{ comment.id }}"/>
 														<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_{{comment.id}}_delete.submit();">
 															<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기">
 														</button>
+														</form>
 													</td>
 												</tr>
 															{% endfor %}
