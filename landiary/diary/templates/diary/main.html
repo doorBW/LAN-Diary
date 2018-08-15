@@ -55,6 +55,7 @@
         present(); //present()함수를 호출하여 다시 찍어줌
     }
     function present(){
+        // var month_real = month - 1;
         var start = new Date(year, month-1, 1);
         var ymda = document.getElementById("Ymd");
         var Tab = document.getElementById("tab");
@@ -74,9 +75,34 @@
         for(var i = 1; i<= dayy(year, month); i++){ //달력 일수만큼 찍어줌
             var cell = row.insertCell();
             if(year == date.getFullYear() && month-1 == date.getMonth() && i == date.getDate()){
-                cell.innerHTML = "<div class='calendar_cell'>"+i+"</div>"+"<a class='calendar_a_tag_example'>"+"일기"+"</a>";
-            }else{
-                cell.innerHTML = "<div>"+i+"</div>";
+                // for문으로 오늘 일기들에 대해 탐색 for post in today_posts
+                console.log("today-----------------------------------today")
+                cell.innerHTML = "<div class='calendar_cell'>"+i+"</div>"+"{% for post in today_posts %}"+"<div>"+"<a class='calendar_a_tag_example'>"+"~ "+"{{ post.title }}"+"</a>"+"</div>"+"{% endfor %}";
+            }
+            else {
+                // 다른 날인 모든 일기들에대해 for 문 탐색시작
+                // for post in other_posts
+                //  if post.published <-> 년월일 비교해서 지금 뿌려주려는 애하고 날짜가 일치하면
+                //  cell.innerHTML = "<div>"+i+"</div>"+"<a class='calendar_a_tag_example'>"+{{post.title}}+"</a>";
+                // else:
+                //  cell.innerHTML = "<div>"+i+"</div>";
+                {% if otherday_posts|length == 0 %}
+                    // cell.innerHTML = "<div>"+i+"</div>"
+                    console.log("no post -------------------------------no post")
+                    pass
+                {% else %}
+                    {% for post in otherday_posts %}
+                        // console.log({{post.published|date:"d"}} == i)
+                        if ({{ post.published|date:"Y" }} == year && {{post.published|date:"m"}} == month && {{post.published|date:"d"}} == i){
+                            console.log("333333333333333333333")
+                            cell.innerHTML = "wwwwwwww"
+                        }
+                        else{
+                            console.log("444444444444444444444444444444444444444444444")
+                            cell.innerHTML = "<div>"+i+"</div>"
+                        }
+                    {% endfor %}  
+                {% endif %}
             }
             
             cnt += 1;

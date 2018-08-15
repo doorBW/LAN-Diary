@@ -9,9 +9,27 @@ from login.models import User
 from .forms import MakeGroupFrom
 
 import jwt # for token generation
-
+from datetime import date #현재날짜 받아오기
 def main(request):
-  return render(request, 'diary/main.html')
+  user = "user2"
+  user_id = 5
+  user_posts = Post.objects.filter(username = user_id)
+  # print('#############1392193###$$$$$$$$$$$$$$$$')
+  # print(user_posts)
+  user_today_posts = user_posts.filter(published__date = date.today())
+  # print(user_today_posts)
+  # print(user_posts)
+  user_otherday_posts = user_posts.exclude(published__date = date.today())
+  print(user_otherday_posts)
+  # user_posts_titlelist = []
+  # for post in user_posts:
+  #   user_posts_titlelist = post.title
+  # 오늘꺼인일기와 아닌일기로 분류 
+  item = {
+    'today_posts' : user_today_posts,
+    'otherday_posts' : user_otherday_posts
+  }
+  return render(request, 'diary/main.html', item)
 
 def mydiary(request):
   return render(request, 'diary/my_diary_view.html')
