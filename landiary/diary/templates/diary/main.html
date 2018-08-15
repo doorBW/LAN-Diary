@@ -74,8 +74,15 @@
         for(var i = 1; i<= dayy(year, month); i++){ //달력 일수만큼 찍어줌
             var cell = row.insertCell();
             if(year == date.getFullYear() && month-1 == date.getMonth() && i == date.getDate()){
-                cell.innerHTML = "<div class='calendar_cell'>"+i+"</div>"+"<a class='calendar_a_tag_example'>"+"일기"+"</a>";
+                cell.innerHTML = "<div class='calendar_cell'>"+i+"</div>"+"{% for post in today_posts %}"+"<div>"+"<form method="POST" action="../mydiary/select/">"+<a class='calendar_a_tag_example'">"+"~ "+"<input type="submit" value="{{ post.title }}" />"+"</a>"+"</form>"+"</div>"+"{% endfor %}";
             }else{
+                // 다른 날인 모든 일기들에대해 for 문 탐색시작
+                // for post in other_posts
+                //  if post.published <-> 년월일 비교해서 지금 뿌려주려는 애하고 날짜가 일치하면
+             
+                //  cell.innerHTML = "<div>"+i+"</div>"+"<a class='calendar_a_tag_example'>"+{{post.title}}+"</a>";
+                // else:
+                //  cell.innerHTML = "<div>"+i+"</div>";
                 cell.innerHTML = "<div>"+i+"</div>";
             }
             
