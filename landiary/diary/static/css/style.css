@@ -1419,7 +1419,14 @@ button{
   text-decoration: none;
 }
 
-
+.calendar_click_mydiary_main_wrap{
+  padding-top: 75px;
+  padding-left: 140px;
+  padding-right: 140px;
+  background-color: #F7F7F7;
+  display: flex;
+  justify-content: center;
+}
 
 
 

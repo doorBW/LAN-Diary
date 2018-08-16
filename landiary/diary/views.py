@@ -14,17 +14,13 @@ def main(request):
   user = "user2"
   user_id = 5
   user_posts = Post.objects.filter(username = user_id)
-  # print('#############1392193###$$$$$$$$$$$$$$$$')
-  # print(user_posts)
   user_today_posts = user_posts.filter(published__date = date.today())
-  # print(user_today_posts)
-  # print(user_posts)
   user_otherday_posts = user_posts.exclude(published__date = date.today())
-  print(user_otherday_posts)
-  # user_posts_titlelist = []
-  # for post in user_posts:
-  #   user_posts_titlelist = post.title
-  # 오늘꺼인일기와 아닌일기로 분류 
+
+  # post_id = request.POST["post_id"]
+  # print(post_id)
+  # user_calendar_post = Post.objects.get(id = post_id)
+  # print(user_calendar_post)
   item = {
     'today_posts' : user_today_posts,
     'otherday_posts' : user_otherday_posts
@@ -167,3 +163,26 @@ def test_errorpage(request):
 
 def test_unloginpage(request):
   return render(request, 'diary/unloginpage.html')
+
+def calendar_diary(request):
+  user_id = 5
+  user = User.objects.get(id = user_id)
+  post_id = request.POST["post_id"]
+  user_posts = Post.objects.filter(username = user_id)
+  user_post = user_posts.get(id = post_id)
+  comments = {}
+  for post in user_posts :
+    comments[post.id] = []
+    tmp_comments = Comment.objects.filter(post=user_post)
+    comments[post.id].append(tmp_comments)
+  item = {
+    'post' : user_post,
+    'comments' : comments
+  }
+  return render(request, 'diary/calendar_click_mydiary_view.html', item)
+
+
+
+
+
+
