@@ -3,6 +3,14 @@
 {% block title %} MAIN {% endblock %}
 {% block script %}
 <script language="javascript">
+    // login 알림 메세지 2초뒤에 지우기
+    if (document.getElementsByClassName('message')){
+        setTimeout(() => {
+            var get_element = document.getElementById('message');
+            get_element.remove();
+        }, 2000);
+    }
+
     var date = new Date();
     var today = new Date();
     var year = today.getFullYear();
@@ -126,11 +134,16 @@
                             <span class="new_pick"><a href="./pickdiary">뜯어온 일기장</a></span>
                             <span class="new_exchange"><a href="./groupdiary/all">교환 일기장</a></span>
                             <span class="new_setup"><a href="./setting">설정</a></span>
-                            <span class="new_logout"><a href="#">로그아웃</a></span>
+                            <span class="new_logout"><a href="../logout">로그아웃</a></span>
                             {% endblock %}
         {% block main%}
         <main>
             <div class="main_wrap">
+                {% if message != null %}
+                    <div class="message" id="message">
+                        {{ message }}
+                    </div>
+                {% endif %}
                 <div class="calendar">
                     <table class = "main_calendar" id = "tab">
                         <tr>

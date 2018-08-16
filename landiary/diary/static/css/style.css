@@ -1420,6 +1420,12 @@ button{
 }
 
 
+/* message css */
+.message{
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+}
 
 
 

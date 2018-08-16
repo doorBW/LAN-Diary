@@ -13,6 +13,7 @@ from .forms import MakeGroupFrom
 import jwt # for token generation
 from datetime import date #현재날짜 받아오기
 def main(request):
+  print('@@@',request.COOKIES)
   user = "user2"
   user_id = 5
   user_posts = Post.objects.filter(username = user_id)
@@ -27,10 +28,25 @@ def main(request):
   # for post in user_posts:
   #   user_posts_titlelist = post.title
   # 오늘꺼인일기와 아닌일기로 분류 
+
   item = {
     'today_posts' : user_today_posts,
     'otherday_posts' : user_otherday_posts
   }
+
+  # login message를 위한 로직
+  try:
+    message = request.session['login_message']
+    del request.session['login_message']
+    item['message'] = message
+  except:
+    pass
+  try:
+    message = request.session['logout_message']
+    del request.session['logout_message']
+    item['message'] = message
+  except:
+    pass
   return render(request, 'diary/main.html', item)
 
 def mydiary(request):
