@@ -57,7 +57,11 @@ def logout(request):
     headers = {
         'Authorization': 'Bearer ' + request.session['user_actoken']
     }
-    res = requests.post('https://kapi.kakao.com/v1/user/logout', headers=headers)
+    res = requests.post('https://kapi.kakao.com/v1/user/unlink',headers = headers )
+    # headers = {
+    #     'Authorization': 'Bearer ' + request.session['user_actoken']
+    # }
+    # res = requests.post('https://kapi.kakao.com/v1/user/logout', headers=headers)
     status = res.status_code
     content = res.json()
     
