@@ -16,7 +16,11 @@ urlpatterns = [
     path('calendardiary', views.calendar_diary),
     path('test/404page', views.test_404page),
     path('test/errorpage', views.test_errorpage),
-    path('test/unloginpage', views.test_unloginpage)
+    path('test/unloginpage', views.test_unloginpage),
+    path('pick', views.pick, name='pick'),
+    path('remove', views.remove),
+    path('comment_delete', views.comment_delete),
+    path('mydiary_delete',views.mydiary_delete),
     # path('my_diary/', views.ViewMydiary.as_view(), name='ViewMydiary'),
     # path('write_diary/', views.write_diary, name='WriteDiary'),
     # path('edit_diary/<int:id>/', views.edit_diary, name='EditDiary'),

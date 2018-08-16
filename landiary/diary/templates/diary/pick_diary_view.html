@@ -54,11 +54,19 @@
 	});
 </script>
 <script type="text/javascript">
-	var diary_id_list = [1,2,3]; //사용자의 다이어리 id 목록을 받아옴
-	var temp_id_list = [1,2,3]; 
+	var now_group_list = []
+	now_group_list = {{ pickposts_idlist }}
 
-	var show_diary_id = diary_id_list[diary_id_list.length-1]; 
-	temp_id_list.splice(show_diary_id-1, 1);
+	var diary_id_list = now_group_list; // 일기의 id 목록을 받아옴
+	var count = diary_id_list.length-1
+	var last_id = diary_id_list[count]
+	var first_id = diary_id_list[0]
+	
+	var temp_id_list = diary_id_list.slice(); 
+
+	var show_diary_id = diary_id_list[count]; // 처음에 보여줘야되는 일기(default) -> =3
+	var tmp_idx = temp_id_list.indexOf(show_diary_id)
+	temp_id_list.splice(tmp_idx, 1);
 	var not_show_diary_id_list = temp_id_list;
 	function show(show_id){
 		document.getElementById(show_id).className='visiblediv';
@@ -71,36 +79,95 @@
 	}
 	function view_pick_diary(){
 		show(show_diary_id);
+		console.log(show_diary_id)
 		hidden(not_show_diary_id_list);
+		console.log(not_show_diary_id_list)
 	}
 	function left_btn_click() {
-		if(show_diary_id==1) {
+		if(show_diary_id==first_id) {
 			alert("더 이상 못 넘겨요ㅠㅠ");
 		}
 		else {
-			show_diary_id--;
-			var for_temp_id_list = [1,2,3];
-			for_temp_id_list.splice(show_diary_id-1, 1);
+			count--;
+			show_diary_id = diary_id_list[count]
+			var for_temp_id_list = now_group_list.slice();
+			var for_tmp_idx = for_temp_id_list.indexOf(show_diary_id)
+			for_temp_id_list.splice(for_tmp_idx, 1);
 			not_show_diary_id_list = for_temp_id_list;
+
 			show(show_diary_id);
 			hidden(not_show_diary_id_list);
 		}
 	}
 	function right_btn_click() {
-		if(show_diary_id==diary_id_list[diary_id_list.length-1]){
+		if(show_diary_id==last_id){
+			console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 			alert("더 이상 못 넘겨요ㅜㅜ");
 		}
 		else{
-			show_diary_id++;
-			var for_temp_id_list = [1,2,3];
-			for_temp_id_list.splice(show_diary_id-1, 1);
-			var not_show_diary_id_list = for_temp_id_list;
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+			count++;
+			show_diary_id = diary_id_list[count]
+			var for_temp_id_list = now_group_list.slice();
+			var for_tmp_idx = for_temp_id_list.indexOf(show_diary_id)
+			for_temp_id_list.splice(for_tmp_idx, 1);
+			not_show_diary_id_list = for_temp_id_list;
 			show(show_diary_id);
 			hidden(not_show_diary_id_list);
 		}
 	}
+
+
+	// var diary_id_list = [1,2,3]; //사용자의 다이어리 id 목록을 받아옴
+	// var temp_id_list = [1,2,3];
+	// var show_diary_id = diary_id_list[diary_id_list.length-1]; 
+	// temp_id_list.splice(show_diary_id-1, 1);
+	// var not_show_diary_id_list = temp_id_list;
+	// function show(show_id){
+	// 	document.getElementById(show_id).className='visiblediv';
+	// }
+	
+	// function hidden(not_show_id_array){
+	// 	for(var index=0; index < not_show_id_array.length; index++){
+	// 		document.getElementById(not_show_id_array[index]).className='hiddendiv';
+	// 	}
+	// }
+	// function view_pick_diary(){
+	// 	show(show_diary_id);
+	// 	hidden(not_show_diary_id_list);
+	// }
+	// function left_btn_click() {
+	// 	if(show_diary_id==1) {
+	// 		alert("더 이상 못 넘겨요ㅠㅠ");
+	// 	}
+	// 	else {
+	// 		show_diary_id--;
+	// 		var for_temp_id_list = [1,2,3];
+	// 		for_temp_id_list.splice(show_diary_id-1, 1);
+	// 		not_show_diary_id_list = for_temp_id_list;
+	// 		show(show_diary_id);
+	// 		hidden(not_show_diary_id_list);
+	// 	}
+	// }
+	// function right_btn_click() {
+	// 	if(show_diary_id==diary_id_list[diary_id_list.length-1]){
+	// 		alert("더 이상 못 넘겨요ㅜㅜ");
+	// 	}
+	// 	else{
+	// 		show_diary_id++;
+	// 		var for_temp_id_list = [1,2,3];
+	// 		for_temp_id_list.splice(show_diary_id-1, 1);
+	// 		var not_show_diary_id_list = for_temp_id_list;
+	// 		show(show_diary_id);
+	// 		hidden(not_show_diary_id_list);
+	// 	}
+	// }
 </script>
-<body onload="view_pick_diary()" class="main_footer_wrap">
+{% if posts|length == 0 %}
+<body>
+{% else %}
+<body onload="view_pick_diary()">
+{% endif %}
 {% endblock %}
 							{% block highlight %}
 							<span class="pick_write"><a href="../writediary">일기 쓰기</a></span>
@@ -112,8 +179,8 @@
 							{% endblock %}
 
 		{% block main%}
-		<!-- 첫번째 뜯어온 일기 -->
-		<div class="main_footer_wrap" id="1">
+		{% for pickpost in pickposts %}
+		<div class="main_footer_wrap" id="{{ pickpost.id }}">
 			<main>
 				<div class="main_wrap">
 					<div class="left_arrow_wrap main_common">
@@ -122,33 +189,34 @@
 					<div class="diary_wrap main_common">
 						<div class="title_input clearfix">
 							<div class="view_mydiary_title">
-								허허허허허허허허허
+								{{ pickpost.title }}
 							</div>
 							<div class="view_mydiary_category_wrap">
 								<span>
-									#뜯어온 일기장
+									#{{ pickpost.category.C_name }}
 								</span>
 								<span>
-									#교환 일기장 이름
-								</span>
-								<span>
-									#글쓴 사람 닉네임(익명아닐때에만?)
+									#{{ pickpost.username }}
 								</span>&nbsp;
 								<span>
-									<img src="{% static 'img/cloud_color.png' %}" alt="" width="25px" height="25px">
+									<img src="{% with 'img/'|add:pickpost.weather|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px" />
 								</span>
 								<span class="pickdiary_emotion_img">
-									<img src="{% static 'img/sleepy_color.png' %}" alt="" width="25px" height="25px"> : 32 
+									<img src="{% with 'img/'|add:pickpost.emotion|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px" /> : 32 
 								</span>
 							</div>
 						</div>
 						
 						<div class="pick_diary_date_input">
-							<span>2018년 </span>
-							<span>7월 </span>
-							<span>28일</span>
+							<span>{{ pickpost.published|date:"Y" }}년 </span>
+							<span>{{ pickpost.published|date:"m" }}월 </span>
+							<span>{{ pickpost.published|date:"d" }}일</span>
 						</div>
-						<div class="pick_diary_image_input">
+						<!-- 사진 안나옴 -->
+							<div class="pick_diary_image_input">
+							<!-- {% if pickpost.photo %}
+							<img src="{{ pickpost.photo.url }}">
+							{% endif %} -->
 							
 						</div>
 						<div class="view_mydiary_func">
@@ -161,13 +229,20 @@
 								일기 보기
 							</span>
 							<span class="hover3">
+								<form name="myForm_remove_{{pickpost.id}}" method="POST" action="../remove">{% csrf_token %}
+								<input type="hidden" name="remove_id" value="{{ pickpost.id }}" />
+								<i class="fas fa-eraser"></i><a href="#" onclick="javascript:document.myForm_remove_{{pickpost.id}}.submit();">지우기</a>
+								</form>
+								<!-- <form method="POST" action="../remove" >{% csrf_token %}
+									<input type="hidden" name="remove_id" value="{{pickpost.id}}" />
 								<i class="fas fa-eraser"></i>
-								지우기
+									<input type="submit" value="지우기" />
+								</form> -->
 							</span>
 						</div>
 						<div class="content_input">
 							<form id="paper" method="get" action="">
-								<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px;" disabled>흐하흐하흐ㅏ흐하흐하ㅡ하흐하흐하흐ㅏ히</textarea>  
+								<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px;" disabled>{{ pickpost.content }}</textarea>  
 								<br>
 							</form>
 						</div>
@@ -182,15 +257,24 @@
 										</form>
 									</td>
 								</tr>
-								<tr class="row">
-									<td class="diary_nickname">슈기</td>
-									<td class="comment_content">앙배불띠</td>
+								{% for key, value in comments.items %}
+									{% if key == pickpost.id %}
+										{% for tmp_comments in value %}
+											{% for comment in tmp_comments %}
+								
+								<tr class='row'>
+									<td class="diary_nickname">{{comment.author}}</td>
+									<td class="comment_content">{{ comment.content }}</td>
 									<td class="view_diary_comment_func">
-										<form name="comment_form" action="" method="POST">
+										<form name="comment_form" action="" method="POST">{% csrf_token %}
 											<button class="view_diary_comment_func_button"><i class="fas fa-times"></i></button>
 										</form>
 									</td>
 								</tr>
+											{% endfor %}
+										{% endfor %}
+									{% endif %}
+								{% endfor %}
 							</table>
 						</div>
 					</div>
@@ -200,182 +284,6 @@
 				</div>
 			</main>
 		</div>
-
-		<!-- 두번째 뜯어온 일기 -->
-		<div class="main_footer_wrap" id="2">
-			<main>
-				<div class="main_wrap">
-					<div class="left_arrow_wrap main_common">
-						<button id="left_btn" onclick="left_btn_click()"><i class="fas fa-angle-left fa-7x"></i></button>
-					</div>
-					<div class="diary_wrap main_common">
-						<div class="title_input clearfix">
-							<div class="view_mydiary_title">
-								힘힘들다리
-							</div>
-							<div class="view_mydiary_category_wrap">
-								<span>
-									#뜯어온 일기장
-								</span>
-								<span>
-									#교환 일기장 이름
-								</span>
-								<span>
-									#글쓴 사람 닉네임(익명아닐때에만?)
-								</span>&nbsp;
-								<span>
-									<img src="{% static 'img/sunny_color.png' %}" alt="" width="25px" height="25px"></i>
-								</span>
-								<span class="pickdiary_emotion_img">
-									<img src="{% static 'img/love_color.png' %}" alt="" width="25px" height="25px"> : 32 
-								</span>
-							</div>
-						</div>
-						
-						<div class="pick_diary_date_input">
-							<span>2018년 </span>
-							<span>8월 </span>
-							<span>4일</span>
-						</div>
-						<div class="pick_diary_image_input">
-							
-						</div>
-						<div class="view_mydiary_func">
-							<span class="view_comment_icon hover1">
-								<i class="far fa-comment-alt"></i>
-								댓글 보기
-							</span>
-							<span class="view_diary_icon hover2">
-								<i class="far fa-eye"></i>
-								일기 보기
-							</span>
-							<span class="hover3">
-								<i class="fas fa-eraser"></i>
-								지우기
-							</span>
-						</div>
-						<div class="content_input">
-							<form id="paper" method="get" action="">
-								<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px;" disabled>아리가또 고자이마스</textarea>  
-								<br>
-							</form>
-						</div>
-						<div class="comment_input_wrap">
-							<table class="comment_table mydiary_comment">
-								<tr class="row">
-									<td class="diary_nickname">닉네임</td>
-									<td class="comment_content">댓글 내용</td>
-									<td class="view_diary_comment_func">
-										<form name="comment_form" action="" method="POST">
-											<button class="view_diary_comment_func_button"><i class="fas fa-times"></i></button>
-										</form>
-									</td>
-								</tr>
-								<tr class="row">
-									<td class="diary_nickname">슈기</td>
-									<td class="comment_content">앙배불띠</td>
-									<td class="view_diary_comment_func">
-										<form name="comment_form" action="" method="POST">
-											<button class="view_diary_comment_func_button"><i class="fas fa-times"></i></button>
-										</form>
-									</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-					<div class="right_arrow_wrap main_common">
-						<button id="right_btn" onclick="right_btn_click()"><i class="fas fa-angle-right fa-7x"></i></button>
-					</div>
-				</div>
-			</main>
-		</div>
-
-		<!-- 세번째 뜯어온 일기 -->
-		<div class="main_footer_wrap" id="3">
-			<main>
-				<div class="main_wrap">
-					<div class="left_arrow_wrap main_common">
-						<button id="left_btn" onclick="left_btn_click()"><i class="fas fa-angle-left fa-7x"></i></button>
-					</div>
-					<div class="diary_wrap main_common">
-						<div class="title_input clearfix">
-							<div class="view_mydiary_title">
-								히사시부리
-							</div>
-							<div class="view_mydiary_category_wrap">
-								<span>
-									#뜯어온 일기장
-								</span>
-								<span>
-									#교환 일기장 이름
-								</span>
-								<span>
-									#글쓴 사람 닉네임(익명아닐때에만?)
-								</span>&nbsp;
-								<span>
-									<img src="{% static 'img/sunny_color.png' %}" alt="" width="25px" height="25px">
-								</span>
-								<span class="pickdiary_emotion_img">
-									<img src="{% static 'img/angry_color.png' %}" alt="" width="25px" height="25px"> : 32 
-								</span>
-							</div>
-						</div>
-						
-						<div class="pick_diary_date_input">
-							<span>2018년 </span>
-							<span>8월 </span>
-							<span>28일</span>
-						</div>
-						<div class="pick_diary_image_input">
-							
-						</div>
-						<div class="view_mydiary_func">
-							<span class="view_comment_icon hover1">
-								<i class="far fa-comment-alt"></i>
-								댓글 보기
-							</span>
-							<span class="view_diary_icon hover2">
-								<i class="far fa-eye"></i>
-								일기 보기
-							</span>
-							<span class="hover3">
-								<i class="fas fa-eraser"></i>
-								지우기
-							</span>
-						</div>
-						<div class="content_input">
-							<form id="paper" method="get" action="">
-								<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px;" disabled>끼앗끼앗</textarea>  
-								<br>
-							</form>
-						</div>
-						<div class="comment_input_wrap">
-							<table class="comment_table mydiary_comment">
-								<tr class="row">
-									<td class="diary_nickname">닉네임</td>
-									<td class="comment_content">댓글 내용</td>
-									<td class="view_diary_comment_func">
-										<form name="comment_form" action="" method="POST">
-											<button class="view_diary_comment_func_button"><i class="fas fa-times"></i></button>
-										</form>
-									</td>
-								</tr>
-								<tr class="row">
-									<td class="diary_nickname">슈기</td>
-									<td class="comment_content">앙배불띠</td>
-									<td class="view_diary_comment_func">
-										<form name="comment_form" action="" method="POST">
-											<button class="view_diary_comment_func_button"><i class="fas fa-times"></i></button>
-										</form>
-									</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-					<div class="right_arrow_wrap main_common">
-						<button id="right_btn" onclick="right_btn_click()"><i class="fas fa-angle-right fa-7x"></i></button>
-					</div>
-				</div>
-			</main>
-		</div>
+		{% endfor %}	
+		
 		{% endblock %}
