@@ -66,8 +66,8 @@
 <script type="text/javascript">
 	var diary_id_list = [1,2,3]; //사용자의 다이어리 id 목록을 받아옴
 	var temp_id_list = [1,2,3]; 
-	var show_diary_id = diary_id_list[diary_id_list.length-1]; // 처음에 보여줘야되는 일기(default) -> =3
-	temp_id_list.splice(show_diary_id-1, 1);
+	var show_diary_id = diary_id_list[diary_id_list.length-1]; // 처음에 보여줘야되는 일기(default) -> =3  가장 마지막의 id 가 변수에 저장된다.
+	temp_id_list.splice(show_diary_id-1, 1); // temp_id_list의 마지막 아이디 3을 지워준다.
 	var not_show_diary_id_list = temp_id_list;
 	function show(show_id){
 		document.getElementById(show_id).className='visiblediv';
@@ -125,7 +125,8 @@
 		
 		{% block main %}
 		<!-- 첫번쨰 일기 -->
-		<div class="main_footer_wrap" id="1">
+		{% for post in posts %}
+		<div class="main_footer_wrap" id="{{post.id}}">
 			<main>
 				<div class="main_wrap">
 					<div class="left_arrow_wrap main_common">
@@ -134,33 +135,46 @@
 					<div class="view_mydiary_wrap main_common">
 						<div class="title_input clearfix">
 							<div class="view_mydiary_title">
-								Way Back Home!!!
+								{{post.title}}
 							</div>
 							<div class="view_mydiary_category_wrap">
 								<span>
 									#내 일기장
 								</span>
+								<span>
+									
+								</span>
 								<span class="my_diary_emotion_img">
-									#<img src="{% static 'img/love_color.png' %}" alt="" width="25px" height="25px"> : 32 
+									<img src="{% with 'img/'|add:post.emotion|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px">: 32 
 								</span>
 								<span>
-									#<i class="fas fa-sun"></i>
+									#<img src="{% with 'img/'|add:post.weather|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px">
 								</span>
 							</div>
 						</div>
 						
 						<div class="mydiary_date_input">
-							<span>2018년 </span>
-							<span>7월 </span>
-							<span>28일</span>
+							<span>{{ post.published|date:"Y"}}년 </span>
+							<span>{{ post.published|date:"m" }}월</span>
+							<span>{{ post.published|date:"d" }}일</span>
 						</div>
+						{% if post.photo %}
 						<div class="image_input">
-							
+							<img class="diary_image" src= "{{ post.photo.url }}" />
 						</div>
+						{% endif %}
 						<div class="view_mydiary_func">
 							<span class="hover1">
+								
+								<!-- <form method="POST" action="../editdiary">{% csrf_token %}
+								<input type="hidden" name="edit_id" value = "{{ post.id }}" />
 								<i class="far fa-edit"></i>
-								수정하기
+								<input type="submit" value="수정하기"/>
+								</form> -->
+								<a href="{% url 'editdiary' pk=post.pk %}">
+									<i class="far fa-edit"></i>수정하기
+								</a>
+
 							</span>
 							<span class="view_comment_icon hover2">
 								<i class="far fa-comment-alt"></i>
@@ -177,7 +191,7 @@
 						</div>
 						<div class="content_input">
 							<form id="paper" method="get" action="">
-								<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>멈춘 시간 속 잠든 너를 찾아가 아무리 막아도 결국 너의 곁인걸 길고 긴 여행을 끝내 이젠 돌아가 너라는 집으로 지금 다시 way back home~</textarea>  
+								<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>{{post.content}}</textarea>  
 								<br>
 							</form>
 						</div>
@@ -192,15 +206,24 @@
 										</form>
 									</td>
 								</tr>
+								{% for key, value in comments.items %}
+									{% if key == post.id %}
+										{% for tmp_comments in value %}
+											{% for comment in tmp_comments %}
+								
 								<tr class='row'>
-									<td class="diary_nickname">슈기</td>
-									<td class="comment_content">앙배불띠</td>
+									<td class="diary_nickname">{{comment.author}}</td>
+									<td class="comment_content">{{ comment.content }}</td>
 									<td class="view_diary_comment_func">
 										<form name="comment_form" action="" method="POST">
 											<button class="view_diary_comment_func_button"><i class="fas fa-times"></i></button>
 										</form>
 									</td>
 								</tr>
+											{% endfor %}
+										{% endfor %}
+									{% endif %}
+								{% endfor %}
 							</table>
 						</div>
 					</div>
@@ -211,17 +234,20 @@
 			</main>
 		</div>
 
-		<!-- 두번째 일기 -->
+		{% endfor %}
+<!--
+		
 		<div class="main_footer_wrap" id="2">
 			<main>
 				<div class="main_wrap">
 					<div class="left_arrow_wrap main_common">
 						<button id="left_btn" onclick="left_btn_click()"><i class="fas fa-angle-left fa-7x"></i></button>
-					</div>
+					</div> 
+
 					<div id="2" class="view_mydiary_wrap main_common">
 						<div class="title_input clearfix">
 							<div class="view_mydiary_title">
-								너무너무너무너무 더운날
+								{{posts.title}}
 							</div>
 							<div class="view_mydiary_category_wrap">
 								<span>
@@ -298,7 +324,7 @@
 			</main>
 		</div>
 
-		<!-- 세번째 일기 -->
+		
 		<div class="main_footer_wrap" id="3">
 			<main>
 				<div class="main_wrap">
@@ -378,12 +404,12 @@
 							</table>
 						</div>
 					</div>
-
+-->
 					<div class="right_arrow_wrap main_common">
 						<button id="right_btn" onclick="right_btn_click()"><i class="fas fa-angle-right fa-7x"></i></button>
 					</div>
 				</div>
 			</main>
 		</div>
-
-		{% endblock %}
+ 
+	{% endblock %}

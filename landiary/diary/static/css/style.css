@@ -666,11 +666,13 @@ input[type=radio]{
 	font-size:25px;
 }
 .image_input{
-	height: 400px;
+	height: auto;
 	border: solid 2px black;
 	border-style: dashed;
 	margin-bottom: 10px;
 	margin-top: 10px;
+  
+  
 }
 .diary_wrap{
 	padding: 5% 25px;
@@ -716,6 +718,12 @@ input[type=radio]{
 .my_diary_emotion_img{
   margin-left: 10px;
 }
+
+.diary_image{
+  width: 100%;
+  height: auto;
+}
+
 /*----------------------------------pick_diary------------------------------*/
 .pick_write, .pick_mydiary, .pick_pick, .pick_exchange, .pick_setup, .pick_logout{
     float: left;
@@ -1272,4 +1280,9 @@ button{
   -moz-appearance: none; 
   appearance: none;
 }
+
+
+
+
+
 
