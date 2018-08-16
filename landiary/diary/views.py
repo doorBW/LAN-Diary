@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-
+from django.views.decorators.http import require_http_methods
 from django.views import generic
 
 from .models import Post, Category, Comment, PickPost
@@ -12,8 +12,14 @@ from .forms import MakeGroupFrom
 
 import jwt # for token generation
 from datetime import date #현재날짜 받아오기
+
+
+  
 def main(request):
-  print('@@@',request.COOKIES)
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../unloginpage')
   user = "user2"
   user_id = 5
   user_posts = Post.objects.filter(username = user_id)
@@ -23,7 +29,7 @@ def main(request):
   # print(user_today_posts)
   # print(user_posts)
   user_otherday_posts = user_posts.exclude(published__date = date.today())
-  print(user_otherday_posts)
+  # print(user_otherday_posts)
   # user_posts_titlelist = []
   # for post in user_posts:
   #   user_posts_titlelist = post.title
@@ -50,6 +56,10 @@ def main(request):
   return render(request, 'diary/main.html', item)
 
 def mydiary(request):
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
   user_id = 1 # 규란이가 성공하면 2가 아니라 현재 접속자를 불러온다. id가 될 지 아닌지는 아직 미정
   user_posts = Post.objects.filter(username = user_id)
   comments = {}
@@ -69,12 +79,22 @@ def mydiary_delete(request):
   return redirect('../main/mydiary/')
 
 def setting(request):
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
   return render(request, 'diary/setting.html')
 
 def write_diary(request):
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
   return render(request, 'diary/write_diary.html')
 
 def pick(request):
+  if request.method == "POST":
+    return redirect('../../errorpage')
   user_id = 1
   post_id = request.POST['post_id']
   user = User.objects.get(id = user_id)
@@ -92,6 +112,10 @@ def pick(request):
 
 
 def pick_diary(request):
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
   user = "test_user1"
   user_id = 1
   try:
@@ -128,6 +152,10 @@ def comment_delete(request):
 
 
 def group_diary(request,group="all"):
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
   # 현재 유저 이름에 대한 db의 id를 가져와야함. 예시를 바탕으로, test_user1의 id는 1임
   user = "user2"
   user_id = 5
@@ -178,12 +206,20 @@ def group_diary(request,group="all"):
   return render(request, 'diary/shared_diary_view.html',item)
 
 def make_group(request):
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
   return render(request, 'diary/shared_diary_make.html')
 
 def making_group(request):
-  visible = request.POST['visible']
-  group_name = request.POST['C_name']
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../../unloginpage')
   if request.method == 'POST':
+    visible = request.POST['visible']
+    group_name = request.POST['C_name']
     form = MakeGroupFrom(request.POST)
     if form.is_valid():
       category = form.save(commit=False)
@@ -195,10 +231,14 @@ def making_group(request):
         category.link = link
       category.save()
   else:
-    print("it's not POST method")
+    return redirect('../../../errorpage')
   return redirect('../groupdiary/all')
 
 def search_group(request):
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
   # user 가정
   user_id = 1
   user_categories = User.objects.get(id = user_id).categories.all() # user가 이미 속한 교환일기장
@@ -216,6 +256,10 @@ def search_group(request):
   return render(request, 'diary/shared_diary_search.html',item)
 
 def invite_check(request,token=""):
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
   user = 'user2'
   if token == "":
     pass # return 잘못된 접근
@@ -231,6 +275,8 @@ def invite_check(request,token=""):
 
 
 def join_group(request,group='',user=''):
+  if request.method == "GET":
+      return redirect('../../../errorpage')
   if request.POST['answer'] == '네':
     group = request.POST['group']
     user = request.POST['user']
@@ -242,12 +288,3 @@ def join_group(request,group='',user=''):
   return redirect("../../groupdiary/"+group)
 
 
-
-def test_404page(request):
-  return render(request, 'diary/404page.html')
-    
-def test_errorpage(request):
-  return render(request, 'diary/errorpage.html')
-
-def test_unloginpage(request):
-  return render(request, 'diary/unloginpage.html')

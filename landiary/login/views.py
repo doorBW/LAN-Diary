@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
+
 import requests, json
 from urllib.parse import urlencode
 from .models import User
@@ -52,7 +53,10 @@ def loging(request):
         request.session['login_message'] = user_nickname+"님의 첫번째 로그인을 환영합니다 :-)"
     return redirect('../main')
 
+
 def logout(request):
+    # if request.method == "GET":
+    #     return redirect('./errorpage')
     print("logout")
     headers = {
         'Authorization': 'Bearer ' + request.session['user_actoken']
@@ -85,3 +89,13 @@ def logout(request):
         return redirect('./main')
     
     return redirect('../')
+
+
+def test_404page(request):
+  return render(request, 'login/404page.html')
+    
+def test_errorpage(request):
+  return render(request, 'login/errorpage.html')
+
+def test_unloginpage(request):
+  return render(request, 'login/unloginpage.html')
