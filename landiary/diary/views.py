@@ -7,12 +7,13 @@ from .models import Post, Category, Comment, PickPost
 from login.models import User
 from datetime import date
 
-from .forms import MakeGroupFrom
+from .forms import MakeGroupFrom, PostForm
 
 
 import jwt # for token generation
 from datetime import date #현재날짜 받아오기
-
+import datetime
+#from django.core.files.uploadhandler import FileUploadHandler
 
   
 def main(request):
@@ -46,6 +47,7 @@ def main(request):
     pass
   return render(request, 'diary/main.html', item)
 
+# 내 일기장에 일기들을 불러와주는 함수
 def mydiary(request):
   try: # 로그인했을때만 접근가능하도록 처리
     user = request.session['user_name']
@@ -76,21 +78,56 @@ def setting(request):
     return redirect('../../unloginpage')
   return render(request, 'diary/setting.html')
 
+def edit_diary(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    user_id = 5
+    if request.method == "POST":
+      original_post = Post.objects.get(id = request.POST['post_id'])
+      original_post.title = request.POST['title']
+      # original_post.category = Category.objects.get(C_name = request.POST['category'])
+      original_post.emotion = request.POST['emotion']
+      original_post.weather = request.POST['weather']
+      if request.FILES['photo'] == "": # 사진을 수정하지 않으면 걍 내비둔다
+        pass
+      else: # 새로운 사진을 첨부했으면, 기존의 사진을 지우고 새로 첨부한 사진을 db에 입력
+        original_post.photo.delete(save=False)
+        original_post.photo = request.FILES['photo'] 
+      original_post.content = request.POST['content']
+      original_post.save()
+      return redirect('main')
+
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'diary/edit_diary.html', {'form': form, 'post': post})
+
 def write_diary(request):
+  user_id = 5
+  category_id = 4
+  user = User.objects.get(id = user_id)
+  
   try: # 로그인했을때만 접근가능하도록 처리
     user = request.session['user_name']
   except:
     return redirect('../../unloginpage')
+  if request.method == "POST":
+    form = PostForm(request.POST,request.FILES)
+    if form.is_valid():
+      post = form.save(commit=False)
+      post.username = User.objects.get(id = user_id)
+      post.category = Category.objects.get(id = category_id )
+      post.save()
+      return redirect('main')
+  else:
+    form = PostForm()
   return render(request, 'diary/write_diary.html')
 
 def pick(request):
-  if request.method == "POST":
+  if request.method == "GET":
     return redirect('../../errorpage')
   user_id = 5
   post_id = request.POST['post_id']
   user = User.objects.get(id = user_id)
   pick_post = Post.objects.get(id = post_id)
-  
   try:
     PickPost_obejct = PickPost.objects.get(username = user)
     PickPost_obejct.pick_posts.add(pick_post)
@@ -99,7 +136,6 @@ def pick(request):
     PickPost_obejct.pick_posts.add(pick_post)
     PickPost_obejct.save()
   return redirect('../main/groupdiary/all')
-
 
 def pick_diary(request):
   try: # 로그인했을때만 접근가능하도록 처리
@@ -166,38 +202,41 @@ def pickdiary_comment_delete(request):
   selected_user_comment.delete()
   return redirect('../main/pickdiary')
 
+
+
 def group_diary(request,group="all"):
   try: # 로그인했을때만 접근가능하도록 처리
     user = request.session['user_name']
   except:
     return redirect('../../unloginpage')
   # 현재 유저 이름에 대한 db의 id를 가져와야함. 예시를 바탕으로, test_user1의 id는 1임
+  user = "test_user1"
   user_id = 5
-  user_posts = Post.objects.filter(username = user_id)
+  user_posts = Post.objects.filter(username = user_id) 
+  # filter 를 통해서 어떤 유저 아이디에 해당하는 post들을 다 가져와서 user_posts 에 저장한다. 외래키 이기 때문에 username으로 해도 id로 탐색.
   user_categories = User.objects.filter(id = user_id)[0].categories.all()
+   # 해당하는 id 에 맞는 유저를 찾아서 [0]을 붙인 이유가 뭐지 그리고 모든 categories를 변수에 저장한다.
   # 전체보기를 위해  user_categories_namelist의 맨 앞에 'all' 값을 하나 추가한다.
   user_categories_namelist = ["all"]
-  for category in user_categories:
-    user_categories_namelist.append(category.C_name)
-  user_categories_idlist = []
-  user_posts_idlist = []
-  for post in user_posts:
-    user_posts_idlist.append(post.id)
-    category = Category.objects.filter(C_name = post.category)
-    if(len(category) == 0):
-      pass
-    else:
-      category_id = category[0].id
-      user_categories_idlist.append(category_id)
-  user_posts_idlist.reverse()
+  for category in user_categories: # user_categories 안에 있는 카테고리들을 반복한다.
+    user_categories_namelist.append(category.C_name) # 각 카테고리의 이름들을 namelist 변수에 담아준더ㅏ,
+  user_categories_idlist = [] # 카테고리의 id 리스트와
+  user_posts_idlist = [] # post의 id 리스트를 만들어주고
+  for post in user_posts: # 특정 유저의 모든 post를 돌면서 
+    user_posts_idlist.append(post.id) # 그 아이디 값을 변수에 담아준다.
+    category = Category.objects.filter(C_name = post.category) # post의 카테고리가 원하는 카테고리의 이름과 같은 것들만 category 변수에 넣는다.
+    if(len(category) == 0): # categorty 변수에 아무것도 없으면 
+      pass # 그냥 넘어가고ㅓ
+    else: # 뭐라도 있으면 
+      category_id = category[0].id # 카테고리 안에 첫번째 post의 id 를 변수에 저장
+      user_categories_idlist.append(category_id) # 그 id 를 idlist 변수에 넣는다.
+  user_posts_idlist.reverse() # idlist를 뒤집어준다.
 
-  comments = {}
-  for post in user_posts:
-    comments[post.id] = []
-  for post in user_posts:
-    tmp_comments = Comment.objects.filter(post = post)
-    comments[post.id].append(tmp_comments)
-
+  comments = {} # 빈 딕셔너리를 선언
+  for post in user_posts: # post들을 반복하며
+    comments[post.id] = [] # 각 id 를 key로 가지는 빈 리스트 [] 를 value로 가짐
+    tmp_comments = Comment.objects.filter(post = post) # post에 해당하는 comment를 다 가져와서 저장하고
+    comments[post.id].append(tmp_comments) # 그 리스트에 넣어준다.
   #group이용해서 db에서 해당 group이름을 가진 교환일기장의 visible값을 아래 변수에 저장
   if group != 'all':
     category_for_link = Category.objects.filter(C_name = group)[0]

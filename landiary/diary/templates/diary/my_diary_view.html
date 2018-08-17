@@ -163,8 +163,16 @@
 						{% endif %}
 						<div class="view_mydiary_func">
 							<span class="hover1">
+								
+								<!-- <form method="POST" action="../editdiary">{% csrf_token %}
+								<input type="hidden" name="edit_id" value = "{{ post.id }}" />
 								<i class="far fa-edit"></i>
-								수정하기
+								<input type="submit" value="수정하기"/>
+								</form> -->
+								<a href="{% url 'editdiary' pk=post.pk %}">
+									<i class="far fa-edit"></i>수정하기
+								</a>
+
 							</span>
 							<span class="view_comment_icon hover2">
 								<i class="far fa-comment-alt"></i>
