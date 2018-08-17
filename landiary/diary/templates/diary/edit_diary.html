@@ -2,6 +2,8 @@
 {% load static %}
 {% block title %} Write {% endblock %}
 {% block script %}
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
 
 <script type="text/javascript">
 	function autoTextarea(obj,limit) {
@@ -14,10 +16,44 @@
 	    	obj.focus();
 	    }
 	}
-<<<<<<< HEAD
+</script>
+<script type="text/javascript">
+//weather 과 emotion 에 원래 글의 정보를 체크해주는 함수
+function checked_emotion_weather(){
+	var weather = document.getElementsByName("weather");
+	var emotion = document.getElementsByName("emotion");
+	for(var i = 0; i < 4; i++){
+		if(weather[i] == {{post.weather}}){
+			weather[i].checked = true
+		}	
+	}
+	for(var j = 0; j < 6; j++){
+		if(emotion[j] == {{post.emotion}}){
+			emotion[j].checked = true
+		}	
+	}
+}
+// 저장되있는 파일을 삭제하는 함수
+// function deletefile(tagid){
+// 	document.getElementById(tagid).innerHTML = document.getElementById(tagid).innerHTML;
+// }
 
-=======
->>>>>>> minsung
+
+
+
+</script>
+<script type="text/javascript">
+	function deletefile(){
+	console.log("################")
+	// document.getElementById("original_image").removeChild(obj.parentNode);
+	
+	var edit = document.getElementById("original_image")
+	edit.innerHTML = "<div class='select_image'>"+"<i class='fas fa-camera-retro'>"+"<input id='file_id' type='file' name='photo' value='파일 업로드'' class='upload'>"+"</i>"+"</div>"
+
+	// $("#original_image").empty();
+}
+</script>
+<script type="text/javascript">
 	function need_value(){
 		var form = document.write_diary_input;
 		if(form.title.value == ""){
@@ -26,56 +62,41 @@
 		}else if(form.category.value == ""){
 			alert("교환일기장을 선택해 주세요 :-(")
 			return form.category.focus()
-<<<<<<< HEAD
-		}
-		else if(form.text.value == ""){
-			alert("일기 내용을 입력해주세요 :-(")
-			return form.text.focus()
-=======
 		}else if(form.photo.value == ""){
 			alert("사진을 선택해 주세요 :-(")
 			return form.photo.focus()
 		}else if(form.content.value == ""){
 			alert("일기 내용을 입력해주세요 :-(")
 			return form.content.focus()
->>>>>>> minsung
 		}else{
 			form.submit();
 		}
 	}
-<<<<<<< HEAD
-	</script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-=======
 </script>
 
-
->>>>>>> minsung
-<body class="main_footer_wrap">
+<body class="main_footer_wrap" onload="checked_emotion_weather()">
 {% endblock %}
 							{% block highlight %}
-							<span class="write_write menu_highlight">일기 쓰기</span>
-							<span class="write_mydiary"><a href="../mydiary">내 일기장</a></span>
-							<span class="write_pick"><a href="../pickdiary">뜯어온 일기장</a></span>
-							<span class="write_exchange"><a href="../groupdiary/all">교환 일기장</a></span>
-							<span class="write_setup"><a href="../setting">설정</a></span>
-							<span class="write_logout"><a href="../../logout">로그아웃</a></span>
+							<span class="mydiary_write"><a href="../writediary">일기 쓰기</a></span>
+							<span class="mydiary_mydiary menu_highlight">내 일기장</span>
+							<span class="mydiary_pick"><a href="../pickdiary">뜯어온 일기장</a></span>
+							<span class="mydiary_exchange"><a href="../groupdiary/all">교환 일기장</a></span>
+							<span class="mydiary_setup"><a href="../setting">설정</a></span>
+							<span class="mydiary_logout"><a href="#">로그아웃</a></span>
 							{% endblock %}
 
 			{% block main %}
 			<main>
 				<div class="main_wrap">
-					<form name="write_diary_input" action = "" method="POST" enctype="multipart/form-data">
+					<form name="write_diary_input" action="editdiary" method="POST" enctype="multipart/form-data">{% csrf_token %}
 					<div class="diary_wrap">
 						<div class="title_input clearfix">
 							
 								<label for="inp" class="inp">
-<<<<<<< HEAD
-								  <input type="title" name="title" id="inp" placeholder="&nbsp;" oninvalid="this.setCustomValidity('Enter User Name Here')">
-=======
-								  <input type="title" name="title" id="inp" placeholder="&nbsp;">
-								  {% csrf_token %}
->>>>>>> minsung
+									<!-- 원래 글에 있던 값을 불러오기 위해 value값을 지정해줌 -->
+								  <input type="hidden" name="post_id" value='{{post.id}}'>	
+								  <input type="title" name="title" id="inp" placeholder="&nbsp;" value='{{post.title}}'>
+								  
 								  <span class="label">일기 제목</span>
 								  <span class="border"></span>
 								</label>
@@ -99,10 +120,11 @@
 								감정 : 
 								<span class="emotion_happy"> 
 									<!-- radio type은 선택을 할 수 있게 해준다. 선택 시 에는 value 값을 넘겨준다. -->
-									<input type="radio" id="happy" name="emotion" value="happy" checked="checked"><label for="happy">&nbsp;</label>
+									<input type="radio" id="happy" name="emotion" value="happy"><label for="happy">&nbsp;</label>
 								</span>
 								<span class="emotion_love">
-									<input type="radio" id="love" name="emotion" value="love"><label for="love">&nbsp;</label>
+									<input type="radio" id="love" name="emotion" value="love">
+									<label for="love">&nbsp;</label>
 								</span>
 								<span class="emotion_angry">
 									<input type="radio" id="angry" name="emotion" value="angry"><label for="angry">&nbsp;</label>
@@ -122,11 +144,14 @@
 							<div class="weather_input">
 								날씨 : 
 								<span class="weather_sunny">
-									<input type="radio" id="sunny" name="weather" value="sunny" checked="checked"><label for="sunny">&nbsp;</label>
+									<input type="radio" id="sunny" name="weather" value="sunny" ><label for="sunny">&nbsp;</label>
 								</span>
 								<span class="weather_umbrella">
-									<input type="radio" id="umbrella" name="weather" value="umbrella"><label for="umbrella">&nbsp;</label>
+									<input type="radio" id="umbrella" name="weather" value="umbrella" > <label for="umbrella">&nbsp;</label>
 								</span>
+
+
+
 								<span class="weather_cloud">
 									<input type="radio" id="cloud" name="weather" value="cloud"><label for="cloud">&nbsp;</label>
 								</span>
@@ -135,20 +160,32 @@
 								</span>
 							</div>
 						
-						<div class="write_diary_image_input">
+						<div class="edit_diary_image_input" id="uploadFile_div">
 							
-							<i class="fas fa-camera-retro"><input type="file" name="photo" value="" class="upload"></i>
 							
+								
+							{% if post.photo %}
+						<div class="edit_image_input" >
+							
+							<div id = "original_image">
+							<img class="diary_image" src= "{{ post.photo.url }}" />
+							<div><a onclick="deletefile(this)" >사진수정하기!</a> </div>
+							</div>
+						</div>
+						
 
+						{% endif %}
 
 						</div>
+						
 						<div class="content_input">
 							<!-- <form id="paper" method="get" action=""> -->
-								<textarea placeholder="일기 내용" onkeyup="autoTextarea(this,2000)" id="text" name="content" rows="4" style="word-wrap: break-word; resize: none; height: 100px; "></textarea>  
+								<textarea placeholder="일기 내용" onkeyup="autoTextarea(this,2000)" id="text" name="content" rows="4" style="word-wrap: break-word; resize: none; height: 100px; ">{{ post.content }}</textarea>  
 								<br>
 						</div>
+
 						<div class="diary_submit_button_wrap">
-							<input type="button" class="diary_submit_button" value="일기 저장" onClick="need_value()"/>
+							<input type="button" class="diary_submit_button" value="일기 저장" onclick="need_value()"/>
 						</div>
 					</div>
 					</form> 

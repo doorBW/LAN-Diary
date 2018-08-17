@@ -310,8 +310,9 @@
 .weather_input{
 	font-size: 30px;
 }
+
 .write_diary_image_input{
-	height: 400px;
+	height: auto;
 	border: solid 2px black;
 	border-style: dashed;
 	margin-bottom: 10px;
@@ -559,6 +560,21 @@ input[type=radio]{
   .weather_snow input:checked + label{
    background-image: url('../img/snow_color.png');
  }
+/*----------------------------------eidt_diary------------------------------*/
+
+
+.edit_diary_image_input{
+  height: auto;
+  border: solid 2px black;
+  border-style: dashed;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-size: 50px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
 /*----------------------------------register------------------------------*/
 
 .register_input_wrap{
@@ -672,11 +688,13 @@ input[type=radio]{
 	font-size:25px;
 }
 .image_input{
-	height: 400px;
+	height: auto;
 	border: solid 2px black;
 	border-style: dashed;
 	margin-bottom: 10px;
 	margin-top: 10px;
+  
+  
 }
 .diary_wrap{
 	padding: 5% 25px;
@@ -722,6 +740,13 @@ input[type=radio]{
 .my_diary_emotion_img{
   margin-left: 10px;
 }
+
+.diary_image{
+  width: 100%;
+  height: auto;
+  z-index: 1;
+}
+
 /*----------------------------------pick_diary------------------------------*/
 .pick_write, .pick_mydiary, .pick_pick, .pick_exchange, .pick_setup, .pick_logout{
     float: left;
