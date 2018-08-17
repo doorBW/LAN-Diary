@@ -14,10 +14,6 @@
 	    	obj.focus();
 	    }
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> minsung
 	function need_value(){
 		var form = document.write_diary_input;
 		if(form.title.value == ""){
@@ -26,31 +22,18 @@
 		}else if(form.category.value == ""){
 			alert("교환일기장을 선택해 주세요 :-(")
 			return form.category.focus()
-<<<<<<< HEAD
-		}
-		else if(form.text.value == ""){
-			alert("일기 내용을 입력해주세요 :-(")
-			return form.text.focus()
-=======
 		}else if(form.photo.value == ""){
 			alert("사진을 선택해 주세요 :-(")
 			return form.photo.focus()
 		}else if(form.content.value == ""){
 			alert("일기 내용을 입력해주세요 :-(")
 			return form.content.focus()
->>>>>>> minsung
 		}else{
 			form.submit();
 		}
 	}
-<<<<<<< HEAD
 	</script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-=======
-</script>
-
-
->>>>>>> minsung
 <body class="main_footer_wrap">
 {% endblock %}
 							{% block highlight %}
@@ -65,17 +48,12 @@
 			{% block main %}
 			<main>
 				<div class="main_wrap">
-					<form name="write_diary_input" action = "" method="POST" enctype="multipart/form-data">
+					<form name="write_diary_input" action = "" method="POST" enctype="multipart/form-data">{% csrf_token %}
 					<div class="diary_wrap">
 						<div class="title_input clearfix">
 							
 								<label for="inp" class="inp">
-<<<<<<< HEAD
-								  <input type="title" name="title" id="inp" placeholder="&nbsp;" oninvalid="this.setCustomValidity('Enter User Name Here')">
-=======
 								  <input type="title" name="title" id="inp" placeholder="&nbsp;">
-								  {% csrf_token %}
->>>>>>> minsung
 								  <span class="label">일기 제목</span>
 								  <span class="border"></span>
 								</label>

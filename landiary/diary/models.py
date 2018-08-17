@@ -20,7 +20,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     photo = models.ImageField()
     content = models.CharField(max_length=4000)
-    published = models.DateTimeField()
+    published = models.DateTimeField(auto_now=True)
     weather = models.CharField(max_length=15)
     emotion = models.CharField(max_length=15)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True)
