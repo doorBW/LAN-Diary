@@ -13,6 +13,23 @@
 	    	obj.focus();
 	    }
 	}
+
+	function need_value(){
+		var form = document.write_diary_input;
+		if(form.title.value == ""){
+			alert("일기 제목을 입력해주세요 :-(")
+			return form.title.focus()
+		}else if(form.category.value == ""){
+			alert("교환일기장을 선택해 주세요 :-(")
+			return form.category.focus()
+		}
+		else if(form.text.value == ""){
+			alert("일기 내용을 입력해주세요 :-(")
+			return form.text.focus()
+		}else{
+			form.submit();
+		}
+	}
 	</script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body class="main_footer_wrap">
@@ -34,7 +51,7 @@
 						<div class="title_input clearfix">
 							
 								<label for="inp" class="inp">
-								  <input type="title" name="title" id="inp" placeholder="&nbsp;">
+								  <input type="title" name="title" id="inp" placeholder="&nbsp;" oninvalid="this.setCustomValidity('Enter User Name Here')">
 								  <span class="label">일기 제목</span>
 								  <span class="border"></span>
 								</label>
@@ -107,7 +124,7 @@
 								<br>
 						</div>
 						<div class="diary_submit_button_wrap">
-							<input type="submit" class="diary_submit_button" value="일기 저장"/>
+							<input type="button" class="diary_submit_button" value="일기 저장" onClick="need_value()"/>
 						</div>
 					</div>
 					</form>
