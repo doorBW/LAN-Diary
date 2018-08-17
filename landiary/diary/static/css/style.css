@@ -1433,5 +1433,19 @@ button{
   margin-bottom: 10px;
 }
 
-
-
+.nothing_pickdiary_wrap{
+  height: 590px;
+  padding-top: 7%;
+}
+.nothing_pickdiary{
+  border: solid 2px;
+  border-radius: 15px;
+  width: 70%;
+  height: 100%;
+  margin: auto;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}

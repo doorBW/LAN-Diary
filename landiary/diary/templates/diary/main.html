@@ -84,20 +84,19 @@
             var cell = row.insertCell();
             if(year == date.getFullYear() && month-1 == date.getMonth() && i == date.getDate()){
                 // for문으로 오늘 일기들에 대해 탐색 for post in today_posts
-                cell.innerHTML = "<div class='calendar_cell'>"+i+"</div>"+"{% for post in today_posts %}"+"<div>"+"<form name='myForm_{{post.id}}' method='POST' action='./calendardiary'>"+"{% csrf_token %}"+"<input type='hidden' name='post_id' value='{{post.id}}' />"+"</form>"+"<a class='calendar_a_tag_example' href='#' onclick = 'javascript:document.myForm_{{post.id}}.submit();'>"+"{{ post.title }}"+"</a>"+"</div>"+"{% endfor %}";
+                cell.innerHTML = "<div class='calendar_cell'>"+i+"</div>"+"{% for post in today_posts %}"+"<div>"+"<form name='myForm_{{post.id}}' method='GET' action='./calendardiary'>"+"<input type='hidden' name='post_id' value='{{post.id}}' />"+"</form>"+"<a class='calendar_a_tag_example' href='#' onclick = 'javascript:document.myForm_{{post.id}}.submit();'>"+"{{ post.title }}"+"</a>"+"</div>"+"{% endfor %}";
             }
             else {
                 {% if otherday_posts|length == 0 %}
                     cell.innerHTML = "<div>"+i+"</div>"
-                    pass
                 {% else %}
                     {% for post in otherday_posts %}
                         if ({{ post.published|date:"Y" }} == year && {{post.published|date:"m"}} == month && {{post.published|date:"d"}} == i){
                             if(cell.innerHTML!=""){
-                                cell.innerHTML += ("<div>"+"<form name='myForm_{{post.id}}' method='POST' action='./calendardiary'>"+"{% csrf_token %}"+"<input type='hidden' name='post_id' value='{{post.id}}' />"+"</form>"+"<a class='calendar_a_tag_example' href='#' onclick = 'javascript:document.myForm_{{post.id}}.submit();'>"+"{{ post.title }}"+"</a>"+"</div>");
+                                cell.innerHTML += ("<div>"+"<form name='myForm_{{post.id}}' method='GET' action='./calendardiary'>"+"<input type='hidden' name='post_id' value='{{post.id}}' />"+"</form>"+"<a class='calendar_a_tag_example' href='#' onclick = 'javascript:document.myForm_{{post.id}}.submit();'>"+"{{ post.title }}"+"</a>"+"</div>");
                             }
                             else{
-                                if(i!=null) cell.innerHTML = "<div>"+i+"</div>"+("<div>"+"<form name='myForm_{{post.id}}' method='POST' action='./calendardiary'>"+"{% csrf_token %}"+"<input type='hidden' name='post_id' value='{{post.id}}' />"+"</form>"+"<a class='calendar_a_tag_example' href='#' onclick = 'javascript:document.myForm_{{post.id}}.submit();'>"+"{{ post.title }}"+"</a>"+"</div>");
+                                if(i!=null) cell.innerHTML = "<div>"+i+"</div>"+("<div>"+"<form name='myForm_{{post.id}}' method='GET' action='./calendardiary'>"+"<input type='hidden' name='post_id' value='{{post.id}}' />"+"</form>"+"<a class='calendar_a_tag_example' href='#' onclick = 'javascript:document.myForm_{{post.id}}.submit();'>"+"{{ post.title }}"+"</a>"+"</div>");
                             }
                         }
                         else{

@@ -132,9 +132,7 @@
 	}
 	function view_exchange_diary(){
 		show(show_diary_id);
-		console.log(show_diary_id)
 		hidden(not_show_diary_id_list);
-		console.log(not_show_diary_id_list)
 	}
 	function left_btn_click() {
 		if(show_diary_id==first_id) {
@@ -246,7 +244,7 @@
 								<span class="exchange_pick"><a href="../pickdiary">뜯어온 일기장</a></span>
 								<span class="exchange_exchange menu_highlight">교환 일기장</span>
 								<span class="exchange_setup"><a href="../setting">설정</a></span>
-								<span class="exchange_logout"><a href="#">로그아웃</a></span>
+								<span class="exchange_logout"><a href="../../logout">로그아웃</a></span>
 								{% endblock %}
 							
 	{% block main %}
@@ -343,7 +341,7 @@
 										<span class="hover1">
 											<form name="myForm_pick_{{post.id}}" method="POST" action="../pick">{% csrf_token %}
 											<input type="hidden" name="post_id" value="{{ post.id }}" />
-											<i class="fas fa-eraser"></i><a href="#" onclick="javascript:document.myForm_pick_{{post.id}}.submit();">뜯어가기</a>
+											<i class="fas fa-cut"></i><a href="#" onclick="javascript:document.myForm_pick_{{post.id}}.submit();">뜯어가기</a>
 											</form>
 										</span>
 										<span class="write_comment_icon hover2">
@@ -383,13 +381,13 @@
 														<button class="exchange_diary_comment_func_button" onclick="comment_edit_click({{ comment.id }})">
 															<img id="comment_img" width="16px" height="16px" src="{% static 'img/edit.png' %}" alt="수정하기">
 														</button>
-														<form method="POST" name="comment_1_delete" action="../comment_delete">
+														<form method="POST" name="comment_{{comment.id}}_delete" action="../comment_delete">
 															{% csrf_token %}
 															<input type="hidden" name="comment_id" value="{{ comment.id }}"/>
-														<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_{{comment.id}}_delete.submit();">
+														 <button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_{{comment.id}}_delete.submit();">
 															<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기">
-														</button>
-														</form>
+														 </button>
+														 </form>
 													</td>
 												</tr>
 															{% endfor %}
@@ -473,8 +471,10 @@
 									</div>
 									<div class="exchange_diary_func">
 										<span class="hover1">
-											<i class="fas fa-cut"></i>
-											<input type="submit" value="뜯어가기">
+											<form name="myForm_pick_{{post.id}}" method="POST" action="../pick">{% csrf_token %}
+												<input type="hidden" name="post_id" value="{{ post.id }}" />
+												<i class="fas fa-cut"></i><a href="#" onclick="javascript:document.myForm_pick_{{post.id}}.submit();">뜯어가기</a>
+											</form>
 										</span>
 										<span class="write_comment_icon hover2">
 											<i class="far fa-comment"></i>
@@ -512,12 +512,15 @@
 														<button class="exchange_diary_comment_func_button" onclick="comment_edit_click({{ comment.id }})">
 															<img id="comment_img" width="16px" height="16px" src="{% static 'img/edit.png' %}" alt="수정하기">
 														</button>
-														<form name="comment_{{comment.id}}_delete">
-															<input type="hidden" name="delete_comment_{{comment.id}}" value="{{ comment.id }}"/>
-														</form>
-														<button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_{{comment.id}}_delete.submit();">
+														<form method="POST" name="comment_{{comment.id}}_delete" action="../comment_delete_2">
+															{% csrf_token %}
+															<input type="hidden" name="comment_id" value="{{ comment.id }}"/>
+															<input type="hidden" name="selected_group" value="{{ post.category }}"/>
+			   
+														 <button class="exchange_diary_comment_func_button" onclick="javascript:document.comment_{{comment.id}}_delete.submit();">
 															<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기">
-														</button>
+														 </button>
+														 </form>
 													</td>
 												</tr>
 															{% endfor %}

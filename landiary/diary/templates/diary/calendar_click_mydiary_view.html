@@ -65,11 +65,11 @@
 {% endblock %}
 <body class="main_footer_wrap">
 							{% block highlight %}
-							<span class="mydiary_write"><a href="./writediary">일기 쓰기</a></span>
+							<span class="mydiary_write"><a href="../writediary">일기 쓰기</a></span>
 							<span class="mydiary_mydiary menu_highlight">내 일기장</span>
-							<span class="mydiary_pick"><a href="./pickdiary">뜯어온 일기장</a></span>
-							<span class="mydiary_exchange"><a href="./groupdiary/all">교환 일기장</a></span>
-							<span class="mydiary_setup"><a href="./setting">설정</a></span>
+							<span class="mydiary_pick"><a href="../pickdiary">뜯어온 일기장</a></span>
+							<span class="mydiary_exchange"><a href="../groupdiary/all">교환 일기장</a></span>
+							<span class="mydiary_setup"><a href="../setting">설정</a></span>
 							<span class="mydiary_logout"><a href="#">로그아웃</a></span>
 							{% endblock %}
 
@@ -118,8 +118,10 @@
 								일기 보기
 							</span>
 							<span class="hover4">
-								<i class="fas fa-eraser"></i>
-								지우기
+									<form name="myForm_mydiary_delete_{{post.id}}" method="POST" action="../calendardiary_delete">{% csrf_token %}
+										<input type="hidden" name="post_id" value="{{ post.id }}" />
+										<i class="fas fa-eraser"></i><a href="#" onclick="javascript:document.myForm_mydiary_delete_{{post.id}}.submit();">지우기</a>
+									</form>
 							</span>
 						</div>
 						<div class="content_input">
@@ -140,9 +142,14 @@
 									<td class="diary_nickname">{{comment.author}}</td>
 									<td class="comment_content">{{comment.content}}</td>
 									<td class="view_diary_comment_func">
-										<form name="comment_form" action="" method="POST">{% csrf_token %}
-											<button class="view_diary_comment_func_button"><i class="fas fa-times"></i></button>
-										</form>
+											<form method="POST" name="comment_{{comment.id}}_delete" action="../calendardiary_comment_delete">
+												{% csrf_token %}
+												<input type="hidden" name="post_id" value="{{ comment.post.id }}"/>
+												<input type="hidden" name="comment_id" value="{{ comment.id }}"/>
+											 <button class="view_diary_comment_func_button" onclick="javascript:document.comment_{{comment.id}}_delete.submit();">
+												<img id="delete_img" width="13px" height="13px" src="{% static 'img/delete.png' %}" alt="삭제하기">
+											 </button>
+											 </form>
 									</td>
 								</tr>
 											{% endfor %}

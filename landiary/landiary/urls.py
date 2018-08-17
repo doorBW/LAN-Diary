@@ -21,5 +21,4 @@ urlpatterns = [
     path('main/', include('diary.urls')),
     # path(,include('diary.urls')),
     path('admin/', admin.site.urls),
-    path('diary/', include('diary.urls')),
 ]
