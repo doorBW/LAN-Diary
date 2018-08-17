@@ -58,17 +58,35 @@ def edit_diary(request):
 '''
 def edit_diary(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    user_id = 2
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.uername = User.objects.get(id=2)
-            post.category = Category.objects.get(id = 1)
-            post.save()
-            return redirect('main')
+      original_post = Post.objects.get(id = request.POST['post_id'])
+      original_post.title = request.POST['title']
+      # original_post.category = Category.objects.get(C_name = request.POST['category'])
+      original_post.emotion = request.POST['emotion']
+      original_post.weather = request.POST['weather']
+      if request.POST['photo'] == "": # 사진을 수정하지 않으면 걍 내비둔다
+        pass
+      else: # 새로운 사진을 첨부했으면, 기존의 사진을 지우고 새로 첨부한 사진을 db에 입력
+        original_post.photo.delete(save=False)
+        original_post.photo = request.FILES['photo'] 
+      original_post.content = request.POST['content']
+      original_post.save()
+      return redirect('main')
+        # form = PostForm(request.POST, instance=post)
+        # if form.is_valid():
+        #     post = form.save(commit=False)
+        #     post.uername = User.objects.get(id=user_id)
+        #     post.category = Category.objects.get(id = post.id)
+        #     post.photo = 
+        #     post.save()
+        #     return redirect('main')
+
     else:
         form = PostForm(instance=post)
     return render(request, 'diary/edit_diary.html', {'form': form, 'post': post})
+
+
 '''
 def edit_diary(request):
   post_id = request.POST['edit_id']

@@ -14,6 +14,24 @@
 	    	obj.focus();
 	    }
 	}
+	function need_value(){
+		var form = document.write_diary_input;
+		if(form.title.value == ""){
+			alert("일기 제목을 입력해주세요 :-(")
+			return form.title.focus()
+		}else if(form.category.value == ""){
+			alert("교환일기장을 선택해 주세요 :-(")
+			return form.category.focus()
+		}else if(form.photo.value == ""){
+			alert("사진을 선택해 주세요 :-(")
+			return form.photo.focus()
+		}else if(form.content.value == ""){
+			alert("일기 내용을 입력해주세요 :-(")
+			return form.content.focus()
+		}else{
+			form.submit();
+		}
+	}
 </script>
 
 
@@ -99,7 +117,7 @@
 						
 						<div class="write_diary_image_input">
 							
-							<i class="fas fa-camera-retro"><input type="file" name="photo" value="파일 업로드" class="upload"></i>
+							<i class="fas fa-camera-retro"><input type="file" name="photo" value="" class="upload"></i>
 							
 
 
@@ -110,7 +128,7 @@
 								<br>
 						</div>
 						<div class="diary_submit_button_wrap">
-							<input type="submit" class="diary_submit_button" value="일기 저장"/>
+							<input type="button" class="diary_submit_button" value="일기 저장" onClick="need_value()"/>
 						</div>
 					</div>
 					</form> 
