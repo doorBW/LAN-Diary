@@ -59,7 +59,6 @@
      var hover1 = $('.hover1');
      var hover2 = $('.hover2');
      var hover3 = $('.hover3');
-     var hover4 = $('.hover4');
      var comment_button_hover = $('.comment_button_hover');
      hover1.hover(function(){
        hover1.css('font-size','30px');
@@ -81,13 +80,6 @@
      },function(){
        hover3.css('font-size','25px');
        hover3.css('color','black');
-     });
-     hover4.hover(function(){
-       hover4.css('font-size','30px');
-       hover4.css('color','#B90000');
-     },function(){
-       hover4.css('font-size','25px');
-       hover4.css('color','black');
      });
      comment_button_hover.hover(function(){
        comment_button_hover.css('color','gray');
@@ -325,7 +317,7 @@
 											<img src="{% with 'img/'|add:post.weather|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px">
 										</span>
 										<span class="exchange_diary_emotion_img">
-											<img src="{% with 'img/'|add:post.emotion|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px"> : 32 
+											<img src="{% with 'img/'|add:post.emotion|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px"> 
 										</span>
 									</div>
 									<div class="exdi_date_input">
@@ -333,9 +325,11 @@
 										<span>{{ post.published|date:"m" }}월 </span>
 										<span>{{ post.published|date:"d" }}일</span>
 									</div>
+									{% if post.photo %}
 									<div class="image_input">
-										
+										<img class="diary_image" src= "{{ post.photo.url }}" />
 									</div>
+									{% endif %}
 									<div class="exchange_diary_func">
 										<span class="hover1">
 											<form name="myForm_pick_{{post.id}}" method="POST" action="../pick">{% csrf_token %}
@@ -351,16 +345,10 @@
 											<i class="far fa-eye"></i>
 											일기 보기
 										</span>
-										<span class="hover4">
-											<i class="far fa-meh"></i>
-											공감하기
-										</span>
 									</div>
 									<div class="content_input">
 										<form id="paper" method="get" action="">
-											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>
-												{{ post.content }}
-											</textarea>  
+											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>{{post.content}}</textarea>
 											<br>
 										</form>
 									</div>
@@ -490,9 +478,7 @@
 									</div>
 									<div class="content_input">
 										<form id="paper" method="get" action="">
-											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>
-												{{ post.content }}
-											</textarea>  
+											<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>{{post.content}}</textarea>
 											<br>
 										</form>
 									</div>

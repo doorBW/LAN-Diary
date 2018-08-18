@@ -132,8 +132,8 @@
 
 		{% if pickposts|length == 0 %}
 		<div class="main_footer_wrap">
-			<div class="nothing_pickdiary_wrap">
-				<div class="nothing_pickdiary">
+			<div class="adiary_wrap">
+				<div class="adiary">
 					<span>아직 뜯어온 일기장에 보여줄 일기가 없어요ㅠ<br>교환 일기장에서 일기를 뜯어오기해보세요~<i class="fas fa-location-arrow"></i></span>
 				</div>
 			</div>
@@ -164,7 +164,7 @@
 										<img src="{% with 'img/'|add:pickpost.weather|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px" />
 									</span>
 									<span class="pickdiary_emotion_img">
-										<img src="{% with 'img/'|add:pickpost.emotion|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px" /> : 32 
+										<img src="{% with 'img/'|add:pickpost.emotion|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px" />
 									</span>
 								</div>
 							</div>
@@ -174,13 +174,18 @@
 								<span>{{ pickpost.published|date:"m" }}월 </span>
 								<span>{{ pickpost.published|date:"d" }}일</span>
 							</div>
+							{% if pickpost.photo %}
+							<div class="image_input">
+								<img class="diary_image" src= "{{ pickpost.photo.url }}" />
+							</div>
+							{% endif %}
 							<!-- 사진 안나옴 -->
-								<div class="pick_diary_image_input">
+								<!-- <div class="pick_diary_image_input"> -->
 								<!-- {% if pickpost.photo %}
 								<img src="{{ pickpost.photo.url }}">
 								{% endif %} -->
 								
-							</div>
+							<!-- </div> -->
 							<div class="view_mydiary_func">
 								<span class="view_comment_icon hover1">
 									<i class="far fa-comment-alt"></i>

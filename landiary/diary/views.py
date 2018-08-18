@@ -55,12 +55,16 @@ def mydiary(request):
     return redirect('../../unloginpage')
   user_id = 5 # 규란이가 성공하면 2가 아니라 현재 접속자를 불러온다. id가 될 지 아닌지는 아직 미정
   user_posts = Post.objects.filter(username = user_id)
+  user_posts_idlist = []
+  for post in user_posts:
+    user_posts_idlist.append(post.id)
+
   comments = {}
   for post in user_posts:
     comments[post.id] = []
     tmp_comments = Comment.objects.filter(post=post)
     comments[post.id].append(tmp_comments)
-  return render(request, 'diary/my_diary_view.html', {'posts':user_posts, 'comments':comments})
+  return render(request, 'diary/my_diary_view.html', {'posts':user_posts, 'comments':comments, 'posts_idlist':user_posts_idlist})
 
 def mydiary_delete(request):
   user_id = 5
@@ -94,7 +98,7 @@ def edit_diary(request, pk):
         original_post.photo = request.FILES['photo'] 
       original_post.content = request.POST['content']
       original_post.save()
-      return redirect('main')
+      return redirect('../mydiary')
 
     else:
         form = PostForm(instance=post)
@@ -116,7 +120,7 @@ def write_diary(request):
       post.username = User.objects.get(id = user_id)
       post.category = Category.objects.get(id = category_id )
       post.save()
-      return redirect('main')
+      return redirect('../mydiary')
   else:
     form = PostForm()
   return render(request, 'diary/write_diary.html')
@@ -152,9 +156,7 @@ def pick_diary(request):
   user_pickposts_idlist = []
   for post in user_posts:
     user_pickposts_idlist.append(post.id)
-  print(user_pickposts_idlist)
   user_pickposts_idlist.reverse()
-  print(user_pickposts_idlist)
 
   comments = {}
   for post in user_posts:

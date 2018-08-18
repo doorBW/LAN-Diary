@@ -36,11 +36,10 @@ function checked_emotion_weather(){
 </script>
 <script type="text/javascript">
 	function deletefile(){
-	console.log("################")
 	// document.getElementById("original_image").removeChild(obj.parentNode);
 	
 	var edit = document.getElementById("original_image")
-	edit.innerHTML = "<div class='select_image'>"+"<i class='fas fa-camera-retro'>"+"<input id='file_id' type='file' name='photo' value='파일 업로드'' class='upload'>"+"</i>"+"</div>"
+	edit.innerHTML = "<div class='select_image'>"+"<i class='fas fa-camera-retro'>"+"<input id='file_id' type='file' name='photo' value='파일 업로드' class='upload'>"+"</i>"+"</div>"
 
 	// $("#original_image").empty();
 }
@@ -106,10 +105,6 @@ function checked_emotion_weather(){
 								</form>
 							</span>
 						</div>
-						
-						
-						
-						
 							<div class="emotion_input">
 								감정 : 
 								<span class="emotion_happy"> 
@@ -143,9 +138,6 @@ function checked_emotion_weather(){
 								<span class="weather_umbrella">
 									<input type="radio" id="umbrella" name="weather" value="umbrella" > <label for="umbrella">&nbsp;</label>
 								</span>
-
-
-
 								<span class="weather_cloud">
 									<input type="radio" id="cloud" name="weather" value="cloud"><label for="cloud">&nbsp;</label>
 								</span>
@@ -155,21 +147,14 @@ function checked_emotion_weather(){
 							</div>
 						
 						<div class="edit_diary_image_input" id="uploadFile_div">
-							
-							
-								
 							{% if post.photo %}
-						<div class="edit_image_input" >
-							
-							<div id = "original_image">
-							<img class="diary_image" src= "{{ post.photo.url }}" />
-							<div><a onclick="deletefile(this)" >사진수정하기!</a> </div>
+							<div class="edit_image_input">
+								<div id = "original_image">
+								<img class="diary_image" src= "{{ post.photo.url }}" />
+								<div class="edit_image_wrap"><a onclick="deletefile(this)" ><i class="far fa-image"></i>사진 수정</a> </div>
+								</div>
 							</div>
-						</div>
-						
-
-						{% endif %}
-
+							{% endif %}
 						</div>
 						
 						<div class="content_input">

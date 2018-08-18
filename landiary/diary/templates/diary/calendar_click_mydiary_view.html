@@ -88,10 +88,10 @@
 									#내 일기장
 								</span>
 								<span class="my_diary_emotion_img">
-									#<img src="{% static 'img/love_color.png' %}" alt="" width="25px" height="25px"> : 32 
-								</span>
+									<img src="{% with 'img/'|add:post.emotion|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px">
+								</span>&nbsp;
 								<span>
-									#<i class="fas fa-sun"></i>
+									<img src="{% with 'img/'|add:post.weather|add:'_color.png' as image_static %}{% static image_static %}{% endwith %}" alt="" width="25px" height="25px">
 								</span>
 							</div>
 						</div>
@@ -101,9 +101,11 @@
 							<span>{{ post.published|date:"m" }}월 </span>
 							<span>{{ post.published|date:"d" }}일</span>
 						</div>
-						<div class="image_input">
-							
-						</div>
+						{% if post.photo %}
+							<div class="image_input">
+								<img class="diary_image" src= "{{ post.photo.url }}" />
+							</div>
+						{% endif %}
 						<div class="view_mydiary_func">
 							<span class="hover1">
 								<i class="far fa-edit"></i>
@@ -126,9 +128,7 @@
 						</div>
 						<div class="content_input">
 							<form id="paper" method="get" action="">
-								<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>
-									{{ post.content }}
-								</textarea>  
+								<textarea placeholder="일기 내용" id="text" name="text" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 400px; " disabled>{{post.content}}</textarea>  
 								<br>
 							</form>
 						</div>
