@@ -22,14 +22,15 @@ def main(request):
   except:
     return redirect('../unloginpage')
   # user = "user2"
-  user_id = 5
+  user_id = User.objects.get(nick_name = user).id
   user_posts = Post.objects.filter(username = user_id)
   user_today_posts = user_posts.filter(published__date = date.today())
   user_otherday_posts = user_posts.exclude(published__date = date.today())
 
   item = {
     'today_posts' : user_today_posts,
-    'otherday_posts' : user_otherday_posts
+    'otherday_posts' : user_otherday_posts,
+    'user' : user
   }
 
   # login message를 위한 로직
@@ -53,7 +54,7 @@ def mydiary(request):
     user = request.session['user_name']
   except:
     return redirect('../../unloginpage')
-  user_id = 5 # 규란이가 성공하면 2가 아니라 현재 접속자를 불러온다. id가 될 지 아닌지는 아직 미정
+  user_id = User.objects.get(nick_name = user).id
   user_posts = Post.objects.filter(username = user_id)
   user_posts_idlist = []
   for post in user_posts:
@@ -67,7 +68,7 @@ def mydiary(request):
   return render(request, 'diary/my_diary_view.html', {'posts':user_posts, 'comments':comments, 'posts_idlist':user_posts_idlist})
 
 def mydiary_delete(request):
-  user_id = 5
+  user_id = User.objects.get(nick_name = user).id
   post_id = request.POST['post_id']
   user = User.objects.get(id = user_id)
   user_post = Post.objects.filter(username = user)
@@ -84,7 +85,7 @@ def setting(request):
 
 def edit_diary(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    user_id = 5
+    user_id = User.objects.get(nick_name = user).id
     if request.method == "POST":
       original_post = Post.objects.get(id = request.POST['post_id'])
       original_post.title = request.POST['title']
@@ -105,15 +106,13 @@ def edit_diary(request, pk):
     return render(request, 'diary/edit_diary.html', {'form': form, 'post': post})
 
 def write_diary(request):
-  user_id = 5
-  category_id = 4
-  user = User.objects.get(id = user_id)
-  
   try: # 로그인했을때만 접근가능하도록 처리
     user = request.session['user_name']
   except:
     return redirect('../../unloginpage')
   if request.method == "POST":
+    user_id = User.objects.get(nick_name = user).id
+    category_id = Category.objects.get(C_name = request.POST['category']).id
     form = PostForm(request.POST,request.FILES)
     if form.is_valid():
       post = form.save(commit=False)
@@ -123,12 +122,20 @@ def write_diary(request):
       return redirect('../mydiary')
   else:
     form = PostForm()
-  return render(request, 'diary/write_diary.html')
+    user = User.objects.get(nick_name = user)
+    item = {
+      'user_categories' : user.categories.all()
+    }
+  return render(request, 'diary/write_diary.html', item)
 
 def pick(request):
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
   if request.method == "GET":
     return redirect('../../errorpage')
-  user_id = 5
+  user_id = User.objects.get(nick_name = user).id
   post_id = request.POST['post_id']
   user = User.objects.get(id = user_id)
   pick_post = Post.objects.get(id = post_id)
@@ -147,17 +154,16 @@ def pick_diary(request):
   except:
     return redirect('../../unloginpage')
   # user = "test_user1"
-  user_id = 5
+  user_id = User.objects.get(nick_name = user).id
   try:
     user_posts = PickPost.objects.get(username = user_id).pick_posts.all()
   except:
-    return redirect('../pickdiary')
+    user_posts=[]
   
   user_pickposts_idlist = []
   for post in user_posts:
     user_pickposts_idlist.append(post.id)
   user_pickposts_idlist.reverse()
-
   comments = {}
   for post in user_posts:
     comments[post.id] = []
@@ -171,7 +177,11 @@ def pick_diary(request):
   return render(request, 'diary/pick_diary_view.html', item)
   
 def remove(request):
-  user_id = 5
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
+  user_id = User.objects.get(nick_name = user).id
   post_id = request.POST['remove_id']
   # user = PickPost.objects.get(id = user_id)
   post = Post.objects.get(id = post_id)
@@ -180,7 +190,11 @@ def remove(request):
   return redirect('../main/pickdiary/')
 
 def comment_delete(request):
-  user_id = 5
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
+  user_id = User.objects.get(nick_name = user).id
   post_id = request.POST['comment_id']
   user_comment = Comment.objects.filter(author = user_id)
   selected_user_comment = user_comment.get(id = post_id)
@@ -188,7 +202,11 @@ def comment_delete(request):
   return redirect('../main/groupdiary/all')
   
 def comment_delete_2(request):
-  user_id = 5
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
+  user_id = User.objects.get(nick_name = user).id
   post_id = request.POST['comment_id']
   user_comment = Comment.objects.filter(author = user_id)
   selected_user_comment = user_comment.get(id = post_id)
@@ -197,7 +215,11 @@ def comment_delete_2(request):
   return redirect('../main/groupdiary/'+selected_group)
 
 def pickdiary_comment_delete(request):
-  user_id = 5
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
+  user_id = User.objects.get(nick_name = user).id
   post_id = request.POST['comment_id']
   user_comment = Comment.objects.filter(author = user_id)
   selected_user_comment = user_comment.get(id = post_id)
@@ -285,6 +307,7 @@ def making_group(request):
         link = "http://localhost:8000/main/invite/check/"+token
         category.link = link
       category.save()
+      User.objects.get(nick_name = user).categories.add(category)
   else:
     return redirect('../../../errorpage')
   return redirect('../groupdiary/all')
@@ -295,7 +318,7 @@ def search_group(request):
   except:
     return redirect('../../unloginpage')
   # user 가정
-  user_id = 5
+  user_id = User.objects.get(nick_name = user).id
   user_categories = User.objects.get(id = user_id).categories.all() # user가 이미 속한 교환일기장
 
   search_word = request.GET.get('search')
@@ -315,7 +338,6 @@ def invite_check(request,token=""):
     user = request.session['user_name']
   except:
     return redirect('../../unloginpage')
-  user = 'user2'
   if token == "":
     pass # return 잘못된 접근
   else:
@@ -343,7 +365,11 @@ def join_group(request,group='',user=''):
   return redirect("../../groupdiary/"+group)
 
 def calendardiary_comment_delete(request):
-  user_id = 5
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
+  user_id = User.objects.get(nick_name = user).id
   comment_id = request.POST['comment_id']
   post_id = request.POST['post_id']
   user_comment = Comment.objects.filter(author = user_id)
@@ -352,7 +378,11 @@ def calendardiary_comment_delete(request):
   return redirect('./calendardiary/?post_id='+post_id)
 
 def calendar_diary(request):
-  user_id = 5
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
+  user_id = User.objects.get(nick_name = user).id
   user = User.objects.get(id = user_id)
   post_id = request.GET["post_id"]
   user_posts = Post.objects.filter(username = user_id)
@@ -369,7 +399,11 @@ def calendar_diary(request):
   return render(request, 'diary/calendar_click_mydiary_view.html', item)
 
 def calendardiary_delete(request):
-  user_id = 5
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
+  user_id = User.objects.get(nick_name = user).id
   post_id = request.POST['post_id']
   user = User.objects.get(id = user_id)
   user_post = Post.objects.filter(username = user)
@@ -377,7 +411,19 @@ def calendardiary_delete(request):
   selected_user_post.delete()
   return redirect('../main')
 
-
-
-
-
+def write_comment(request):
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
+  if request.method == "POST":
+    comment_content = request.POST['comment_content']
+    C_name = request.POST['category_name']
+    post_id = request.POST['post_id']
+    user = User.objects.get(nick_name = user)
+    post = Post.objects.get(id = post_id)
+    comment = Comment.objects.create(post = post,content = comment_content, author = user)
+    comment.save()
+  else:
+    return redirect('../errorpage')
+  return redirect('../main/groupdiary/'+C_name)

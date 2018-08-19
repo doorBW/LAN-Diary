@@ -59,14 +59,12 @@
 								</label>
 							
 							<span class="category_wrap">
-								<form action="" method="POST">
-									<select name="category">
-								    <option value="">교환 일기장 선택</option>
-								    <option value="그룹1">그룹1</option>
-								    <option value="그룹2">그룹2</option>
-								    <option value="그룹3">그룹3</option>
-									</select>
-								</form>
+								<select name="category">
+								<option value="">개인 일기장에 쓰기</option>
+								{% for category in user_categories %}
+								<option value="{{ category.C_name }}">{{ category.C_name }}</option>
+								{% endfor %}
+								</select>
 							</span>
 						</div>
 						

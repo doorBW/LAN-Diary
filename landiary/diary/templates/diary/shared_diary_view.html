@@ -384,13 +384,13 @@
 
 											</table>
 										</div>
-										<form action="">
+										<form action="../write_comment" method="POST" name='write_comment'>{% csrf_token %}
 											<div class="write_comment">
 												<label for="user_comment"></label>
-												<form action="#" method="">
-													<input name="comment_content" type="text" id="user_comment" placeholder=" 댓글 쓰기...">
-													<input type="image" src="{% static 'img/edit.png' %}" class="comment_button comment_button_hover"/>
-												</form>
+												<input type="hidden" name="post_id" value="{{ post.id }}">
+												<input type="hidden" name="category_name" value="{{ selected_group }}">
+												<input name="comment_content" type="text" id="user_comment" placeholder=" 댓글 쓰기...">
+												<input type="image" src="{% static 'img/edit.png' %}" class="comment_button comment_button_hover" />
 											</div>
 										</form>
 									</div>
@@ -453,9 +453,11 @@
 										<span>{{ post.published|date:"m" }}월 </span>
 										<span>{{ post.published|date:"d" }}일</span>
 									</div>
+									{% if post.photo %}
 									<div class="image_input">
-										
+										<img class="diary_image" src= "{{ post.photo.url }}" />
 									</div>
+									{% endif %}
 									<div class="exchange_diary_func">
 										<span class="hover1">
 											<form name="myForm_pick_{{post.id}}" method="POST" action="../pick">{% csrf_token %}
@@ -470,10 +472,6 @@
 										<span class="view_diary_icon hover3">
 											<i class="far fa-eye"></i>
 											일기 보기
-										</span>
-										<span class="hover4">
-											<i class="far fa-meh"></i>
-											공감하기
 										</span>
 									</div>
 									<div class="content_input">
@@ -515,13 +513,13 @@
 												
 											</table>
 										</div>
-										<form action="">
+										<form action="../write_comment" method="POST" name='write_comment'>{% csrf_token %}
 											<div class="write_comment">
 												<label for="user_comment"></label>
-												<form action="#" method="">
-													<input name="comment_content" type="text" id="user_comment" placeholder=" 댓글 쓰기...">
-													<input type="image" src="{% static 'img/edit.png' %}" class="comment_button comment_button_hover"/>
-												</form>
+												<input type="hidden" name="post_id" value="{{ post.id }}">
+												<input type="hidden" name="category_name" value="{{ selected_group }}">
+												<input name="comment_content" type="text" id="user_comment" placeholder=" 댓글 쓰기...">
+												<input type="image" src="{% static 'img/edit.png' %}" class="comment_button comment_button_hover" />
 											</div>
 										</form>
 									</div>
