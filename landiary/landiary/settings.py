@@ -94,7 +94,7 @@ DATABASES = {
 	'PORT': '5432',
         'NAME': 'landiary',
         'USER': 'landiary',
-        'PASSWORD': 'landiary'
+        'PASSWORD': '********'
     }
 }
 
