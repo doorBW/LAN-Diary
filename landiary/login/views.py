@@ -23,8 +23,8 @@ def loging(request):
     authorize_code.replace(" ","") # 공백제거
     body = {
         "grant_type": "authorization_code",
-        "client_id": "1d894462dd40831cc8d2537ee51addfc",
-        "redirect_uri": "http://localhost:8000/loging",
+        "client_id": "4b53473330b656e657284cfbee30f436",
+        "redirect_uri": "http://ec2-13-209-26-90.ap-northeast-2.compute.amazonaws.com/loging",
         "code": authorize_code,
     }
     headers = {'Content-type': 'application/x-www-form-urlencoded'}

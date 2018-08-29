@@ -31,8 +31,6 @@
          }
       }, 1000)
    });
-</script>
-<script type="text/javascript">
    $(document).ready(function() {
       $(".content_input").show(); //페이지를 로드할 때 표시할 요소
       $(".write_comment_icon").show();
@@ -169,43 +167,52 @@
          // 여기 내용에는
          // alert("자신이 작성한 댓글만 수정할 수 있다 ㅗ");
       }else{
+         //comment_root.innerHTML = "<form name='change_comment' method='POST'>"+comment_root.innerHTML;
          var img_tags = comment_root.getElementsByTagName("td")[2];
          var modify_img = img_tags.getElementsByTagName('button')[0];
          var delete_img = img_tags.getElementsByTagName('button')[1];
          modify_img.remove();
          delete_img.remove();
-         var update_btn = "<form name='change_comment' method='POST'><input class='css_update_btn' name='new_comment' type='submit' value='수정'/><input name='comment_"+comment_id+"' type='hidden' value='"+comment_id+"'></form>";
-         var cancle_btn = "<input class='css_cancle_btn' type='submit' onclick='comment_cancle("+comment_id+")' value='취소'/>";
+         var update_btn = "<input class='css_update_btn' name='new_comment' type='submit' value='수정'/><input name='comment_id' type='hidden' value='"+comment_id+"'/>";
+         var cancle_btn = "<input class='css_cancle_btn' style='cursor:pointer;' onclick='comment_cancle("+comment_id+")' value='취소'/>";
          img_tags.innerHTML = update_btn+cancle_btn;
 
          var temp_content = document.getElementById(each_comment);
          var temp_content_text = temp_content.getElementsByTagName('td')[1].innerText;
          temp_content.getElementsByTagName('td')[1].innerText = "";
-         var comment_input = '<input class="edit_comment_class" type="text" id="edit_comment_'+comment_id+'" value="'+temp_content_text+'" />';
+         var comment_input = '<input name="comment_content" class="edit_comment_class" type="text" id="edit_comment_'+comment_id+'" value="'+temp_content_text+'" /><input type="hidden" id="original_content" value="'+temp_content_text+'"/><input type="hidden" name="C_name" value="{{ selected_group }}">';
          var add_span = document.createElement("span");
          add_span.innerHTML = comment_input;
          temp_content.getElementsByTagName('td')[1].appendChild(add_span);
+         document.getElementsByClassName('comment_input_wrap')[0].innerHTML += "<form id='change_comment_form' name='change_comment' method='POST' action='../edit_comment'>{% csrf_token %}";
+	document.getElementById('change_comment_form').appendChild(document.getElementsByClassName('comment_table')[0])
       }
    }
+</script>
+<script type="text/javascript">
 
    function comment_cancle(comment_id){
       var each_comment = "comment_row_"+comment_id;
       var each_comment = document.getElementById(each_comment);
       var temp_content = each_comment.getElementsByTagName('td')[1];
       var temp_content_input = temp_content.getElementsByTagName('input')[0];
-      var temp_content_text = temp_content_input.value;
+      var temp_content_text = document.getElementById('original_content').value;
       temp_content_input.remove();
       temp_content.innerHTML = temp_content_text;
 
-      var update_btn = each_comment.getElementsByTagName('td')[2].getElementsByTagName('form')[0];
+      var update_btn = each_comment.getElementsByTagName('td')[2].getElementsByTagName('input')[0];
       var cancle_btn = each_comment.getElementsByTagName('td')[2].getElementsByTagName('input')[2];
       update_btn.remove();
       cancle_btn.remove();
 
-      var original_btn = '<button class="exchange_diary_comment_func_button" onclick="comment_edit_click('+comment_id+')"><img id="comment_img" width="16px" height="16px" src="{% static "img/edit.png" %}" alt="수정하기"></button><form name="comment_'+comment_id+'_delete"><input type="hidden" name="delete_comment_'+comment_id+'" value="'+comment_id+'"/></form><button class="exchange_diary_comment_func_button"><img id="delete_img" width="13px" height="13px" src="{% static "img/delete.png" %}" alt="삭제하기"></button>'
+      var original_btn_1 = '<button class="exchange_diary_comment_func_button" onclick="comment_edit_click('+comment_id+')"><img id="comment_img" width="16px" height="16px" src="{% static "img/edit.png" %}" alt="수정하기"></button><form name="comment_'+comment_id+'_delete">';
+      //'{% csrf_token %}'
+      var original_btn_2 = '<input type="hidden" name="delete_comment_'+comment_id+'" value="'+comment_id+'"/></form><button class="exchange_diary_comment_func_button"><img id="delete_img" width="13px" height="13px" src="{% static "img/delete.png" %}" alt="삭제하기"></button>';
 
-		each_comment.getElementsByTagName('td')[2].innerHTML = original_btn
-		
+		each_comment.getElementsByTagName('td')[2].innerHTML = original_btn_1 + "{% csrf_token %}" + original_btn_2;
+       var form_inner = document.getElementsByClassName('comment_table')[0]
+      document.getElementsByClassName('comment_input_wrap')[0].appendChild(form_inner)
+      document.getElementById('change_comment_form').remove()		
 	}
 
 	function copy_link() {

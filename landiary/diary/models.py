@@ -18,7 +18,7 @@ from login.models import User
 class Post(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
-    photo = models.ImageField()
+    photo = models.ImageField(upload_to='../media/',blank=True, null=True)
     content = models.CharField(max_length=4000)
     published = models.DateTimeField(auto_now=True)
     weather = models.CharField(max_length=15)

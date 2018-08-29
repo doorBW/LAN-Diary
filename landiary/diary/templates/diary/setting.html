@@ -25,28 +25,32 @@
 										<div class="setting_each_title">
 											일기장 주인
 										</div>
-											<span class="setting_each_detail">홍길동</span>
+											<span class="setting_each_detail">{{ user.nick_name }}</span>
 									</div><br>
 
 									<div class="setting_content_each">
 										<div class="setting_each_title">
 											별명
 										</div>
-											<span class="setting_each_detail">길동무</span>
+											<span class="setting_each_detail">{{ user.nick_name }}</span>
 									</div><br>
 
 									<div class="setting_content_each">
 										<div class="setting_each_title">
 											이메일
 										</div>
-											<span class="setting_each_detail">asdf@naver.com</span>
+											<span class="setting_each_detail">{{ user.email }}</span>
 									</div><br>
 
 									<div class="setting_content_each">
 										<div class="setting_each_title">
 											돌려쓰는 일기장
 										</div>
-											<span class="setting_each_detail">A, B, C</span>
+											<span class="setting_each_detail">
+												{% for category in categories %}
+													{{ category.C_name }} /
+												{% endfor %}
+											</span>
 									</div><br>
 
 									<div class="setting_explain">

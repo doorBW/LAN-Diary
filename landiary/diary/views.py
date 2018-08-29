@@ -8,6 +8,7 @@ from login.models import User
 from datetime import date
 
 from .forms import MakeGroupFrom, PostForm
+from raven.contrib.django.raven_compat.models import client
 
 
 import jwt # for token generation
@@ -65,9 +66,14 @@ def mydiary(request):
     comments[post.id] = []
     tmp_comments = Comment.objects.filter(post=post)
     comments[post.id].append(tmp_comments)
+  user_posts_idlist.reverse()
   return render(request, 'diary/my_diary_view.html', {'posts':user_posts, 'comments':comments, 'posts_idlist':user_posts_idlist})
 
 def mydiary_delete(request):
+  try:
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
   user_id = User.objects.get(nick_name = user).id
   post_id = request.POST['post_id']
   user = User.objects.get(id = user_id)
@@ -81,29 +87,39 @@ def setting(request):
     user = request.session['user_name']
   except:
     return redirect('../../unloginpage')
-  return render(request, 'diary/setting.html')
+  user = User.objects.get(nick_name = user)
+  categories = user.categories.all()
+  return render(request, 'diary/setting.html',{'user':user,'categories':categories})
 
 def edit_diary(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    user_id = User.objects.get(nick_name = user).id
-    if request.method == "POST":
-      original_post = Post.objects.get(id = request.POST['post_id'])
-      original_post.title = request.POST['title']
-      # original_post.category = Category.objects.get(C_name = request.POST['category'])
-      original_post.emotion = request.POST['emotion']
-      original_post.weather = request.POST['weather']
-      if request.FILES['photo'] == "": # 사진을 수정하지 않으면 걍 내비둔다
-        pass
-      else: # 새로운 사진을 첨부했으면, 기존의 사진을 지우고 새로 첨부한 사진을 db에 입력
-        original_post.photo.delete(save=False)
-        original_post.photo = request.FILES['photo'] 
-      original_post.content = request.POST['content']
-      original_post.save()
-      return redirect('../mydiary')
+  try:
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
+  
+  post = get_object_or_404(Post, pk=pk)
+  #user_id = User.objects.get(nick_name = user).id
+  if request.method == "POST":
+    original_post = Post.objects.get(id = request.POST['post_id'])
+    if original_post.username != User.objects.get(nick_name = user):
+      redirect('../../errorpage')
+    original_post.title = request.POST['title']
+    # original_post.category = Category.objects.get(C_name = request.POST['category'])
+    original_post.emotion = request.POST['emotion']
+    original_post.weather = request.POST['weather']
+    if request.FILES['photo'] == "": # 사진을 수정하지 않으면 걍 내비둔다
+      pass
+    else: # 새로운 사진을 첨부했으면, 기존의 사진을 지우고 새로 첨부한 사진을 db에 입력
+      original_post.photo.delete(save=False)
+      original_post.photo = request.FILES['photo'] 
+    original_post.content = request.POST['content']
+    original_post.save()
+    return redirect('../mydiary')
 
-    else:
-        form = PostForm(instance=post)
-    return render(request, 'diary/edit_diary.html', {'form': form, 'post': post})
+  else:
+    form = PostForm(instance=post)
+    #redirect('../../errorpage')
+  return render(request, 'diary/edit_diary.html',{'form':form, 'post':post})
 
 def write_diary(request):
   try: # 로그인했을때만 접근가능하도록 처리
@@ -112,12 +128,26 @@ def write_diary(request):
     return redirect('../../unloginpage')
   if request.method == "POST":
     user_id = User.objects.get(nick_name = user).id
-    category_id = Category.objects.get(C_name = request.POST['category']).id
-    form = PostForm(request.POST,request.FILES)
+    if request.POST['category'] == '':
+      category_id = 0
+    else:
+      category_id =  Category.objects.get(C_name = request.POST['category']).id
+    #try:
+     # category_id = Category.objects.get(C_name = request.POST['category']).id
+    #except:
+     # category_id = 0
+    try:
+        form = PostForm(request.POST,request.FILES)
+    except:
+        client.captureException()
     if form.is_valid():
       post = form.save(commit=False)
       post.username = User.objects.get(id = user_id)
-      post.category = Category.objects.get(id = category_id )
+      #post.photo = request.FILES # 해당 부분 주석처리하면 오류 발생 안함
+      if category_id == 0:
+        pass
+      else:
+        post.category = Category.objects.get(id = category_id )
       post.save()
       return redirect('../mydiary')
   else:
@@ -197,8 +227,11 @@ def comment_delete(request):
   user_id = User.objects.get(nick_name = user).id
   post_id = request.POST['comment_id']
   user_comment = Comment.objects.filter(author = user_id)
-  selected_user_comment = user_comment.get(id = post_id)
-  selected_user_comment.delete()
+  try:
+    selected_user_comment = user_comment.get(id = post_id)
+    selected_user_comment.delete()
+  except:
+    return redirect('../errorpage')
   return redirect('../main/groupdiary/all')
   
 def comment_delete_2(request):
@@ -209,8 +242,11 @@ def comment_delete_2(request):
   user_id = User.objects.get(nick_name = user).id
   post_id = request.POST['comment_id']
   user_comment = Comment.objects.filter(author = user_id)
-  selected_user_comment = user_comment.get(id = post_id)
-  selected_user_comment.delete()
+  try:
+    selected_user_comment = user_comment.get(id = post_id)
+    selected_user_comment.delete()
+  except:
+    return redirect('../errorpage')
   selected_group = request.POST['selected_group']
   return redirect('../main/groupdiary/'+selected_group)
 
@@ -222,8 +258,11 @@ def pickdiary_comment_delete(request):
   user_id = User.objects.get(nick_name = user).id
   post_id = request.POST['comment_id']
   user_comment = Comment.objects.filter(author = user_id)
-  selected_user_comment = user_comment.get(id = post_id)
-  selected_user_comment.delete()
+  try:
+    selected_user_comment = user_comment.get(id = post_id)
+    select_uset_comment.delete()
+  except:
+    return redirect('../errorpage')
   return redirect('../main/pickdiary')
 
 
@@ -234,12 +273,16 @@ def group_diary(request,group="all"):
   except:
     return redirect('../../unloginpage')
   # 현재 유저 이름에 대한 db의 id를 가져와야함. 예시를 바탕으로, test_user1의 id는 1임
-  user = "test_user1"
-  user_id = 5
-  user_posts = Post.objects.filter(username = user_id) 
+  user_id = User.objects.get(nick_name = user).id
+  all_posts = Post.objects.all()
+  user_posts = []
   # filter 를 통해서 어떤 유저 아이디에 해당하는 post들을 다 가져와서 user_posts 에 저장한다. 외래키 이기 때문에 username으로 해도 id로 탐색.
   user_categories = User.objects.filter(id = user_id)[0].categories.all()
-   # 해당하는 id 에 맞는 유저를 찾아서 [0]을 붙인 이유가 뭐지 그리고 모든 categories를 변수에 저장한다.
+  for post in all_posts:
+    for category in user_categories:
+      if post.category == category:
+        user_posts.append(post)
+  # 해당하는 id 에 맞는 유저를 찾아서 [0]을 붙인 이유가 뭐지 그리고 모든 categories를 변수에 저장한다.
   # 전체보기를 위해  user_categories_namelist의 맨 앞에 'all' 값을 하나 추가한다.
   user_categories_namelist = ["all"]
   for category in user_categories: # user_categories 안에 있는 카테고리들을 반복한다.
@@ -304,7 +347,7 @@ def making_group(request):
         category.link = "http://localhost:8000/main/search/?search="+group_name
       else:
         token = jwt.encode({'group':group_name},'tokenpw',algorithm='HS256').decode('utf-8')
-        link = "http://localhost:8000/main/invite/check/"+token
+        link = "http://ec2-13-209-26-90.ap-northeast-2.compute.amazonaws.com/main/invite/check/"+token
         category.link = link
       category.save()
       User.objects.get(nick_name = user).categories.add(category)
@@ -423,6 +466,22 @@ def write_comment(request):
     user = User.objects.get(nick_name = user)
     post = Post.objects.get(id = post_id)
     comment = Comment.objects.create(post = post,content = comment_content, author = user)
+    comment.save()
+  else:
+    return redirect('../errorpage')
+  return redirect('../main/groupdiary/'+C_name)
+
+def edit_comment(request):
+  try: # 로그인했을때만 접근가능하도록 처리
+    user = request.session['user_name']
+  except:
+    return redirect('../../unloginpage')
+  if request.method == "POST":
+    comment_content = request.POST['comment_content']
+    comment_id = request.POST['comment_id']
+    C_name = request.POST['C_name']
+    comment = Comment.objects.get(id = comment_id)
+    comment.content = comment_content
     comment.save()
   else:
     return redirect('../errorpage')

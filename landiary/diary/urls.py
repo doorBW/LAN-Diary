@@ -26,5 +26,6 @@ urlpatterns = [
     # path('write_diary/', views.write_diary, name='WriteDiary'),
     # path('edit_diary/<int:id>/', views.edit_diary, name='EditDiary'),
     path('<int:pk>/editdiary',views.edit_diary, name = 'editdiary'),
-    path('write_comment',views.write_comment)
+    path('write_comment',views.write_comment),
+    path('edit_comment',views.edit_comment)
 ]

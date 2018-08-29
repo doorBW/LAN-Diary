@@ -131,12 +131,12 @@
                             <span class="new_pick"><a href="./pickdiary">뜯어온 일기장</a></span>
                             <span class="new_exchange"><a href="./groupdiary/all">교환 일기장</a></span>
                             <span class="new_setup"><a href="./setting">설정</a></span>
-                            <span class="new_logout"><a href="./logout">로그아웃</a></span>
+                            <span class="new_logout"><a href="../logout">로그아웃</a></span>
                             {% endblock %}
         {% block main%}
         <main>
             <div class="main_wrap">
-                안녕하세요 {{ user }} 님!
+                <span class="message">안녕하세요 {{ user }} 님!</span>
                 {% if message != null %}
                     <div class="message" id="message">
                         {{ message }}

@@ -220,15 +220,6 @@
 							</div>
 							<div class="comment_input_wrap">
 								<table class="comment_table mydiary_comment">
-									<tr class="row">
-										<td class="diary_nickname">닉네임</td>
-										<td class="comment_content">댓글 내용</td>
-										<td class="view_diary_comment_func">
-											<form name="comment_form" action="" method="POST">
-												<button class="view_diary_comment_func_button"><i class="fas fa-times"></i></button>
-											</form>
-										</td>
-									</tr>
 									{% for key, value in comments.items %}
 										{% if key == post.id %}
 											{% for tmp_comments in value %}
@@ -238,7 +229,8 @@
 										<td class="diary_nickname">{{comment.author}}</td>
 										<td class="comment_content">{{ comment.content }}</td>
 										<td class="view_diary_comment_func">
-											<form name="comment_form" action="" method="POST">
+											<form name="comment_form" action="../comment_delete" method="POST">{% csrf_token %}
+												<input type="hidden" name="comment_id" value="{{ comment.id }}"/>
 												<button class="view_diary_comment_func_button"><i class="fas fa-times"></i></button>
 											</form>
 										</td>
